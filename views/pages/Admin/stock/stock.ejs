@@ -1,0 +1,105 @@
+<% include ../header.ejs %>
+<% include ../sideBar.ejs %>
+
+<script src="js/Administrateur/stock/stock.js"></script>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Liste de stock</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="tableAllStock">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"> N°</th>
+                                        <th class="text-center"> Nom</th>
+                                        <th class="text-center"> Description</th>
+                                        <th class="text-center"> Quantité</th>
+                                        <th class="text-center"> date Exp</th>
+                                        <th class="text-center"> Quantité min</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Articles bientot éxpiré</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover"
+                                                id="tableMedicamentBientotExpire">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> N°</th>
+                                                        <th class="text-center"> Nom</th>
+                                                        <th class="text-center"> Date</th>
+                                                        <th class="text-center"> Quantité</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Articles bientot terminé</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover"
+                                                id="tableMedicamentBientotTermine">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> N°</th>
+                                                        <th class="text-center"> Nom</th>
+                                                        <th class="text-center"> DateExp</th>
+                                                        <th class="text-center"> Quantité</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <% include ../footer.ejs %>

@@ -1,0 +1,147 @@
+<% include ../header.ejs %>
+<% include ../sideBar.ejs %>
+
+<script src="js/Administrateur/achat/achat.js"></script>
+
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title  text-center">Ajouter un nouveau produit</h4>
+
+                                <div class="forms-sample form-group ">
+                                    <div class="row">
+                                        <label for="nom" class="col-sm-3 col-form-label">Nom</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="nom" class="form-control" id="nom"
+                                                placeholder="Veuillez saisir le nom" required="true" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="prenom" class="col-sm-3 col-form-label">Quantité</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" name="quantiteAchat" class="form-control"
+                                                id="quantiteAchat" placeholder="Quantité" required />
+                                        </div>
+                                        <label for="prenom" class="col-sm-3 col-form-label">Quantité
+                                            minimum</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" name="minQuantite" class="form-control"
+                                                id="minQuantite" placeholder="Quantité minimum" required />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="email" class="col-sm-3 col-form-label">Description</label>
+                                        <div class="col-sm-9">
+                                            <textarea type="text" name="description" class="form-control" rows="4"
+                                                cols="50" id="description"
+                                                placeholder="Veuillez saisir la escription"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="pseudo" class="col-sm-3 col-form-label">Date Exp</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" name="dateExp" class="form-control" id="dateExp"
+                                                placeholder="Veuillez saisir la date d'experimation" required />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <br />
+
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button id="submit" class="btn btn-success mr-2">Confirmer</button>
+                                            <button class="btn btn-light" onclick="resetFileds()">Annuler</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Recents achats</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="tableRecentAchats">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> N°</th>
+                                                        <th class="text-center"> Nom</th>
+                                                        <th class="text-center"> Quantité</th>
+                                                        <th class="text-center"> Date achat</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Liste des achats</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="tableAllAchats">
+                                <thead id="mainDataAchats">
+                                    <tr>
+                                        <th class="text-center"> N°</th>
+                                        <th class="text-center"> Nom</th>
+                                        <th class="text-center"> Description</th>
+                                        <th class="text-center"> Quantité Achat</th>
+                                        <th class="text-center"> Date Exp</th>
+                                        <th class="text-center"> Date Achat</th>
+                                        <th class="text-center"> Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés !
+                l'utilisateur est
+                bien ajouté.</div>
+            <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur
+                !champs vide ou pseudo
+                existe déja.</div>
+            <div class="row">
+
+
+                <% include ../footer.ejs %>

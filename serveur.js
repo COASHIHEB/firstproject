@@ -61,10 +61,6 @@ app.use(auth)
 /** Fin Nos Routes **/
 console.log("Hello Leila")
 console.log("Hello Leila")
-<<<<<<< HEAD
 
-app.listen(8083); //Déclaration du port d'écoute de serveur 
-=======
-console.log("Bonjour Sihem")
-app.listen(8083); //Déclaration du port d'écoute de serveur
->>>>>>> 3531b3795cadd61370e11deb3feb950868b3f861
+app.listen(8083);
+

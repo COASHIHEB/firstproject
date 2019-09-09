@@ -59,6 +59,6 @@ const auth = require('./routes/auth.js')
 app.use(auth)
 
 /** Fin Nos Routes **/
-console.log("test")
+console.log("Bonjour sihem")
 
 app.listen(8083); //Déclaration du port d'écoute de serveur

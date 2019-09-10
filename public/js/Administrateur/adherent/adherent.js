@@ -15,7 +15,38 @@ $(document).ready(function () {
 /************************fin pagination, serach **********************/
 
 /******** Fonction pour modifier un client *********/
-function alertMod(val) {
+function alertMod(id) {
+  swal({
+      title: "vous êtes sure?",
+      text: "vous voulez vraiment modifier les informations de ce client?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((modifier) => {
+      if (modifier) {
+        $.post("updateAdh", {
+            id: id,
+            points: $('#points' + id).html(),
+            statut: $('#statut' + id).val(),
+          },
+          function (data, status) {
+            if (data == 'done') {
+              swal("Les informations sont bien modifiées !", {
+                icon: "success",
+              });
+            } else {
+              swal("Erreur, mal de modification!", {
+                icon: "error",
+              });
+            }
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000)
+          });
+
+      }
+    });
 }
 
 

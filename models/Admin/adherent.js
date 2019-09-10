@@ -33,18 +33,40 @@ class adherent{
             if(rep === 'error') {
                 CallBack('error');
             }else { 
-                console.log(inputs.idUtil);
                 connexion.query("DELETE FROM adherent WHERE utilisateur_idUtil=?",[inputs.idUtil], (err, result)=>{
                     if(err) {
                         CallBack('error');
                     }else { 
                         connexion.query("DELETE FROM utilisateur WHERE idUtil=?",[inputs.idUtil], (err, result)=>{
-                            CallBack('done');
+                            if(err){
+                                CallBack('error');
+                            }else{
+                                CallBack('done');
+                            }
                         });
                     }
                 });
             }
         });
+    }
+
+  
+        /******  Methode pour modifier un client ******/
+    static updateAdherent(inputs,CallBack){
+        connexion.query("UPDATE utilisateur SET  statut=? WHERE idUtil = ?",[inputs.statut, inputs.id], (err, result)=>{
+            if(err) {
+                CallBack('error');
+            }else { 
+                connexion.query("UPDATE adherent SET point=? WHERE utilisateur_idUtil = ?",[parseFloat(inputs.points), inputs.id], (err, reslt)=>{
+                    if(err){
+                        CallBack('error');
+                    }else{
+                        CallBack('done');
+                    }
+                });
+            }
+        });
+            
     }
 
 }

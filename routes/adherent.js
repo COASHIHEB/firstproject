@@ -21,12 +21,11 @@ app.post('/deleteAdh', (request, response) => {
 });
 
 /* Lien pour modifier un clients*/
-app.post('/modifierEmp', (request, response) => {
-    let modifierEmp = require("../models/Admin/employe");
-    modifierEmp.modifierEmp(request.body, (resp) => {
+app.post('/updateAdh', (request, response) => {
+   require("../models/Admin/adherent").updateAdherent(request.body, (resp) => {
         response.json(resp);
-    })
-})
+    });
+});
 
 
 module.exports = app

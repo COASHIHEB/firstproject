@@ -17,7 +17,7 @@
                                         <th class="text-center"> N°</th>
                                         <th class="text-center">Code</th>
                                         <th class="text-center"> Nom</th>
-                                        <th class="text-center"> Prénom</th>
+                                        <th class="text-center"> Points</th>
                                         <th class="text-center"> email</th>
                                         <th class="text-center"> télèphone</th>
                                         <th class="text-center">Date</th>
@@ -66,19 +66,24 @@
                                                     </div>
                                                     <div class="dropdown-divider"></div>
                                                     <p class="mb-0 font-weight-normal text-center float-center"> 
-                                                            <%= respo[i].nom %> <%= respo[i].prenom %> a <span id="nbrComd"><%= respo[i].nbrComd %></span> commande(s).
+                                                            <%= respo[i].nom %> <%= respo[i].prenom %> a <b><%= respo[i].nbrComd %></b> commande(s).
                                                     </p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td contenteditable="true" class="text-center" uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
-                                        <td contenteditable="true" class="text-center" uppercase id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
-                                        <td class="text-center" id="mail<%= respo[i].id %>"><%= respo[i].email %></td>
-                                        <td class="text-center" id="tel<%= respo[i].id %>"><%= respo[i].numTel %></td>
+                                        <td class="text-center" uppercase><%= respo[i].nom %> <%= respo[i].prenom %></td>
+                                        <td contenteditable="true" class="text-center" id="points<%= respo[i].idUtil %>"><%= respo[i].point %></td>
+                                        <td class="text-center"><%= respo[i].email %></td>
+                                        <td class="text-center"><%= respo[i].numTel %></td>
                                         <td class="text-center"><%= respo[i].date %></td>
-                                        <td class="text-center"><%= respo[i].valide %></td>
+                                        <% if(respo[i].valide == "oui"){%>
+                                          <td class="text-center" style="color:green"><%= respo[i].valide %></td>
+                                        <%}%>
+                                        <% if(respo[i].valide == "non"){%>
+                                          <td class="text-center" style="color: red"><%= respo[i].valide %></td>
+                                        <%}%>
                                         <td class="text-center">
-                                            <select id="statut" >
+                                            <select id="statut<%= respo[i].idUtil %>" >
                                                 <% if(respo[i].statut == "Administrateur"){%>
                                                     <option value="<%= respo[i].statut %>"selected>Admin</option>
                                                     <option value="client">Client</option>
@@ -106,7 +111,7 @@
                             </table>
                         </div>
                         <div class="alert alert-warning" role="alert" style="width: 80%">
-                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous pouvez modifier que le nom, le prénom et le status de votre clients.
+                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous pouvez modifier que le status et ces points de votre clients.
                         </div>
                     </div>
                 </div>

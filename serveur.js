@@ -59,8 +59,6 @@ const auth = require('./routes/auth.js')
 app.use(auth)
 
 /** Fin Nos Routes **/
-console.log("Hello Leila")
-console.log("Hello Leila")
 
 app.listen(8083);
 

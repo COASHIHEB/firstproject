@@ -65,6 +65,7 @@ function alertSupp(idUtil,idAdh) {
         $.post("deleteAdh", {
             idUtil,
             idAdh,
+            statut: $('#statut'+idUtil).val(),
           },
           function (data, status) {
             if (data == 'done') {

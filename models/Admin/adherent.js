@@ -29,23 +29,22 @@ class adherent{
   
         /******  Methode pour supprimer un client ******/
     static deleteAdherent(inputs,CallBack){
-        require("./commande").deleteClientCommande(inputs.idAdh,(rep) => {
-            if(rep === 'error') {
+        console.log(inputs);
+        connexion.query("DELETE FROM adherent WHERE utilisateur_idUtil=?",[inputs.idUtil], (err, result)=>{
+            if(err) {
                 CallBack('error');
             }else { 
-                connexion.query("DELETE FROM adherent WHERE utilisateur_idUtil=?",[inputs.idUtil], (err, result)=>{
-                    if(err) {
-                        CallBack('error');
-                    }else { 
-                        connexion.query("DELETE FROM utilisateur WHERE idUtil=?",[inputs.idUtil], (err, result)=>{
-                            if(err){
-                                CallBack('error');
-                            }else{
-                                CallBack('done');
-                            }
-                        });
-                    }
-                });
+                if(inputs.statut === "client"){
+                    connexion.query("DELETE FROM utilisateur WHERE idUtil=?",[inputs.idUtil], (err, result)=>{
+                        if(err){
+                            CallBack('error');
+                        }else{
+                          CallBack('done');
+                        }
+                    });
+                }else{
+                    CallBack('done');
+                }
             }
         });
     }
@@ -61,7 +60,39 @@ class adherent{
                     if(err){
                         CallBack('error');
                     }else{
-                        CallBack('done');
+                        if(inputs.statut === "client"){
+                            require("./employe").selectEmployer(inputs.id,(emp) => {
+                                if(emp === 'exist'){
+                                    require("./employe").deleteEmployer(inputs.id,(emp) => {
+                                        if(emp === "done"){
+                                            CallBack('done');
+                                        }else{
+                                            CallBack('error');
+                                        }
+                                    });
+                                }else{
+                                    CallBack('error');
+                                }
+                            });
+                        }else if(inputs.statut === "employe"){
+                            require("./employe").selectEmployer(inputs.id,(emp) => {
+                                console.log(emp);
+                                if(emp === 'done'){
+                                    require("./employe").addEmployer(inputs.id,(emp) => {
+                                        console.log(emp);
+                                        if(emp === "done"){
+                                            CallBack('done');
+                                        }else{
+                                            CallBack('error');
+                                        }
+                                    });
+                                }else{
+                                    CallBack('done');
+                                }
+                            });
+                        }else{
+                            CallBack('done');
+                        }
                     }
                 });
             }

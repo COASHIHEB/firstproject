@@ -15,6 +15,7 @@ app.get('/client', (request, response) => {
 
 /* Lien pour supprimer un clients*/
 app.post('/deleteAdh', (request, response) => {
+    console.log(request.body);
     require("../models/Admin/adherent").deleteAdherent(request.body, (resp) => {
         response.json(resp);
     });

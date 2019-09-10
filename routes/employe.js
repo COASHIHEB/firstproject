@@ -2,9 +2,24 @@ var express = require('express');
 var app = express.Router();
 
 
+/**** Redirect l'admin no connecter  vert la page login ****/
+const redirectLogin = (request, response, next) => {
+    if (!request.session.userType) {
+        response.redirect('/login');
+    } else {
+        if (request.session.userType === "Administrateur") {
+            next();
+        } else if (request.session.userType === "employe") {
+            response.redirect('/home');
+        } else {
+            response.redirect('/');
+        }
+    }
+}
+
 
 /* lien vers page employe */
-app.get('/employe', (request, response) => {
+app.get('/employe', redirectLogin, (request, response) => {
     let selectEmploye = require("../models/Admin/employe");
     selectEmploye.selectEmploye((resp) => {
         let resultSelect = resp;

@@ -1,0 +1,117 @@
+<% include ../header.ejs %>
+<% include ../sideBar.ejs %>
+
+<script src="js/Administrateur/adherent/adherent.js"></script>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin ">
+                <div class="card" >
+                    <div class="card-body"  >
+                        <h4 class="card-title text-center">Liste des clients</h4>
+                        <div class="table-responsive"  style="height: 400px">
+                            <table class="table table-bordered table-hover" id="tableau" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"> N°</th>
+                                        <th class="text-center">Code</th>
+                                        <th class="text-center"> Nom</th>
+                                        <th class="text-center"> Prénom</th>
+                                        <th class="text-center"> email</th>
+                                        <th class="text-center"> télèphone</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Valide</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                        <% if(locals.respo){
+                                            for(let i=0; i<respo.length; i++){ %>
+                                    <tr>
+                                        <td class="text-center"><%= i+1 %></td>
+                                        <td class="text-center" class="nav-item dropdown" onclick="nbrComd('<%= i+1 %>')" id="code<%= respo[i].id %>">
+                                            <a class="nav-link count-indicator dropdown-toggle" id="commandes" href="#" data-toggle="dropdown">
+                                                <%= respo[i].code %>
+                                            </a>
+                                            <div style="background-color:burlywood" class="dropdown-menu dropdown-menu-center navbar-dropdown preview-list" aria-labelledby="commandes">
+                                                <div style="width: 600px">
+                                                    <div class="preview-item-content">
+                                                        <h6 class="preview-subject text-center font-weight-medium text-dark">La liste des commandes</h6>
+                                                        <p class=" small-text">
+                                                            <table class="table table-bordered table-hover" id="tableau<%= i+1 %>" >
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center"> N°</th>
+                                                                        <th class="text-center">Code</th>
+                                                                        <th class="text-center"> Prix Totale</th>
+                                                                        <th class="text-center"> Statut</th>
+                                                                        <th class="text-center"> Date</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <body>
+                                                                    <% for(let j=0; j<respo[i].nbrComd; j++){ %>
+                                                                        <tr>
+                                                                           <td class="text-center"><%= i+1 %></td>
+                                                                           <td class="text-center"><%= respo[i].commandes[j].idCommande %></td>
+                                                                           <td class="text-center"><%= respo[i].commandes[j].prixTotal %></td>
+                                                                           <td class="text-center"><%= respo[i].commandes[j].statut %></td>
+                                                                           <td class="text-center"><%= respo[i].commandes[j].dateCommande %></td>
+                                                                        </tr>
+                                                                    <% } %>
+                                                                </body>
+                                                            </table>
+                                                        </p>
+                                                    </div>
+                                                    <div class="dropdown-divider"></div>
+                                                    <p class="mb-0 font-weight-normal text-center float-center"> 
+                                                            <%= respo[i].nom %> <%= respo[i].prenom %> a <span id="nbrComd"><%= respo[i].nbrComd %></span> commande(s).
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td contenteditable="true" class="text-center" uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
+                                        <td contenteditable="true" class="text-center" uppercase id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
+                                        <td class="text-center" id="mail<%= respo[i].id %>"><%= respo[i].email %></td>
+                                        <td class="text-center" id="tel<%= respo[i].id %>"><%= respo[i].numTel %></td>
+                                        <td class="text-center"><%= respo[i].date %></td>
+                                        <td class="text-center"><%= respo[i].valide %></td>
+                                        <td class="text-center">
+                                            <select id="statut" >
+                                                <% if(respo[i].statut == "Administrateur"){%>
+                                                    <option value="<%= respo[i].statut %>"selected>Admin</option>
+                                                    <option value="client">Client</option>
+                                                    <option value="employe">Employée</option>
+                                                <%}%>
+                                                <% if(respo[i].statut == "employe"){%>
+                                                    <option value="Administrateur">Admin</option>
+                                                    <option value="client">Client</option>
+                                                    <option value="employe" selected>Employée</option>
+                                                <%}%>
+                                                <% if(respo[i].statut == "client"){%>
+                                                    <option value="Administrateur">Admin</option>
+                                                    <option value="client" selected>Client</option>
+                                                    <option value="employe">Employée</option>
+                                                <%}%>
+                                            </select>
+                                        </td>
+                                        <td class="text-center"> 
+                                            <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].idUtil %>','<%= respo[i].idadh %>')"><span class="fa fa-trash"></span></button>
+                                            <button class=" btn btn-success btn-xs" onclick="alertMod('<%= respo[i].idUtil %>')"><span class=" fa fa-edit"></span></button>
+                                        </td>
+                                    </tr>
+                                            <% }  }%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-warning" role="alert" style="width: 80%">
+                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous pouvez modifier que le nom, le prénom et le status de votre clients.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include ../footer.ejs %>

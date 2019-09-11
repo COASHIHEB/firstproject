@@ -12,41 +12,6 @@ $(document).ready(function () {
           "lengthMenu": [10, 25, 50, 75, 100],
         });
   }
-/************************fin pagination, serach **********************/
-
-/******** Fonction pour modifier un client *********/
-function alertMod(id) {
-  swal({
-      title: "vous êtes sure?",
-      text: "vous voulez vraiment modifier les informations de ce client?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((modifier) => {
-      if (modifier) {
-        $.post("updateAdh", {
-            id: id,
-          },
-          function (data, status) {
-            if (data == 'done') {
-              swal("Les informations sont bien modifiées !", {
-                icon: "success",
-              });
-            } else {
-              swal("Erreur, mal de modification!", {
-                icon: "error",
-              });
-            }
-            setTimeout(function () {
-              window.location.reload();
-            }, 2000)
-          });
-
-      }
-    });
-}
-
 
 
 /******** Fonction pour supprimer un client *********/

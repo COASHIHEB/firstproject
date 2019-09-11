@@ -2,7 +2,7 @@ var express = require('express');
 var app = express.Router();
 
 
-/**** Redirect l'admin no connecter  vert la page login ****/
+/**** Redirect l'utilisateur no connecter  vert la page login ****/
 const redirectLogin = (request, response, next) => {
     if (!request.session.userType) {
         response.redirect('/login');
@@ -20,14 +20,11 @@ const redirectLogin = (request, response, next) => {
 
 /* lien vers page employe */
 app.get('/employe', redirectLogin, (request, response) => {
-    let selectEmploye = require("../models/Admin/employe");
-    selectEmploye.selectEmploye((resp) => {
-        let resultSelect = resp;
-        selectEmploye.selectAdmin((resp) => {
-            let resultSelectAdmin = resp;
+    require("../models/Admin/employe").selectEmploye((resp) => {
+        require("../models/Admin/employe").selectAdmin((res) => {
             response.render('pages/Admin/employe/employe', {
-                respo: resultSelect,
-                respoAdmin: resultSelectAdmin
+                respo: resp,
+                respoAdmin: res
             });
         });
     });
@@ -36,29 +33,25 @@ app.get('/employe', redirectLogin, (request, response) => {
 
 /* Ajouter supprimé modifier et selectionner utilisateur */
 app.post('/addUser', (request, response) => {
-    let addUser = require("../models/Admin/employe");
-    addUser.addUser(request.body, (resp) => {
+    require("../models/Admin/employe").addUser(request.body, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/selectEmploye', (request, response) => {
-    let selectEmploye = require("../models/Admin/employe");
-    selectEmploye.selectEmploye((resp) => {
+    require("../models/Admin/employe").selectEmploye((resp) => {
         response.json(resp);
     });
 })
 
 app.post('/deleteEmp', (request, response) => {
-    let deleteEmp = require("../models/Admin/employe");
-    deleteEmp.deleteEmp(request.body, (resp) => {
+    require("../models/Admin/employe").deleteEmp(request.body, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/modifierEmp', (request, response) => {
-    let modifierEmp = require("../models/Admin/employe");
-    modifierEmp.modifierEmp(request.body, (resp) => {
+    require("../models/Admin/employe").modifierEmp(request.body, (resp) => {
         response.json(resp);
     })
 })

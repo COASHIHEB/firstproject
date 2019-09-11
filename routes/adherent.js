@@ -2,7 +2,7 @@ var express = require('express');
 var app = express.Router();
 
 
-/**** Redirect l'admin no connecter  vert la page login ****/
+/**** Redirect l'utilisateur no connecter  vert la page login ****/
 const redirectLogin = (request, response, next) => {
     if (!request.session.userType) {
         response.redirect('/login');
@@ -35,12 +35,7 @@ app.post('/deleteAdh', (request, response) => {
     });
 });
 
-/* Lien pour modifier un clients*/
-app.post('/updateAdh', (request, response) => {
-   require("../models/Admin/adherent").updateAdherent(request.body, (resp) => {
-        response.json(resp);
-    });
-});
+
 
 
 module.exports = app

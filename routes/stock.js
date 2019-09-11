@@ -26,36 +26,31 @@ app.get('/stock', redirectLogin, (request, response) => {
 /* Ajouter supprimé modifier et selectionner stock/produit */
 
 app.get('/allStock', redirectLogin, (request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.allStock((resp) => {
+    require('../models/Admin/stock').allStock((resp) => {
         response.json(resp);
     })
 })
 
 app.get('/stockBientotExpire', redirectLogin, (request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.stockBientotExpire((resp) => {
+    require('../models/Admin/stock').stockBientotExpire((resp) => {
         response.json(resp);
     })
 })
 
 app.get('/stockMinimum', redirectLogin,(request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.stockMinimum((resp) => {
+    require('../models/Admin/stock').stockMinimum((resp) => {
         response.json(resp);
     })
 })
 
 app.post('/deleteStock', (request, response) => {
-    let Stock = require("../models/Admin/stock");
-    Stock.deleteStock(request.body, (resp) => {
+    require("../models/Admin/stock").deleteStock(request.body, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/updateStock', (request, response) => {
-    let Stock = require("../models/Admin/stock");
-    Stock.updateStock(request.body, (resp) => {
+    require("../models/Admin/stock").updateStock(request.body, (resp) => {
         response.json(resp);
     })
 })

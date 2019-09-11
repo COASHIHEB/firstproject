@@ -29,22 +29,17 @@ class adherent{
   
         /******  Methode pour supprimer un client ******/
     static deleteAdherent(inputs,CallBack){
-        console.log(inputs);
         connexion.query("DELETE FROM adherent WHERE utilisateur_idUtil=?",[inputs.idUtil], (err, result)=>{
             if(err) {
                 CallBack('error');
             }else { 
-                if(inputs.statut === "client"){
-                    connexion.query("DELETE FROM utilisateur WHERE idUtil=?",[inputs.idUtil], (err, result)=>{
-                        if(err){
-                            CallBack('error');
-                        }else{
-                          CallBack('done');
-                        }
-                    });
-                }else{
-                    CallBack('done');
-                }
+                connexion.query("DELETE FROM utilisateur WHERE idUtil=?",[inputs.idUtil], (err, result)=>{
+                    if(err){
+                        CallBack('error');
+                    }else{
+                        CallBack('done');
+                    }
+                });
             }
         });
     }
@@ -52,51 +47,19 @@ class adherent{
   
         /******  Methode pour modifier un client ******/
     static updateAdherent(inputs,CallBack){
-        connexion.query("UPDATE utilisateur SET  statut=? WHERE idUtil = ?",[inputs.statut, inputs.id], (err, result)=>{
+        /*connexion.query("UPDATE utilisateur SET  WHERE idUtil = ?",[ inputs.id], (err, result)=>{
             if(err) {
                 CallBack('error');
             }else { 
-                connexion.query("UPDATE adherent SET point=? WHERE utilisateur_idUtil = ?",[parseFloat(inputs.points), inputs.id], (err, reslt)=>{
+                connexion.query("UPDATE adherent SET WHERE utilisateur_idUtil = ?",[parseFloat(inputs.points), inputs.id], (err, reslt)=>{
                     if(err){
                         CallBack('error');
                     }else{
-                        if(inputs.statut === "client"){
-                            require("./employe").selectEmployer(inputs.id,(emp) => {
-                                if(emp === 'exist'){
-                                    require("./employe").deleteEmployer(inputs.id,(emp) => {
-                                        if(emp === "done"){
-                                            CallBack('done');
-                                        }else{
-                                            CallBack('error');
-                                        }
-                                    });
-                                }else{
-                                    CallBack('error');
-                                }
-                            });
-                        }else if(inputs.statut === "employe"){
-                            require("./employe").selectEmployer(inputs.id,(emp) => {
-                                console.log(emp);
-                                if(emp === 'done'){
-                                    require("./employe").addEmployer(inputs.id,(emp) => {
-                                        console.log(emp);
-                                        if(emp === "done"){
-                                            CallBack('done');
-                                        }else{
-                                            CallBack('error');
-                                        }
-                                    });
-                                }else{
-                                    CallBack('done');
-                                }
-                            });
-                        }else{
-                            CallBack('done');
-                        }
+                        CallBack('done');
                     }
                 });
             }
-        });
+        });*/CallBack('done');
             
     }
 

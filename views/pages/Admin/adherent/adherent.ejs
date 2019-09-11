@@ -22,7 +22,6 @@
                                         <th class="text-center"> télèphone</th>
                                         <th class="text-center">Date</th>
                                         <th class="text-center">Valide</th>
-                                        <th class="text-center">Statut</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -72,7 +71,7 @@
                                             </div>
                                         </td>
                                         <td class="text-center" uppercase><%= respo[i].nom %> <%= respo[i].prenom %></td>
-                                        <td contenteditable="true" class="text-center" id="points<%= respo[i].idUtil %>"><%= respo[i].point %></td>
+                                        <td class="text-center" id="points<%= respo[i].idUtil %>"><%= respo[i].point %></td>
                                         <td class="text-center"><%= respo[i].email %></td>
                                         <td class="text-center"><%= respo[i].numTel %></td>
                                         <td class="text-center"><%= respo[i].date %></td>
@@ -82,25 +81,6 @@
                                         <% if(respo[i].valide == "non"){%>
                                           <td class="text-center" style="color: red"><%= respo[i].valide %></td>
                                         <%}%>
-                                        <td class="text-center">
-                                            <select id="statut<%= respo[i].idUtil %>" >
-                                                <% if(respo[i].statut == "Administrateur"){%>
-                                                    <option value="<%= respo[i].statut %>"selected>Admin</option>
-                                                    <option value="client">Client</option>
-                                                    <option value="employe">Employée</option>
-                                                <%}%>
-                                                <% if(respo[i].statut == "employe"){%>
-                                                    <option value="Administrateur">Admin</option>
-                                                    <option value="client">Client</option>
-                                                    <option value="employe" selected>Employée</option>
-                                                <%}%>
-                                                <% if(respo[i].statut == "client"){%>
-                                                    <option value="Administrateur">Admin</option>
-                                                    <option value="client" selected>Client</option>
-                                                    <option value="employe">Employée</option>
-                                                <%}%>
-                                            </select>
-                                        </td>
                                         <td class="text-center"> 
                                             <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].idUtil %>','<%= respo[i].idadh %>')"><span class="fa fa-trash"></span></button>
                                             <button class=" btn btn-success btn-xs" onclick="alertMod('<%= respo[i].idUtil %>')"><span class=" fa fa-edit"></span></button>
@@ -111,7 +91,7 @@
                             </table>
                         </div>
                         <div class="alert alert-warning" role="alert" style="width: 80%">
-                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous pouvez modifier que le status et ces points de votre clients.
+                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous pouvez que supprimer un client.
                         </div>
                     </div>
                 </div>

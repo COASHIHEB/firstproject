@@ -27,8 +27,6 @@ function alertMod(id) {
       if (modifier) {
         $.post("updateAdh", {
             id: id,
-            points: $('#points' + id).html(),
-            statut: $('#statut' + id).val(),
           },
           function (data, status) {
             if (data == 'done') {

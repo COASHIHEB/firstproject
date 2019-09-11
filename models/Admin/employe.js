@@ -137,48 +137,6 @@ class employe{
         }
     });
 }
-    
-    static selectEmployer(input, CallBack){
-        connexion.query("SELECT * FROM employe WHERE utilisateur_idUtil = ?",[input], (err, employe)=>{
-            if(err){
-                CallBack('error');
-            }else if(employe.length === 0){
-                CallBack('done');
-            }else{
-                CallBack('exist');
-            }
-        });
-    }
-    
-    static addEmployer(input, CallBack){
-
-        const generateRandomCode = (() => {
-            let  USABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789".split("");
-            return length => {
-              return new Array(length).fill(null).map(() => {
-                return USABLE_CHARACTERS[Math.floor(Math.random() * USABLE_CHARACTERS.length)];
-              }).join("");
-            }
-          } )();
-        
-        connexion.query("INSERT INTO employe (code, utilisateur_idUtil) VALUES (?,?)", [generateRandomCode(6),input ], (err, result)=>{
-            if(err) {
-                CallBack('error');
-            }else { 
-                CallBack('done');
-            }
-        });
-    }
-
-    static deleteEmployer(input, CallBack){
-        connexion.query("DELETE FROM employe WHERE utilisateur_idUtil=?",[input], (err, result)=>{
-            if(err) {
-                CallBack('error');
-            }else { 
-                CallBack('done');
-            }
-        });
-    }
 }
 
 module.exports = employe;

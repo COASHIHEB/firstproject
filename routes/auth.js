@@ -14,12 +14,14 @@ var transporter = nodemailer.createTransport({
 });
 
 /**** Redirect l'admin no connecter  vert la page login ****/
-const redirectLogin = (request, response, next) => {
+const redirectLogin = (request, response) => {
     if (!request.session.userType) {
         response.redirect('/login');
     } else {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
+        } else if (request.session.userType === "employe") {
+            return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});
         }
@@ -31,11 +33,13 @@ const redirectHome = (request, response, next) => {
     if (request.session.userId) {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
+        } else if (request.session.userType === "employe") {
+            return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});
         }
     } else {
-        next()
+        next();
     }
 }
 
@@ -59,7 +63,7 @@ app.get('/login', redirectHome, (request, response) => {
 });
 
 /*Lien vert la page d'authentification "Register" */
-app.get('/register', (request, response) => {
+app.get('/register', redirectHome, (request, response) => {
     response.render('pages/clients/register/register', {});
 });
 

@@ -1,23 +1,35 @@
 var express = require('express');
 var app = express.Router();
 
+/**** Redirect l'utilisateur no connecter  vert la page login ****/
+const redirectLogin = (request, response, next) => {
+    if (!request.session.userType) {
+        response.redirect('/login');
+    } else {
+        if (request.session.userType === "Administrateur") {
+            next();
+        } else if (request.session.userType === "employe") {
+            response.redirect('/home');
+        } else {
+            response.redirect('/');
+        }
+    }
+}
 
 /* lien vers page achat */
-app.get('/achat', (request, response) => {
+app.get('/achat',redirectLogin, (request, response) => {
     response.render('pages/Admin/achat/achat', {});
 })
 
 /* Ajouter supprimé modifier et selectionner achat */
-app.get('/allAchat', (request, response) => {
-    let Achat = require('../models/Admin/achat')
-    Achat.allAchat((resp) => {
+app.get('/allAchat',redirectLogin, (request, response) => {
+    require('../models/Admin/achat').allAchat((resp) => {
         response.json(resp);
     })
 })
 
-app.get('/recentAchat', (request, response) => {
-    let Achat = require('../models/Admin/achat')
-    Achat.recentAchat((resp) => {
+app.get('/recentAchat',redirectLogin, (request, response) => {
+    require('../models/Admin/achat').recentAchat((resp) => {
         response.json(resp);
     })
 })
@@ -25,15 +37,13 @@ app.get('/recentAchat', (request, response) => {
 
 
 app.post('/addAchat', (request, response) => {
-    let Achat = require("../models/Admin/achat");
-    Achat.addAchat(request.body, (resp) => {
+    require("../models/Admin/achat").addAchat(request.body, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/deleteAchat', (request, response) => {
-    let Achat = require("../models/Admin/achat");
-    Achat.deleteAchat(request.body, (resp) => {
+    require("../models/Admin/achat").deleteAchat(request.body, (resp) => {
         response.json(resp);
     })
 })
@@ -41,8 +51,7 @@ app.post('/deleteAchat', (request, response) => {
 
 
 app.post('/updateAchat', (request, response) => {
-    let Achat = require("../models/Admin/achat");
-    Achat.updateAchat(request.body, (resp) => {
+    require("../models/Admin/achat").updateAchat(request.body, (resp) => {
         response.json(resp);
     })
 })

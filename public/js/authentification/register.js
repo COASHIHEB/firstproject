@@ -60,17 +60,15 @@ $(document).ready(function() {
             },
             function(data, status){
               if(data == 'error'){
-                swal("Informations invalide veuillez s’inscrire de nouveau", {
-                  icon: "error",
-                });
+                $('#passwordConfWarning').css("color","red");
+                $('#passwordConfWarning').text("Informations invalide veuillez s’inscrire de nouveau");
               }else if(data == 'exist'){
                 $('#emailValide').css("background-color","red");
                 $('#emailWarning').css("color","red");
                 $("#emailWarning").text("Email existe déja !");
               }else if(data == 'notInsert'){
-                swal("Informations invalide veuillez s’inscrire de nouveau", {
-                  icon: "error",
-                });
+                $('#passwordConfWarning').css("color","red");
+                $('#passwordConfWarning').text("Informations invalide veuillez s’inscrire de nouveau");
               }else{
                 $('#insVal').text('Vous etes inscrit');
                 $('#remove').after("<div id='valider'></div>");

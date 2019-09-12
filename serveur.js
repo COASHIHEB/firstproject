@@ -58,7 +58,14 @@ app.use(profile)
 const auth = require('./routes/auth.js')
 app.use(auth)
 
+
+app.use(require('./routes/adherent.js'))
+
 /** Fin Nos Routes **/
+<<<<<<< HEAD
 
 app.listen(8083);
 
+=======
+app.listen(8083); //Déclaration du port d'écoute de serveur
+>>>>>>> 633328f02eb2da1b94168e5d3dbdef401e455924

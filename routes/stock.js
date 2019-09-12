@@ -2,45 +2,55 @@ var express = require('express');
 var app = express.Router();
 
 
+/**** Redirect l'admin no connecter  vert la page login ****/
+const redirectLogin = (request, response, next) => {
+    if (!request.session.userType) {
+        response.redirect('/login');
+    } else {
+        if (request.session.userType === "Administrateur") {
+            next();
+        } else if (request.session.userType === "employe") {
+            response.redirect('/home');
+        } else {
+            response.redirect('/');
+        }
+    }
+}
+
 /* lien vers page stock */
-app.get('/stock', (request, response) => {
+app.get('/stock', redirectLogin, (request, response) => {
     response.render('pages/admin/stock/stock', {});
 })
 
 
 /* Ajouter supprimé modifier et selectionner stock/produit */
 
-app.get('/allStock', (request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.allStock((resp) => {
+app.get('/allStock', redirectLogin, (request, response) => {
+    require('../models/Admin/stock').allStock((resp) => {
         response.json(resp);
     })
 })
 
-app.get('/stockBientotExpire', (request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.stockBientotExpire((resp) => {
+app.get('/stockBientotExpire', redirectLogin, (request, response) => {
+    require('../models/Admin/stock').stockBientotExpire((resp) => {
         response.json(resp);
     })
 })
 
-app.get('/stockMinimum', (request, response) => {
-    let Stock = require('../models/Admin/stock')
-    Stock.stockMinimum((resp) => {
+app.get('/stockMinimum', redirectLogin,(request, response) => {
+    require('../models/Admin/stock').stockMinimum((resp) => {
         response.json(resp);
     })
 })
 
 app.post('/deleteStock', (request, response) => {
-    let Stock = require("../models/Admin/stock");
-    Stock.deleteStock(request.body, (resp) => {
+    require("../models/Admin/stock").deleteStock(request.body, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/updateStock', (request, response) => {
-    let Stock = require("../models/Admin/stock");
-    Stock.updateStock(request.body, (resp) => {
+    require("../models/Admin/stock").updateStock(request.body, (resp) => {
         response.json(resp);
     })
 })

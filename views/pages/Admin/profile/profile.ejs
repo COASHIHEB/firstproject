@@ -4,6 +4,7 @@
 <% include ../sideBar.ejs %>
 
 <script src="js/Administrateur/achat/achat.js"></script>
+<link rel="stylesheet" href="css/fileSkinCSS.css">
 
 <div class="main-panel">
     <div class="content-wrapper">
@@ -19,8 +20,15 @@
                                     <div class="text-center">
                                         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
                                             class="avatar img-circle img-thumbnail" alt="avatar">
+                                            <br/>
+                                            <br/>
                                         <h6>Upload a different photo...</h6>
-                                        <input type="file" class="text-center center-block file-upload">
+                                        <!--input type="file" class="text-center center-block file-upload"-->
+
+                                        <span class="btn btn-info btn-file">
+                                            Browse <input type="file">
+                                        </span>
+                                        
                                     </div>
                                     </hr><br>
 
@@ -118,7 +126,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="offset-4 col-8">
+                                                                        <div class="offset-9 col-8">
                                                                             <button name="submit" type="submit"
                                                                                 class="btn btn-primary">Update
                                                                                 My Profile</button>
@@ -168,7 +176,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <div class="offset-4 col-8">
+                                                                        <div class="offset-9 col-8">
                                                                             <button name="submit" type="submit"
                                                                                 class="btn btn-primary">Update
                                                                                 My Profile</button>

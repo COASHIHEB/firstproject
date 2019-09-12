@@ -58,7 +58,10 @@ app.use(profile)
 const auth = require('./routes/auth.js')
 app.use(auth)
 
+
+const categorie = require('./routes/categorie-sousCat.js')
+app.use(categorie)
+
 /** Fin Nos Routes **/
-console.log("Bonjour sihem")
 
 app.listen(8083); //Déclaration du port d'écoute de serveur

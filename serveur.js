@@ -59,7 +59,13 @@ const auth = require('./routes/auth.js')
 app.use(auth)
 
 
+<<<<<<< HEAD
 app.use(require('./routes/adherent.js'))
+=======
+const categorie = require('./routes/categorie-sousCat.js')
+app.use(categorie)
+>>>>>>> sihem_branch
 
 /** Fin Nos Routes **/
-app.listen(8083); //Déclaration du port d'écoute de serveur
+
+app.listen(8083);

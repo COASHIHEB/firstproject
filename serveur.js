@@ -39,13 +39,14 @@ app.use(require("./middlewares/flash"));
 
 /** Nos Routes **/
 
+
+
 const stock = require('./routes/stock.js')
 app.use(stock)
 
 
 const achat = require('./routes/achat.js')
 app.use(achat)
-
 
 const employe = require('./routes/employe.js')
 app.use(employe)
@@ -57,6 +58,7 @@ app.use(profile)
 
 const auth = require('./routes/auth.js')
 app.use(auth)
+
 
 
 app.use(require('./routes/adherent.js'))

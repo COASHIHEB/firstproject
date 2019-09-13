@@ -12941,6 +12941,7 @@ button.bg-dark:focus {
   .ml-lg-4,
   .mx-lg-4 {
     margin-left: 1.5rem !important; }
+    
   .m-lg-5 {
     margin: 3rem !important; }
   .mt-lg-5,
@@ -16607,3 +16608,9 @@ table th, .table td {
             to {top: 0; opacity: 0;}
         }
     
+
+/* Anas adding */
+        #pages_breadcrumb {
+          padding-left: 0px;
+          padding-right: 0px;
+      }

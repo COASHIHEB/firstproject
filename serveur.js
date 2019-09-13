@@ -39,13 +39,14 @@ app.use(require("./middlewares/flash"));
 
 /** Nos Routes **/
 
+
+
 const stock = require('./routes/stock.js')
 app.use(stock)
 
 
 const achat = require('./routes/achat.js')
 app.use(achat)
-
 
 const employe = require('./routes/employe.js')
 app.use(employe)
@@ -59,29 +60,4 @@ const auth = require('./routes/auth.js')
 app.use(auth)
 
 /** Fin Nos Routes **/
-console.log("Hello Leila")
-console.log("Hello Leila")
-
 app.listen(8083); //Déclaration du port d'écoute de serveur
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-console.log("Helloooooooooooooo Anas")

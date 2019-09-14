@@ -39,13 +39,14 @@ app.use(require("./middlewares/flash"));
 
 /** Nos Routes **/
 
+
+
 const stock = require('./routes/stock.js')
 app.use(stock)
 
 
 const achat = require('./routes/achat.js')
 app.use(achat)
-
 
 const employe = require('./routes/employe.js')
 app.use(employe)
@@ -60,6 +61,10 @@ app.use(auth)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 051625583d52845fc17184f05e0b959f7d4bf318
 app.use(require('./routes/adherent.js'))
 =======
 const categorie = require('./routes/categorie-sousCat.js')

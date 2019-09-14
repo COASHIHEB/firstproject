@@ -7,6 +7,16 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
+        <div class="content-wrapper" id="pages_breadcrumb">
+            <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Achat</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 d-flex align-items-stretch grid-margin">
 
@@ -20,8 +30,11 @@
                                     <div class="row">
                                         <label for="nom" class="col-sm-3 col-form-label">Nom</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="nom" class="form-control" id="nom"
+                                            <input type="text" name="nom" class="form-control " id="nom"
                                                 placeholder="Veuillez saisir le nom" required="true" />
+                                            <div id="nomWarning" class="invalid-feedback">
+                                            </div>
+
                                         </div>
                                     </div>
                                     <br />
@@ -30,6 +43,9 @@
                                         <div class="col-sm-3">
                                             <input type="number" name="quantiteAchat" class="form-control"
                                                 id="quantiteAchat" placeholder="Quantité" required />
+                                            <div id="quantiteAchatWarning" class="invalid-feedback">
+                                            </div>
+
                                         </div>
                                         <label for="prenom" class="col-sm-3 col-form-label">Quantité
                                             minimum</label>
@@ -49,10 +65,13 @@
                                     </div>
                                     <br />
                                     <div class="row">
-                                        <label for="pseudo" class="col-sm-3 col-form-label">Date Exp</label>
+                                        <label for="pseudo" class="col-sm-3 col-form-label">Date
+                                            Exp</label>
                                         <div class="col-sm-9">
                                             <input type="date" name="dateExp" class="form-control" id="dateExp"
                                                 placeholder="Veuillez saisir la date d'experimation" required />
+                                            <div id="dateExpWarning" class="invalid-feedback">
+                                            </div>
                                         </div>
                                     </div>
                                     <br />

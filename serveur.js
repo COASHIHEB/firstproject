@@ -58,13 +58,10 @@ app.use(profile)
 const auth = require('./routes/auth.js')
 app.use(auth)
 
-
-<<<<<<< HEAD
 app.use(require('./routes/adherent.js'))
-=======
+
 const categorie = require('./routes/categorie-sousCat.js')
 app.use(categorie)
->>>>>>> sihem_branch
 
 /** Fin Nos Routes **/
 

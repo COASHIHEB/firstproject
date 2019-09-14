@@ -46,7 +46,7 @@ const redirectHome = (request, response, next) => {
 
 
 /* lien vert la pages idex d'admenistrateur */
-app.get('/home', redirectLogin, (request, response) => {
+app.get('/home', (request, response) => {
     response.render('pages/Admin/index', {});
 });
 

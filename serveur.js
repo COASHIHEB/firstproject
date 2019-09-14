@@ -6,6 +6,27 @@ var app = express(); //une déclaration et inistialisation du mosule Express
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+/***  declaraion des sockets pour les messages ****/
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+/****  secket traitement *****/
+io.sockets.on('connection', function(socket) {
+    socket.on('username', function() {
+        socket.username = "session.userType";
+        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+    });
+
+    socket.on('disconnect', function(username) {
+        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+});
+
 
 
 /** Moteur de Tamplate **/
@@ -65,4 +86,7 @@ app.use(categorie)
 
 /** Fin Nos Routes **/
 
-app.listen(8083);
+//app.listen(8083);
+const server = http.listen(8083, function() {
+    console.log('listening on *:8080');
+});

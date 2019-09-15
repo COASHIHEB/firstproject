@@ -45,9 +45,7 @@ app.use(require("./middlewares/flash"));
 io.sockets.on('connection', function(socket) {
 
     socket.on('username', function(id) {
-        console.log('connected');
         socket.userid = id ;
-        console.log(socket.userid);
         io.emit('is_online', socket.userid);
     });
 
@@ -56,7 +54,7 @@ io.sockets.on('connection', function(socket) {
     })
 
     socket.on('chat_message', function(message) {
-        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+        io.emit('chat_message', message, socket.userid);
     });
 
 });

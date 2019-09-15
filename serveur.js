@@ -8,6 +8,7 @@ var session = require('express-session');
 
 
 
+
 /** Moteur de Tamplate **/
 
 app.set('view engine', 'ejs'); //déclarer une viex AngularJS

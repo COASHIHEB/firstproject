@@ -7,27 +7,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 /***  declaraion des sockets pour les messages ****/
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-
-/****  secket traitement *****/
-io.sockets.on('connection', function(socket) {
-    socket.on('username', function() {
-        socket.username = "session.userType";
-        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
-    });
-
-    socket.on('disconnect', function(username) {
-        io.emit('is_online', '🔴 <i>' + socket.username + ' left the chat..</i>');
-    })
-
-    socket.on('chat_message', function(message) {
-        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
-    });
-
-});
-
-
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 /** Moteur de Tamplate **/
 
@@ -54,39 +35,53 @@ app.use(session({
         secure: false
     }
 }));
+
+
 //Création d'un nouveau Midleware
 app.use(require("./middlewares/flash"));
 //Fin Partie session  !cookie: {secure: false} false car on utilise pas le protocole https
 
+/****  secket traitement *****/
+io.sockets.on('connection', function(socket) {
+
+    socket.on('username', function(id) {
+        console.log('connected');
+        socket.userid = id ;
+        io.emit('is_online', socket.userid);
+    });
+
+    socket.on('disconnect', function() {
+        io.emit('is_not_online', socket.userid);
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', '<strong>' + socket.username + '</strong>: ' + message);
+    });
+
+});
+
+
 /** Nos Routes **/
 
-const stock = require('./routes/stock.js')
-app.use(stock)
 
+app.use(require('./routes/stock.js'))
 
-const achat = require('./routes/achat.js')
-app.use(achat)
+app.use(require('./routes/achat.js'))
 
+app.use( require('./routes/employe.js'))
 
-const employe = require('./routes/employe.js')
-app.use(employe)
+app.use(require('./routes/profile.js'))
 
-
-const profile = require('./routes/profile.js')
-app.use(profile)
-
-
-const auth = require('./routes/auth.js')
-app.use(auth)
+app.use(require('./routes/auth.js'))
 
 app.use(require('./routes/adherent.js'))
 
-const categorie = require('./routes/categorie-sousCat.js')
-app.use(categorie)
+app.use(require('./routes/categorie-sousCat.js'))
+
+app.use(require('./routes/messenger.js'))
 
 /** Fin Nos Routes **/
 
-//app.listen(8083);
-const server = http.listen(8083, function() {
-    console.log('listening on *:8080');
-});
+
+
+const serve = http.listen(8083);

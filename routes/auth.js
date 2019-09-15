@@ -46,7 +46,7 @@ const redirectHome = (request, response, next) => {
 
 
 /* lien vert la pages idex d'admenistrateur */
-app.get('/home', (request, response) => {
+app.get('/home', redirectLogin, (request, response) => {
     response.render('pages/Admin/index', {});
 });
 
@@ -75,12 +75,8 @@ app.get('/register', redirectHome, (request, response) => {
 app.post('/login', (request, response) => {
     require("../models/login").login(request.body, (resp) => {
         if (resp != "error") {
-            const {
-                userId
-            } = request.session;
-            const {
-                userType
-            } = request.session;
+            const { userId} = request.session;
+            const {userType } = request.session;
             request.session.userId = resp.id;
             request.session.userType = resp.statut;
         }
@@ -155,12 +151,18 @@ app.post('/register', (request, response) => {
 
 /* logout pour l'admin*/
 app.get('/logout', (request, response) => {
-    request.session.destroy(err => {
-        if (err) {
+    require("../models/user").disconnectUsre(request.session.userId, (resp) => {
+        if(resp === "error"){
             return response.redirect('/home')
+        }else{
+            request.session.destroy(err => {
+                if (err) {
+                    return response.redirect('/home')
+                }
+            response.redirect('/login')
+           });
         }
-        response.redirect('/login')
-    })
+    });
 });
 /*fin logout pour l'admin*/
 

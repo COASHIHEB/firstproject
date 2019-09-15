@@ -17,15 +17,21 @@ class messenger{
     
         /******  Methode pour afficher la liste des messages pour un contact ******/
     static selectMessages(inputs,CallBack){
-        connexion.query("SELECT * FROM tchat WHERE (idEmeteur=? AND idRecepteur=?) OR (idEmeteur=? AND idRecepteur=?) ORDER BY idtchat ASC",[inputs.idEm, inputs.idRcp, inputs.idRcp, inputs.idEm], (err, msg)=>{       
+        connexion.query("UPDATE tchat SET statut='lu' WHERE (idRecepteur =?) ",[inputs.idRcp], (err, statut)=>{
             if(err){
                 CallBack('error');
             }else{
-                connexion.query("SELECT * FROM utilisateur WHERE idUtil=?",[inputs.idEm], (err, user)=>{
+                connexion.query("SELECT * FROM tchat WHERE (idEmeteur=? AND idRecepteur=?) OR (idEmeteur=? AND idRecepteur=?) ORDER BY idtchat ASC",[inputs.idEm, inputs.idRcp, inputs.idRcp, inputs.idEm], (err, msg)=>{       
                     if(err){
                         CallBack('error');
                     }else{
-                        CallBack({messages: msg , name: user[0].nom+" "+user[0].prenom});
+                        connexion.query("SELECT * FROM utilisateur WHERE idUtil=?",[inputs.idEm], (err, user)=>{
+                            if(err){
+                                CallBack('error');
+                            }else{
+                                CallBack({messages: msg , name: user[0].nom+" "+user[0].prenom});
+                            }
+                        });
                     }
                 });
             }

@@ -37,39 +37,24 @@ app.use(session({
 app.use(require("./middlewares/flash"));
 //Fin Partie session  !cookie: {secure: false} false car on utilise pas le protocole https
 
+
 /** Nos Routes **/
 
 
+app.use(require('./routes/stock.js'))
 
-const stock = require('./routes/stock.js')
-app.use(stock)
+app.use(require('./routes/achat.js'))
 
+app.use( require('./routes/employe.js'))
 
-const achat = require('./routes/achat.js')
-app.use(achat)
+app.use(require('./routes/profile.js'))
 
-const employe = require('./routes/employe.js')
-app.use(employe)
+app.use(require('./routes/auth.js'))
 
-
-const profile = require('./routes/profile.js')
-app.use(profile)
-
-
-const auth = require('./routes/auth.js')
-app.use(auth)
-
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 051625583d52845fc17184f05e0b959f7d4bf318
 app.use(require('./routes/adherent.js'))
-=======
-const categorie = require('./routes/categorie-sousCat.js')
-app.use(categorie)
->>>>>>> sihem_branch
+
+app.use(require('./routes/categorie-sousCat.js'))
+
 
 /** Fin Nos Routes **/
 

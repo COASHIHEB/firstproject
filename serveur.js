@@ -47,6 +47,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('username', function(id) {
         console.log('connected');
         socket.userid = id ;
+        console.log(socket.userid);
         io.emit('is_online', socket.userid);
     });
 

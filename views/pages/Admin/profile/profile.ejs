@@ -1,13 +1,69 @@
 <!--/row-->
 
 <% include ../header.ejs %>
+
+
 <% include ../sideBar.ejs %>
+<link rel="stylesheet" href="css/fileSkinCSS.css">
+<script src="js/Administrateur/profile/profile.js"></script>
+<style>
+    .image {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+    }
+
+    .overlay {
+        display: none;
+    }
+
+    .image:hover .overlay {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+        color: white;
+        padding-top: 70%;
+        font-size: 20px;
+    }
+
+    img {
+        vertical-align: top;
+    }
+
+
+    .file-upload {
+        display: none;
+    }
+
+    #submitUpdatePictureProfile {
+        display: none;
+    }
+    </style>
 
 <script src="js/Administrateur/achat/achat.js"></script>
 <link rel="stylesheet" href="css/fileSkinCSS.css">
 
 <div class="main-panel">
+
     <div class="content-wrapper">
+        <div class="content-wrapper" id="pages_breadcrumb">
+            <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 grid-margin">
                 <div class="card">
@@ -16,7 +72,6 @@
                         <div class="container bootstrap snippet">
                             <div class="row">
                                 <div class="col-sm-3" style="padding-top:5%">
-
                                     <div class="text-center">
                                         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
                                             class="avatar img-circle img-thumbnail" alt="avatar">
@@ -30,13 +85,15 @@
                                         </span>
                                         
                                     </div>
+
                                     </hr><br>
 
 
 
                                     <ul class="list-group">
                                         <li class="list-group-item text-muted">Activity <i
-                                                class="fa fa-dashboard fa-1x"></i></li>
+                                                class="fa fa-dashboard fa-1x"></i>
+                                        </li>
                                         <li class="list-group-item text-right"><span
                                                 class="pull-left"><strong>Shares</strong></span> 125</li>
                                         <li class="list-group-item text-right"><span
@@ -66,63 +123,63 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
+
                                                             <div class="col-md-12">
-                                                                <form>
-                                                                    <div class="form-group row">
-                                                                        <label for="username"
-                                                                            class="col-4 col-form-label">Pseudo*</label>
-                                                                        <div class="col-8">
-                                                                            <input id="username" name="username"
-                                                                                placeholder="Username"
-                                                                                class="form-control here"
-                                                                                required="required" type="text">
+                                                                <div class="form-group row">
+                                                                    <label for="nom"
+                                                                        class="col-4 col-form-label">Nom</label>
+                                                                    <div class="col-8">
+                                                                        <input id="nom" name="nom" placeholder="Nom"
+                                                                            class="form-control here" type="text">
+                                                                        <div id="nomWarning" class="invalid-feedback">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="name"
-                                                                            class="col-4 col-form-label">Nom</label>
-                                                                        <div class="col-8">
-                                                                            <input id="name" name="name"
-                                                                                placeholder="First Name"
-                                                                                class="form-control here" type="text">
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="prenom"
+                                                                        class="col-4 col-form-label">Prenom</label>
+                                                                    <div class="col-8">
+                                                                        <input id="prenom" name="prenom"
+                                                                            placeholder="Prenom"
+                                                                            class="form-control here" type="text">
+                                                                        <div id="prenomWarning"
+                                                                            class="invalid-feedback">
                                                                         </div>
+
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="lastname"
-                                                                            class="col-4 col-form-label">Prenom</label>
-                                                                        <div class="col-8">
-                                                                            <input id="lastname" name="lastname"
-                                                                                placeholder="Last Name"
-                                                                                class="form-control here" type="text">
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="email"
+                                                                        class="col-4 col-form-label">Email*</label>
+                                                                    <div class="col-8">
+                                                                        <input id="email" name="email"
+                                                                            placeholder="Email"
+                                                                            class="form-control here"
+                                                                            required="required" type="email" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="numTlp"
+                                                                        class="col-4 col-form-label">numero
+                                                                        téléphone</label>
+                                                                    <div class="col-8">
+                                                                        <input id="numTel" name="numTel"
+                                                                            placeholder="numéro téléphone"
+                                                                            class="form-control here" type="text">
+                                                                        <div id="numTelWarning"
+                                                                            class="invalid-feedback">
                                                                         </div>
+
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="email"
-                                                                            class="col-4 col-form-label">Email*</label>
-                                                                        <div class="col-8">
-                                                                            <input id="email" name="email"
-                                                                                placeholder="Email"
-                                                                                class="form-control here"
-                                                                                required="required" type="text">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="numTlp"
-                                                                            class="col-4 col-form-label">numero
-                                                                            téléphone</label>
-                                                                        <div class="col-8">
-                                                                            <input id="numTlp" name="numTlp"
-                                                                                placeholder="numéro téléphone"
-                                                                                class="form-control here" type="text">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="adresse"
-                                                                            class="col-4 col-form-label">Adresse</label>
-                                                                        <div class="col-8">
-                                                                            <textarea id="adresse" name="adresse"
-                                                                                cols="40" rows="4"
-                                                                                class="form-control"></textarea>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="adresse"
+                                                                        class="col-4 col-form-label">Adresse</label>
+                                                                    <div class="col-8">
+                                                                        <textarea id="adresse" name="adresse" cols="40"
+                                                                            rows="4" class="form-control"></textarea>
+                                                                        <div id="adresseWarning"
+                                                                            class="invalid-feedback">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
@@ -132,7 +189,7 @@
                                                                                 My Profile</button>
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -141,39 +198,46 @@
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <h4>Changer Mot de passe</h4>
+                                                                <p>Nous vous conseillons d’utiliser un mot de passe
+                                                                    sûr
+                                                                    que vous n’utilisez nulle part ailleurs</p>
                                                                 <hr>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <form>
-                                                                    <div class="form-group row">
-                                                                        <label for="username"
-                                                                            class="col-4 col-form-label">Pseudo*</label>
-                                                                        <div class="col-8">
-                                                                            <input id="username" name="username"
-                                                                                placeholder="Username"
-                                                                                class="form-control here"
-                                                                                required="required" type="text">
+                                                                <div class="form-group row">
+                                                                    <label for="username"
+                                                                        class="col-4 col-form-label">Actuel</label>
+                                                                    <div class="col-8">
+                                                                        <input id="oldPassword" name="oldPassword"
+                                                                            class="form-control " required="required"
+                                                                            type="password">
+                                                                        <div id="oldPasswordWarning"
+                                                                            class="invalid-feedback">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="name"
-                                                                            class="col-4 col-form-label">Nom</label>
-                                                                        <div class="col-8">
-                                                                            <input id="name" name="name"
-                                                                                placeholder="First Name"
-                                                                                class="form-control here" type="text">
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="name"
+                                                                        class="col-4 col-form-label">Nouveau</label>
+                                                                    <div class="col-8">
+                                                                        <input id="newPassword" name="newPassword"
+                                                                            class="form-control " type="password">
+                                                                        <div id="newPasswordWarning"
+                                                                            class="invalid-feedback">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="lastname"
-                                                                            class="col-4 col-form-label">Prenom</label>
-                                                                        <div class="col-8">
-                                                                            <input id="lastname" name="lastname"
-                                                                                placeholder="Last Name"
-                                                                                class="form-control here" type="text">
-                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="lastname"
+                                                                        class="col-4 col-form-label">Confirmer</label>
+                                                                    <div class="col-8">
+                                                                        <input id="confirmePassword"
+                                                                            name="confirmePasword" class="form-control"
+                                                                            type="password">
+                                                                        <div id="confirmePasswordWarning"
+                                                                            class="invalid-feedback"></div>
                                                                     </div>
                                                                     <div class="form-group row">
                                                                         <div class="offset-9 col-8">
@@ -182,7 +246,7 @@
                                                                                 My Profile</button>
                                                                         </div>
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -200,31 +264,45 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="modal" id="modalNewPicture">
+                <div class="modal-dialog modal-dialog-centered">
+                    <!-- Modal body -->
+
+                    <div class="modal-content  ">
+
+                        <div class="containter d-flex justify-content-center">
+                            <img id="newImage" src="images/profilePicture/profil.png" style="height: auto;"
+                                class="avatar img-circle img-thumbnail" alt="avatar">
+                        </div>
+
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
+                            <button id="saveNewPicture" type="button" class="btn btn-primary"
+                                onclick="updatePictureFunction()" data-dismiss="modal">Enregistrer</button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
 
-            <% include ../footer.ejs %>
+            <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés !
+                l'utilisateur est
+                bien ajouté.</div>
+            <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur
+                !champs vide ou pseudo
+                existe déja.</div>
+        </div>
 
 
-            <script>
-                $(document).ready(function () {
 
+    </div>
 
-                    var readURL = function (input) {
-                        if (input.files && input.files[0]) {
-                            var reader = new FileReader();
+    <% include ../footer.ejs %>
 
-                            reader.onload = function (e) {
-                                $('.avatar').attr('src', e.target.result);
-                            }
-
-                            reader.readAsDataURL(input.files[0]);
-                        }
-                    }
-
-
-                    $(".file-upload").on('change', function () {
-                        readURL(this);
-                    });
-                });
-            </script>
+    <script>    </script>

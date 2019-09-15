@@ -59,9 +59,14 @@ io.sockets.on('connection', function(socket) {
 
 });
 
-
 /** Nos Routes **/
 
+app.use(require('./routes/stock.js'))
+
+/** Nos Routes **/
+app.use(require('./routes/achat.js'))
+
+app.use( require('./routes/employe.js'))
 
 app.use(require('./routes/stock.js'))
 
@@ -78,6 +83,15 @@ app.use(require('./routes/adherent.js'))
 app.use(require('./routes/categorie-sousCat.js'))
 
 app.use(require('./routes/messenger.js'))
+
+app.use(require('./routes/profile.js'))
+
+app.use(require('./routes/auth.js'))
+
+app.use(require('./routes/adherent.js'))
+
+app.use(require('./routes/categorie-sousCat.js'))
+
 
 /** Fin Nos Routes **/
 

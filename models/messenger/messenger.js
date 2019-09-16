@@ -41,7 +41,7 @@ class messenger{
     
         /******  Methode pour ajouter un messages pour un contact ******/
     static addMessage(inputs,CallBack){
-        connexion.query("INSERT INTO tchat (texte, date, idEmeteur, idRecepteur) VALUES (?, ?, ?, ?)",[inputs.msg, new Date(), inputs.idEm, inputs.idRcp], (err, msg)=>{       
+        connexion.query("INSERT INTO tchat (message, date, idEmeteur, idRecepteur) VALUES (?, ?, ?, ?)",[inputs.msg, new Date(), inputs.idEm, inputs.idRcp], (err, msg)=>{       
             if(err){
                 CallBack('error');
             }else{

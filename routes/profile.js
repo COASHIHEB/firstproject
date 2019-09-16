@@ -60,17 +60,13 @@ app.get('/profile', (request, response) => {
 
 /*  */
 app.get('/getUtilisateur', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.getUtilisateur(request.session.userId, (resp) => {
+    require('../models/Admin/profile').getUtilisateur(request.session.userId, (resp) => {
         response.json(resp);
     })
 })
 
 app.post('/updateUtilisateur', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.updateUtilisateur({
+    require('../models/Admin/profile').updateUtilisateur({
         userId: request.session.userId,
         user: request.body
     }, (resp) => {
@@ -79,9 +75,7 @@ app.post('/updateUtilisateur', (request, response) => {
 })
 
 app.post('/updatePassword', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.updatePassword({
+    require('../models/Admin/profile').updatePassword({
         userId: request.session.userId,
         user: request.body
     }, (resp) => {

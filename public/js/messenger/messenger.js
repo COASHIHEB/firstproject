@@ -76,9 +76,9 @@ function messages(id){
         $('.message'+nbrBoiteMessage).text("");
         data.messages.forEach(element => {
           if(id == element.idEmeteur){
-            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.texte+"&nbsp;</p></li>");
+            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
           }else{
-            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.texte+"&nbsp;</p></li>");
+            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
           }
         });
       }

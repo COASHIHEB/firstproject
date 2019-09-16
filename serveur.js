@@ -10,6 +10,7 @@ var session = require('express-session');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
 /** Moteur de Tamplate **/
 
 app.set('view engine', 'ejs'); //déclarer une viex AngularJS

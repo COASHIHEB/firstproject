@@ -52,7 +52,7 @@ function newMessage(id,nbrFenetre){
     },
     function(data, status){
       if(data == 'done'){
-        $('#message'+id).append("<li style='color:midnightblue'>"+ $('#myMessage'+nbrFenetre).val() +"</li>");
+        $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+ $('#myMessage'+nbrFenetre).val() +"&nbsp;</p></li>");
         socket.emit('chat_message', $('#myMessage'+nbrFenetre).val());        
         $('#myMessage'+nbrFenetre).val("");
       }else{}
@@ -76,15 +76,20 @@ function messages(id){
         $('.message'+nbrBoiteMessage).text("");
         data.messages.forEach(element => {
           if(id == element.idEmeteur){
-            $('#message'+id).append("<li style='color:dimgray'>"+element.texte+"</li>");
+            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.texte+"&nbsp;</p></li>");
           }else{
-            $('#message'+id).append("<li style='color:midnightblue'>"+element.texte+"</li>");
+            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.texte+"&nbsp;</p></li>");
           }
         });
       }
     }
   });
 }
+/****#eceff0
+ * background-color: white;
+    border: 1px solid green; 
+    border-radius: 10px 25px 0px 12px;
+ * ***/
 
 /*****   debut Socket javascripte   *****/
 var socket = io.connect('http://localhost:8083');
@@ -100,9 +105,9 @@ function contacts(){
     }else{
       data.contacts.forEach(element => {
         if(element.connected == "oui"){
-          $('#contactsListe').append("<li><a class='list-group-item'  href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
+          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }else{
-          $('#contactsListe').append("<li><a class='list-group-item'  href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
+          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }
       });
 
@@ -115,7 +120,7 @@ function contacts(){
 
 // append the chat text message
 socket.on('chat_message', function(msg,id){
-  $('#message'+id).append("<li style='color:dimgray'>"+ msg +"</li>")
+  $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+msg+"&nbsp;</p></li>")
 });
 
 // statut connected someone is online

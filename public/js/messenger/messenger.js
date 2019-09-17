@@ -44,24 +44,6 @@ function fermer(val){
   $("#boitMessage"+val).hide();
 }
 
-/**********   Methode pour ajouter un nouveau messages   ********/
-function newMessage(id,nbrFenetre){
-  if($('#myMessage'+nbrFenetre).val() != ""){
-    //envoyer et ajouter le nouveau message sur la bdd
-    $.post("message",{
-      id: id,
-      msg: $('#myMessage'+nbrFenetre).val(),
-    },
-    function(data, status){
-      if(data.val == 'done'){
-        $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+ $('#myMessage'+nbrFenetre).val() +"&nbsp;</p></li>");
-        socket.emit('notification', $('#myMessage'+nbrFenetre).val() ,id, data.nom);        
-        $('#myMessage'+nbrFenetre).val("");
-      }else{}
-    });
-  }
-}
-
 
 /*********    Methode pour fait vu pour tous les messages non lu    ********/
 function viewAll(){
@@ -80,12 +62,13 @@ function viewAll(){
 /********     methode pour afficher une boite des message     ********/
 function messages(id){
   
-  if(fenetre[0] != id && fenetre[1] != id){
   //recuperie les message d'un contacte
   $.post("messages",{id},
   function(data, status){
     if(data == 'error'){
     }else{
+      
+      if(fenetre[0] != id && fenetre[1] != id){
         $('#nomContacte'+conteur()).text(data.contactName);
         fenetre[nbrBoiteMessage-1]=id;
         $('#button'+nbrBoiteMessage).attr('onclick', 'newMessage('+id+','+nbrBoiteMessage+')');
@@ -93,13 +76,15 @@ function messages(id){
         $('.message'+nbrBoiteMessage).text("");
         data.messages.forEach(element => {
           if(id == element.idEmeteur){
-            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
+            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
           }else{
-            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
+            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
           }
         });
         
-            // afficher le nombres des notifications sur le header
+      }
+      
+      // afficher le nombres des notifications sur le header
         $('#messageDropdown'+data.userId+' span').remove();
       if(data.notifications.length > 0){
         $('#messageDropdown').attr('id','messageDropdown'+data.userId);
@@ -151,11 +136,11 @@ function messages(id){
           }
         }
 
-        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
+        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a id='"+element.idUtil+"' onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
       });
     }
   });
-  }
+  
 }
 /****#eceff0
  * background-color: white;
@@ -230,7 +215,7 @@ function contacts(){
           }
         }
 
-        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
+        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a id='"+element.idUtil+"' onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
       });
 
 
@@ -241,6 +226,23 @@ function contacts(){
 }
 
 
+/**********   Methode pour ajouter un nouveau messages   ********/
+function newMessage(id,nbrFenetre){
+  if($('#myMessage'+nbrFenetre).val() != ""){
+    //envoyer et ajouter le nouveau message sur la bdd
+    $.post("message",{
+      id: id,
+      msg: $('#myMessage'+nbrFenetre).val(),
+    },
+    function(data, status){
+      if(data != 'error'){
+       $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+ $('#myMessage'+nbrFenetre).val() +"&nbsp;</p></li>");
+        socket.emit('notification', $('#myMessage'+nbrFenetre).val() , id , data);        
+        $('#myMessage'+nbrFenetre).val("");
+      }else{}
+    });
+  }
+}
 
 // append the chat text message
 socket.on('chat_message', function(msg,id){
@@ -258,12 +260,35 @@ socket.on('is_not_online', function(id) {
 });
 
 // statut notification
-socket.on('notification', function(msg,idEm,idRcp,name) {
+socket.on('notification', function(msg,idRcp,user) {
 
-  io.emit('chat_message', msg);
-    if($('#messageDropdown'+idRcp+' i').val() == ''){
+  //si l'utilisateur avoire aucun des notification
+  if($('#messageDropdown'+idRcp+' span').text() == ''){
 
+    $('#messageDropdown').attr('id','messageDropdown'+idRcp);
+    $('#messageDropdown'+idRcp+' i').after("<span class='count'>1</span>");
+    $('#msgNbr'+idRcp).empty();
+    $('#msgNbr'+idRcp).append("Tu as <b>1</b> messages non lu");
+
+    $('#notificationListe'+idRcp).append("<div class='dropdown-divider'></div><a id='"+user.idUtil+"' onclick='messages("+user.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+user.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+user.nom+" "+user.prenom+"<span class='float-right font-weight-light small-text'><b> 1mn </b></span></h6><p class='font-weight-light small-text'>"+(msg).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>1</span></p></div></a>");
+
+  }else{
+    //si l'utilisateur avoire deja des notification
+    if($('#'+user.idUtil+' span.badge').text() ==''){
+      //si l'utilisateur avoire aucun des notification pour cet emeteur
+      $('#messageDropdown'+idRcp+'span').after("<span class='count'>"+(parseInt($('#messageDropdown'+idRcp+' span').text())+1)+"</span>");
+      $('#msgNbr'+idRcp).empty();
+      $('#msgNbr'+idRcp).append("Tu as <b>"+(parseInt($('#messageDropdown'+idRcp+' span').text())+1)+"</b> messages non lu");
+
+      $('#notificationListe'+idRcp).append("<div class='dropdown-divider'></div><a id='"+user.idUtil+"' onclick='messages("+user.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+user.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+user.nom+" "+user.prenom+"<span class='float-right font-weight-light small-text'><b> 1mn </b></span></h6><p class='font-weight-light small-text'>"+(msg).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>1</span></p></div></a>");
+    
+    }else{
+      //si l'utilisateur avoire deja des notification pour le meme emeteur
+      var nbr = parseInt($('#'+user.idUtil+' span.badge').text());
+      $('#'+user.idUtil+' p').html((msg).substr(0, 20)+"<span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+(nbr+1)+"</span>");
     }
+
+  }
 
 });
 

@@ -17,7 +17,7 @@ class messenger{
     
         /******  Methode pour afficher la liste des messages pour un contact ******/
     static selectMessages(inputs,CallBack){
-        connexion.query("UPDATE tchat SET statut='lu' WHERE (idRecepteur =?) ",[inputs.idRcp], (err, statut)=>{
+        connexion.query("UPDATE tchat SET statut='lu' WHERE (idRecepteur =? AND idEmeteur =?) ",[inputs.idRcp, inputs.idEm], (err, statut)=>{
             if(err){
                 CallBack('error');
             }else{
@@ -41,11 +41,17 @@ class messenger{
     
         /******  Methode pour ajouter un messages pour un contact ******/
     static addMessage(inputs,CallBack){
-        connexion.query("INSERT INTO tchat (texte, date, idEmeteur, idRecepteur) VALUES (?, ?, ?, ?)",[inputs.msg, new Date(), inputs.idEm, inputs.idRcp], (err, msg)=>{       
+        connexion.query("INSERT INTO tchat (message, date, idEmeteur, idRecepteur) VALUES (?, ?, ?, ?)",[inputs.msg, new Date(), inputs.idEm, inputs.idRcp], (err, msg)=>{       
             if(err){
                 CallBack('error');
             }else{
-                CallBack('done');
+                require("../../models/user").selecteUsreConnected(inputs.idEm,(user) => {
+                    if(err){
+                        CallBack('error');
+                    }else{
+                        CallBack(user);
+                    }
+                });
             }
         });
     }

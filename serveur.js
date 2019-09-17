@@ -53,12 +53,9 @@ io.sockets.on('connection', function(socket) {
         io.emit('is_not_online', socket.userid);
     })
 
-    socket.on('notification', function(message,id,name) {
-        io.emit('notification', message, socket.userid, id,name);
-    });
-
-    socket.on('chat_message', function(message) {
-        io.emit('chat_message', message, socket.userid);
+    socket.on('notification', function(message,id, user) {
+        io.emit('notification', message, id, user);
+        io.emit('chat_message', message, user.idUtil);
     });
 
 });

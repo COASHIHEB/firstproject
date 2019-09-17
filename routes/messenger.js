@@ -26,7 +26,7 @@ app.post('/messages', (request, response) => {
 /*****   lien pour ajouter un nouveau message  *****/
 app.post('/message', (request, response) => {
     require("../models/messenger/messenger").addMessage({idEm : request.session.userId , idRcp : request.body.id, msg : request.body.msg},(resp) => {
-        response.json({val : resp, nom : request.session.userNom+" "+request.session.userPrenom});
+        response.json(resp);
     });
 });
 

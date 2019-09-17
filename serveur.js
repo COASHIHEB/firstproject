@@ -62,6 +62,9 @@ app.use(auth)
 const categorie = require('./routes/categorie-sousCat.js')
 app.use(categorie)
 
+const offre = require('./routes/offre.js')
+app.use(offre)
+
 /** Fin Nos Routes **/
 
 app.listen(8083); //Déclaration du port d'écoute de serveur

@@ -6,20 +6,26 @@ class login{
      /* Methode pour login */
     static login(inputs,CallBack){
         
-        connexion.query("SELECT * FROM utilisateur WHERE email =? AND mdp =?",[inputs.pseudo, sha1(inputs.password)], (err, result)=>{
+        require("../models/user").selecteUsre(inputs,(user) => {
             
-            if(err || typeof result[0] === "undefined") {
+            if(typeof user === "undefined") {
                 // mal de connection mot de passe ou pseudo peut etre faut 
               CallBack("error");
-            }else if(result[0].valide === "non"){
+            }else if(user.valide === "non"){
                 // le compte n'est pas validé
               CallBack("NonValide");
             }
             else { 
-                // bien connecter
-                CallBack({
-                    id: result[0].idUtil,
-                    statut: result[0].statut,
+                require("../models/user").connectUsre(user.idUtil,(connect) => {
+                    if(connect === "done"){
+                       // bien connecter
+                        CallBack({
+                          id: user.idUtil,
+                          statut: user.statut,
+                        });
+                    }else{
+                        CallBack('error');
+                    }
                 });
             }
         });

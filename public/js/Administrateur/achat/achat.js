@@ -41,7 +41,7 @@ function getTableAllAchats() {
       let divAllAchat;
       if (data.statut == "done") {
         data.allAchat.forEach(function (achat, index) {
-          divAllAchat = '<tr><td class="text-center">' + (index+1) + '</td><td contenteditable="true" class="text-center" id="nom' + achat.idAchat + '">' + achat.nom + '</td><td contenteditable="true" class="text-center" id="description' + achat.idAchat + '">' + achat.description + '</td><td contenteditable="true" class="text-center" id="quantiteAchat' + achat.idAchat + '">' + achat.quantiteAchat + '</td><td contenteditable="true" class="text-center" id="dateExp' + achat.idAchat + '">' + achat.dateExp + '</td><td contenteditable="true" class="text-center" id="dateAchat' + +achat.idAchat + '">' + achat.dateAchat + '</td><td class="text-center"><button class=" btn btn-danger btn-xs" onclick="alertSupp(' + achat.idAchat + ')"><span class="fa fa-trash"></span></button>&nbsp;&nbsp;<button class=" btn btn-success btn-xs" onclick="alertMod(' + achat.idAchat + ',' + achat.idProd + ')"><span class="fa fa-edit"></span></button></td></tr>';
+          divAllAchat = '<tr><td class="text-center">' + (index + 1) + '</td><td contenteditable="true" class="text-center" id="nom' + achat.idAchat + '">' + achat.nom + '</td><td contenteditable="true" class="text-center" id="description' + achat.idAchat + '">' + achat.description + '</td><td contenteditable="true" class="text-center" id="quantiteAchat' + achat.idAchat + '">' + achat.quantiteAchat + '</td><td contenteditable="true" class="text-center" id="dateExp' + achat.idAchat + '">' + achat.dateExp + '</td><td contenteditable="true" class="text-center" id="dateAchat' + +achat.idAchat + '">' + achat.dateAchat + '</td><td class="text-center"><button class=" btn btn-danger btn-xs" onclick="alertSupp(' + achat.idAchat + ')"><span class="fa fa-trash"></span></button>&nbsp;&nbsp;<button class=" btn btn-success btn-xs" onclick="alertMod(' + achat.idAchat + ',' + achat.idProd + ')"><span class="fa fa-edit"></span></button></td></tr>';
           var table = $('#tableAllAchats').DataTable();
           table.row.add($(divAllAchat)).draw();
         });
@@ -87,24 +87,57 @@ $(document).ready(function () {
 
 
   $("#submit").click(function () {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = '0' + dd
+    }
+    if (mm < 10) {
+      mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+
+    let error = 0;
     if ($("#nom").val() == "") {
+      $("#nom").addClass("is-invalid");
+      $("#nomWarning").text("champs vide");
       $("#nom").focus();
-      return false;
-    } else if ($("#quantiteAchat").val() == "") {
+      error = 1
+    } else {
+      $("#nom").removeClass("is-invalid");
+      $("#nomWarning").text("");
+    }
+    if ($("#quantiteAchat").val() == "") {
+      $("#quantiteAchat").addClass("is-invalid");
+      $("#quantiteAchatWarning").text("champs vide");
       $("#quantiteAchat").focus();
-      return false;
-    } else if ($("#minQuantite").val() == "") {
-      $("#minQuantite").focus();
-      return false;
-    } else if ($("#description").val() == "") {
-      $("#description").focus();
-      return false;
-    } else if ($("#dateExp").val() == "") {
-      $("#dateExp").focus();
-      return false;
+      error = 1
+    } else {
+      $("#quantiteAchat").removeClass("is-invalid");
+      $("#quantiteAchatWarning").text("");
+    }
+    if ($("#dateExp").val() == "") {
+      $("#dateExp").addClass("is-invalid");
+      $("#dateExpWarning").text("champs vide");
+      $("#dateExpWarning").focus();
+      error = 1
+    } else if ($("#dateExp").val() <= today) {
+      $("#dateExp").addClass("is-invalid");
+      $("#dateExpWarning").text("date inferieur ------------");
+      $("#dateExpWarning").focus();
+      error = 1
+
+    } else {
+      $("#dateExp").removeClass("is-invalid");
+      $("#dateExpWarning").text("");
     }
 
 
+    if (error) return false
 
 
 
@@ -117,6 +150,7 @@ $(document).ready(function () {
       },
       function (data, status) {
         if (data.statut == 'done') {
+
           var x = document.getElementById("snackbar");
           x.className = "show";
 

@@ -6,6 +6,9 @@ var app = express(); //une déclaration et inistialisation du mosule Express
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+/***  declaraion des sockets pour les messages ****/
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 
 /** Moteur de Tamplate **/
@@ -33,42 +36,70 @@ app.use(session({
         secure: false
     }
 }));
+
+
 //Création d'un nouveau Midleware
 app.use(require("./middlewares/flash"));
 //Fin Partie session  !cookie: {secure: false} false car on utilise pas le protocole https
 
+/****  secket traitement *****/
+io.sockets.on('connection', function(socket) {
+
+    socket.on('username', function(id) {
+        socket.userid = id ;
+        io.emit('is_online', socket.userid);
+    });
+
+    socket.on('disconnect', function() {
+        io.emit('is_not_online', socket.userid);
+    })
+
+    socket.on('notification', function(message,id, user) {
+        io.emit('notification', message, id, user);
+        io.emit('chat_message', message, user.idUtil);
+    });
+
+});
+
 /** Nos Routes **/
 
-const stock = require('./routes/stock.js')
-app.use(stock)
+app.use(require('./routes/stock.js'))
 
+/** Nos Routes **/
+app.use(require('./routes/achat.js'))
 
-const achat = require('./routes/achat.js')
-app.use(achat)
+app.use( require('./routes/employe.js'))
 
+app.use(require('./routes/stock.js'))
 
-const employe = require('./routes/employe.js')
-app.use(employe)
+app.use(require('./routes/achat.js'))
 
+app.use( require('./routes/employe.js'))
 
-const profile = require('./routes/profile.js')
-app.use(profile)
+app.use(require('./routes/profile.js'))
 
+app.use(require('./routes/auth.js'))
 
-const auth = require('./routes/auth.js')
-app.use(auth)
-
-
-<<<<<<< HEAD
 app.use(require('./routes/adherent.js'))
-=======
-const categorie = require('./routes/categorie-sousCat.js')
-app.use(categorie)
->>>>>>> sihem_branch
+
+app.use(require('./routes/categorie-sousCat.js'))
+
+app.use(require('./routes/messenger.js'))
+
+app.use(require('./routes/profile.js'))
+
+app.use(require('./routes/auth.js'))
+
+app.use(require('./routes/adherent.js'))
+
+app.use(require('./routes/categorie-sousCat.js'))
+
 
 const offre = require('./routes/offre.js')
 app.use(offre)
 
 /** Fin Nos Routes **/
 
-app.listen(8083);
+
+
+const serve = http.listen(8083);

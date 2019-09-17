@@ -22,7 +22,6 @@ $(document).ready(function() {
         password : $("#password").val(),
       },
       function(data, status){
-          console.log(status)
         if(data == 'error'){
             $('#emailValide').css("background-color","red");
             $('#passwordValide').css("background-color","red");

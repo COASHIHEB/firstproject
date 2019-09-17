@@ -5,6 +5,16 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
+        <div class="content-wrapper" id="pages_breadcrumb">
+            <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Employe</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 d-flex align-items-stretch grid-margin">
                 <div class="row flex-grow">
@@ -12,116 +22,124 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title  text-center">Ajouter un utilisateur</h4>
-                                    <div class="forms-sample form-group ">
-                                        <div class="row">
-                                            <label for="nom" class="col-sm-3 col-form-label">Nom</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="nom" class="form-control" id="nomUtilisateur" placeholder="Veuillez saisir le nom" required>
-                                            </div>
+                                <div class="forms-sample form-group ">
+                                    <div class="row">
+                                        <label for="nom" class="col-sm-3 col-form-label">Nom</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="nom" class="form-control" id="nomUtilisateur"
+                                                placeholder="Veuillez saisir le nom" required>
                                         </div>
-                                        <br/>
-                                        <div class="row">
-                                            <label for="prenom" class="col-sm-3 col-form-label">Prénom</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="nom" class="form-control" id="prenomUtilisateur" placeholder="Veuillez saisir le prenom" required>
-                                            </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="prenom" class="col-sm-3 col-form-label">Prénom</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="nom" class="form-control" id="prenomUtilisateur"
+                                                placeholder="Veuillez saisir le prenom" required>
                                         </div>
-                                        <br/>
-                                        <div class="row">
-                                            <label for="prenom" class="col-sm-3 col-form-label">Adresse</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" name="adresse" class="form-control" id="adresse" placeholder="Veuillez saisir l'adresse" required>
-                                            </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="prenom" class="col-sm-3 col-form-label">Adresse</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="adresse" class="form-control" id="adresse"
+                                                placeholder="Veuillez saisir l'adresse" required>
                                         </div>
-                                        <br/>
-                                        <div class="row">
-                                            <label for="pseudo" class="col-sm-3 col-form-label">Télèphone</label>
-                                            <div class="col-sm-9">
-                                                <input type="number" name="tel" class="form-control" id="tel" placeholder="Veuillez saisir le numéro de tel" required>
-                                            </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="pseudo" class="col-sm-3 col-form-label">Télèphone</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="tel" class="form-control" id="tel"
+                                                placeholder="Veuillez saisir le numéro de tel" required>
                                         </div>
-                                        <br/>
-                                        <div class="row">
-                                            <label for="email" class="col-sm-3 col-form-label">Email</label>
-                                            <div class="col-sm-9">
-                                                <input type="email" name="email" class="form-control" id="email" placeholder="Veuillez saisir l'email" required>
-                                            </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" name="email" class="form-control" id="email"
+                                                placeholder="Veuillez saisir l'email" required>
                                         </div>
-                                        <br/>
-                                        <div class="row">
-                                            <label for="mdp" class="col-sm-3 col-form-label">Mot de passe</label>
-                                            <div class="col-sm-9 input-group" id="show_hide_password">
-                                                <input type="text" name="password" class="form-control" id="mdp" placeholder="Veuillez saisir le mot de passe" required> 
-                                                <div class="input-group-addon col-sm-1">
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label for="mdp" class="col-sm-3 col-form-label">Mot de passe</label>
+                                        <div class="col-sm-9 input-group" id="show_hide_password">
+                                            <input type="text" name="password" class="form-control" id="mdp"
+                                                placeholder="Veuillez saisir le mot de passe" required>
+                                            <div class="input-group-addon col-sm-1">
                                                 <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div> 
-                                        </div> 
-                                        <br/>
-                                        <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! l'utilisateur est bien ajouté.</div>
-                                        <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !champs vide ou pseudo existe déja.</div> 
-                                        <div class="row">
-                                            <label for="type" class="col-sm-3 col-form-label">Type</label>
-                                            <div class="col-sm-9">
-                                            <select class="form-control form-control-sm" id="type" >
-                                                <option>Administrateur</option>
-                                                <option selected>Employe</option>
-                                            </select>
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <div class="row">
-                                            <div class="col-md-12 text-right">
-                                                <button  id="submit" class="btn btn-success mr-2">Confirmer</button>
-                                                <button class="btn btn-light"  onclick="resetFileds()" >Annuler</button>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-           
-            <div class="col-md-6 d-flex align-items-stretch grid-margin">
-                <div class="row flex-grow">
-                    <div class="col-12 stretch-card">
-                        <div class="card">
-                                <div class="col-12 grid-margin">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title text-center">Liste des administrateurs</h4>
-                                            <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover" id="tableau2">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center"> N°</th>
-                                                                <th class="text-center"> Nom</th>
-                                                                <th class="text-center"> email</th>
-                                                                <th class="text-center"> télèphone</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody >
-                                                            <% if(locals.respoAdmin){
-                                                                for(let i=0; i<respoAdmin.length; i++){ %>
-                                                                    <tr>
-                                                                        <td class="text-center"><%= i+1 %></td>
-                                                                        <td class="text-center" uppercase><%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].mail %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].tel %></td>
-                                                                    </tr>
-                                                             <% }  }%>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                    <br />
+                                    <div id="snackbar"> <span class="fa fa-check"
+                                            style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! l'utilisateur est
+                                        bien ajouté.</div>
+                                    <div id="snackbarError"> <span class="fa fa-times"
+                                            style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !champs vide ou pseudo
+                                        existe déja.</div>
+                                    <div class="row">
+                                        <label for="type" class="col-sm-3 col-form-label">Type</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control form-control-sm" id="type">
+                                                <option>Administrateur</option>
+                                                <option selected>Employe</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button id="submit" class="btn btn-success mr-2">Confirmer</button>
+                                            <button class="btn btn-light" onclick="resetFileds()">Annuler</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow" style="overflow-x: auto;">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">Liste des administrateurs</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover" id="tableau2">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center"> N°</th>
+                                                <th class="text-center"> Nom</th>
+                                                <th class="text-center"> email</th>
+                                                <th class="text-center"> télèphone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if(locals.respoAdmin){
+                                                                for(let i=0; i<respoAdmin.length; i++){ %>
+                                            <tr>
+                                                <td class="text-center"><%= i+1 %></td>
+                                                <td class="text-center" uppercase>
+                                                    <%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %>
+                                                </td>
+                                                <td class="text-center"><%= respoAdmin[i].mail %></td>
+                                                <td class="text-center"><%= respoAdmin[i].tel %></td>
+                                            </tr>
+                                            <% }  }%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="col-12 grid-margin">
@@ -129,56 +147,72 @@
                     <div class="card-body">
                         <h4 class="card-title text-center">Liste des employés</h4>
                         <div class="table-responsive">
-                                <table class="table table-bordered table-hover" id="tableau" >
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center"> N°</th>
-                                            <th class="text-center"> Nom</th>
-                                            <th class="text-center"> Prénom</th>
-                                            <th class="text-center"> email</th>
-                                            <th class="text-center"> télèphone</th>
-                                            <th class="text-center">Code</th>
-                                            <th class="text-center">Date</th>
-                                            <th class="text-center">Valde</th>
-                                            <th class="text-center">Permis</th>
-                                            <th class="text-center">Statut</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody >
-                                        <% if(locals.respo){
+                            <table class="table table-bordered table-hover" id="tableau">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"> N°</th>
+                                        <th class="text-center"> Nom</th>
+                                        <th class="text-center"> Prénom</th>
+                                        <th class="text-center"> email</th>
+                                        <th class="text-center"> télèphone</th>
+                                        <th class="text-center">Code</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Valde</th>
+                                        <th class="text-center">Permis</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(locals.respo){
                                             for(let i=0; i<respo.length; i++){ %>
-                                                <tr>
-                                                    <td class="text-center"><%= i+1 %></td>
-                                                    <td contenteditable="true" class="text-center" uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
-                                                    <td contenteditable="true" class="text-center" id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
-                                                    <td contenteditable="true" class="text-center" id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
-                                                    <td contenteditable="true" class="text-center" id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
-                                                    <td contenteditable="true" class="text-center" id="code<%= respo[i].id %>"><%= respo[i].code %></td>
-                                                    <td class="text-center"><%= respo[i].date %></td>
-                                                    <td class="text-center"><%= respo[i].valide %></td>
-                                                    <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>"><%= respo[i].permis %></td>
-                                                    <% if(respo[i].statut == "hors service"){ %>
-                                                         <td  style="color:red"><i class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
-                                                    <%  }%>
-                                                    <% if(respo[i].statut == "en ligne"){ %>
-                                                        <td style="color:green"><i class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
-                                                   <%  }%>
-                                                    <td class="text-center"> 
-                                                        <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].id %>')"><span class="fa fa-trash"></span></button>
-                                                        <button class=" btn btn-success btn-xs" onclick="alertMod('<%= respo[i].id %>')"><span class=" fa fa-edit"></span></button>
-                                                    </td>
-                                                </tr>
-                                            <% }  }%>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="alert alert-warning" role="alert" style="width: 50%">
-                                <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier ces informations: date d'inscirption, statut et valide.
-                            </div>
+                                    <tr>
+                                        <td class="text-center"><%= i+1 %></td>
+                                        <td contenteditable="true" class="text-center" uppercase
+                                            id="nom<%= respo[i].id %>">
+                                            <%= respo[i].nom %></td>
+                                        <td contenteditable="true" class="text-center" id="prenom<%= respo[i].id %>">
+                                            <%= respo[i].prenom %></td>
+                                        <td contenteditable="true" class="text-center" id="mail<%= respo[i].id %>">
+                                            <%= respo[i].mail %></td>
+                                        <td contenteditable="true" class="text-center" id="tel<%= respo[i].id %>">
+                                            <%= respo[i].tel %></td>
+                                        <td contenteditable="true" class="text-center" id="code<%= respo[i].id %>">
+                                            <%= respo[i].code %></td>
+                                        <td class="text-center"><%= respo[i].date %></td>
+                                        <td class="text-center"><%= respo[i].valide %></td>
+                                        <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>">
+                                            <%= respo[i].permis %></td>
+                                        <% if(respo[i].statut == "hors service"){ %>
+                                        <td style="color:red"><i
+                                                class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %>
+                                        </td>
+                                        <%  }%>
+                                        <% if(respo[i].statut == "en ligne"){ %>
+                                        <td style="color:green"><i
+                                                class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %>
+                                        </td>
+                                        <%  }%>
+                                        <td class="text-center">
+                                            <button class=" btn btn-danger btn-xs"
+                                                onclick="alertSupp('<%= respo[i].id %>')"><span
+                                                    class="fa fa-trash"></span></button>
+                                            <button class=" btn btn-success btn-xs"
+                                                onclick="alertMod('<%= respo[i].id %>')"><span
+                                                    class=" fa fa-edit"></span></button>
+                                        </td>
+                                    </tr>
+                                    <% }  }%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-warning" role="alert" style="width: 50%">
+                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier ces
+                            informations: date d'inscirption, statut et valide.
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-<% include ../footer.ejs %>
+            <% include ../footer.ejs %>

@@ -22,11 +22,17 @@
     <link href="sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="vendors/iconfonts/font-awesome/css/font-awesome.css">
+    <script src="js/Administrateur/profile/header.js"></script>
+
+
+
+    <!--  importer le fichier du socket   -->
+    <script src="../../../../socket.io/socket.io.js"></script>
 
 
 </head>
 
-<body>
+<body onload="contacts()">
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -59,57 +65,15 @@
                         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#"
                             data-toggle="dropdown" aria-expanded="false">
                             <i class="mdi mdi-file-document-box"></i>
-                            <span class="count">7</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
                             aria-labelledby="messageDropdown">
                             <div class="dropdown-item">
-                                <p class="mb-0 font-weight-normal float-left">You have 7 unread mails
+                                <p class="mb-0 font-weight-normal float-left" id="msgNbr">
                                 </p>
-                                <span class="badge badge-info badge-pill float-right">View all</span>
+                                <span class="badge badge-info badge-pill float-right" onclick="viewAll()">View all</span>
                             </div>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark">David Grey
-                                        <span class="float-right font-weight-light small-text">1 Minutes ago</span>
-                                    </h6>
-                                    <p class="font-weight-light small-text">
-                                        The meeting is cancelled
-                                    </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark">Tim Cook
-                                        <span class="float-right font-weight-light small-text">15 Minutes ago</span>
-                                    </h6>
-                                    <p class="font-weight-light small-text">
-                                        New product launch
-                                    </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow">
-                                    <h6 class="preview-subject ellipsis font-weight-medium text-dark"> Johnson
-                                        <span class="float-right font-weight-light small-text">18 Minutes ago</span>
-                                    </h6>
-                                    <p class="font-weight-light small-text">
-                                        Upcoming board meeting
-                                    </p>
-                                </div>
-                            </a>
+                            <div id="notificationListe"></div>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -172,7 +136,8 @@
                     <li class="nav-item dropdown d-none d-xl-inline-block">
                         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
                             aria-expanded="false">
-                            <span class="profile-text">Hello, Richard V.Welsh !</span>
+                            <span id="nomUser"
+                                class="profile-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -211,4 +176,7 @@
                 </button>
             </div>
         </nav>
+        
         <!-- partial -->
+
+        <% include messenger.ejs %>

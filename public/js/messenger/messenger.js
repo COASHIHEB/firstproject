@@ -11,6 +11,8 @@ $(document).ready(function(){
 
   var fenetre = ['0','0'];
 
+
+
 /***** variable globale pour conte le nobre des boites des message ouvert ******/
 var nbrBoiteMessage;
 function conteur(){
@@ -51,9 +53,9 @@ function newMessage(id,nbrFenetre){
       msg: $('#myMessage'+nbrFenetre).val(),
     },
     function(data, status){
-      if(data == 'done'){
+      if(data.val == 'done'){
         $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+ $('#myMessage'+nbrFenetre).val() +"&nbsp;</p></li>");
-        socket.emit('chat_message', $('#myMessage'+nbrFenetre).val());        
+        socket.emit('notification', $('#myMessage'+nbrFenetre).val() ,id, data.nom);        
         $('#myMessage'+nbrFenetre).val("");
       }else{}
     });
@@ -61,14 +63,29 @@ function newMessage(id,nbrFenetre){
 }
 
 
+/*********    Methode pour fait vu pour tous les messages non lu    ********/
+function viewAll(){
+  $.post("viewAll",
+  function(data, status){
+    if(data.msg == 'done'){
+      $('#messageDropdown'+data.userId+' span').remove();
+      $('#notificationListe'+data.userId).empty();
+      $('#msgNbr'+data.userId).empty();
+      $('#msgNbr'+data.userId).append("Tu as <b>0</b> messages non lu");
+    }
+  });
+}
+
+
 /********     methode pour afficher une boite des message     ********/
 function messages(id){
+  
+  if(fenetre[0] != id && fenetre[1] != id){
   //recuperie les message d'un contacte
   $.post("messages",{id},
   function(data, status){
     if(data == 'error'){
     }else{
-      if(fenetre[0] != id && fenetre[1] != id){
         $('#nomContacte'+conteur()).text(data.contactName);
         fenetre[nbrBoiteMessage-1]=id;
         $('#button'+nbrBoiteMessage).attr('onclick', 'newMessage('+id+','+nbrBoiteMessage+')');
@@ -81,9 +98,64 @@ function messages(id){
             $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
           }
         });
+        
+            // afficher le nombres des notifications sur le header
+        $('#messageDropdown'+data.userId+' span').remove();
+      if(data.notifications.length > 0){
+        $('#messageDropdown').attr('id','messageDropdown'+data.userId);
+        $('#messageDropdown'+data.userId+' i').after("<span class='count'>"+data.notifications.length+"</span>");
       }
+
+      
+      $('#msgNbr'+data.userId).empty();
+      $('#msgNbr').attr('id','msgNbr'+data.userId);
+      $('#msgNbr'+data.userId).append("Tu as <b>"+data.notifications.length+"</b> messages non lu");
+
+      $('#notificationListe'+data.userId).empty();
+      $('#notificationListe').attr('id','notificationListe'+data.userId);
+
+      // afficher les notifications (les message non lu)
+      data.notifications.forEach(element => {
+        var date = new Date().getTime();
+        var d = date - new Date(element.date).getTime();
+        d *=0.001;
+        if( d < 60){
+          d = Math.trunc(d) + " s"; // le message recoit ne dépasse pas 59 s
+        }else{
+          d /= 60;
+          if(d < 60){
+            d = Math.trunc(d) + " mn";// le message recoit ne dépasse pas 59 mn
+          }else{
+            d /= 60;
+            if(d < 24){
+              d = Math.trunc(d) + " h";// le message recoit ne dépasse pas 24 h
+            }else{
+              d /= 24;
+              if(d < 7){
+                d = Math.trunc(d) + " jours"; // le message recoit ne dépasse pas 6 jours
+              }else{
+                d /= 7;
+                if(d < 4){
+                  d = Math.trunc(d) + " semaine"; // le message recoit ne dépasse pas 3 semaine
+                }else{
+                  d /= 4;
+                  if(d < 12){
+                    d = Math.trunc(d) + " mois"; // le message recoit ne dépasse pas 12 mois
+                  }else{
+                    d /= 12;
+                    d = Math.trunc(d) + " années"; 
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
+      });
     }
   });
+  }
 }
 /****#eceff0
  * background-color: white;
@@ -110,12 +182,64 @@ function contacts(){
           $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }
       });
+            // afficher le nombres des notifications sur le header
+      if(data.notifications.length > 0){
+        $('#messageDropdown').attr('id','messageDropdown'+data.userId);
+        $('#messageDropdown'+data.userId+' i').after("<span class='count'>"+data.notifications.length+"</span>");
+      }
+
+      $('#msgNbr').attr('id','msgNbr'+data.userId);
+      $('#msgNbr'+data.userId).append("Tu as <b>"+data.notifications.length+"</b> messages non lu");
+
+      $('#notificationListe').attr('id','notificationListe'+data.userId);
+
+      // afficher les notifications (les message non lu)
+      data.notifications.forEach(element => {
+        var date = new Date().getTime();
+        var d = date - new Date(element.date).getTime();
+        d *=0.001;
+        if( d < 60){
+          d = Math.trunc(d) + " s"; // le message recoit ne dépasse pas 59 s
+        }else{
+          d /= 60;
+          if(d < 60){
+            d = Math.trunc(d) + " mn";// le message recoit ne dépasse pas 59 mn
+          }else{
+            d /= 60;
+            if(d < 24){
+              d = Math.trunc(d) + " h";// le message recoit ne dépasse pas 24 h
+            }else{
+              d /= 24;
+              if(d < 7){
+                d = Math.trunc(d) + " jours"; // le message recoit ne dépasse pas 6 jours
+              }else{
+                d /= 7;
+                if(d < 4){
+                  d = Math.trunc(d) + " semaine"; // le message recoit ne dépasse pas 3 semaine
+                }else{
+                  d /= 4;
+                  if(d < 12){
+                    d = Math.trunc(d) + " mois"; // le message recoit ne dépasse pas 12 mois
+                  }else{
+                    d /= 12;
+                    d = Math.trunc(d) + " années"; 
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        $('#notificationListe'+data.userId).append("<div class='dropdown-divider'></div><a onclick='messages("+element.idUtil+")' class='dropdown-item preview-item'><div class='preview-thumbnail'><img src='images/profilePicture/"+element.image+"' alt='image' class='profile-pic'></div><div class='preview-item-content flex-grow'><h6 class='preview-subject ellipsis font-weight-medium text-dark'>"+element.nom+" "+element.prenom+"<span class='float-right font-weight-light small-text'><b>"+d+" </b></span></h6><p class='font-weight-light small-text'>"+(element.message).substr(0, 20)+" <span style='background-color:red; border-color :red' class='badge badge-info badge-pill float-right'>"+element.nbr+"</span></p></div></a>");
+      });
+
 
       // lancer socket
       socket.emit('username', data.userId);
     }
   });
 }
+
 
 
 // append the chat text message
@@ -131,6 +255,16 @@ socket.on('is_online', function(id) {
 // statut disconnected someone is online
 socket.on('is_not_online', function(id) {
     $('#'+id).css("color","red");
+});
+
+// statut notification
+socket.on('notification', function(msg,idEm,idRcp,name) {
+
+  io.emit('chat_message', msg);
+    if($('#messageDropdown'+idRcp+' i').val() == ''){
+
+    }
+
 });
 
 

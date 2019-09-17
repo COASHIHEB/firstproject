@@ -77,8 +77,12 @@ app.post('/login', (request, response) => {
         if (resp != "error") {
             const { userId} = request.session;
             const {userType } = request.session;
+            const { userNom} = request.session;
+            const {userPrenom } = request.session;
             request.session.userId = resp.id;
             request.session.userType = resp.statut;
+            request.session.userNom = resp.nom;
+            request.session.userPrenom = resp.prenom;
         }
         response.json(resp);
     });

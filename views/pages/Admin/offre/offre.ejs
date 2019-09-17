@@ -1,0 +1,307 @@
+<% include ../header.ejs %>
+<% include ../sideBar.ejs %>
+
+<script src="js/Administrateur/offre/offre.js"></script>
+<link href="css/fSelect.css" rel="stylesheet">
+<script src="js/fSelect.js"></script>
+<link  rel = "stylesheet"  href = "css/fileSkinCSS.css" >
+
+ 
+ 
+
+<script>
+  (function($) {
+    $(function() {
+        $('.test').fSelect();
+    });
+  })(jQuery);
+</script>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title  text-center">Ajouter une offre</h4>
+                                    <div class="forms-sample form-group ">
+                                        <div class="row">
+                                            <label for="nom" class="col-sm-2 col-form-label">Catégorie</label>
+                                                <div class="col-sm-3">
+                                                    <select class="test form-control" id="sel" onchange="selCat(), verifier()">
+                                                        <%for(let i=0; i<categorie.length; i++){ %>
+                                                            <option  value='<%= categorie[i].nom %>' data-id="<%= categorie[i].id %>" name="cat" > <%= categorie[i].nom %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            <!-- </div>
+                                            <br/>
+                                            <div class="row"> -->
+                                                    <label for="nom" class="col-sm-2 col-form-label">Sous catégorie</label>
+                                                    <div class="col-sm-3"  id="sousCat">
+                                                        <select class="form-control" onchange="verifier()">
+                                                            <%for(let i=0; i<sousCat.length; i++){ %>
+                                                                <option style="line-height:1" value='<%= sousCat[i].nom %>' data-id="<%= sousCat[i].id %>" name="sousCateg" > <%= sousCat[i].nom %></option>
+                                                            <% } %> 
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                        <div class="row">
+                                            <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" name="nom" class="form-control" id="nom" placeholder="Veuillez saisir le nom" onchange="verifier()" required>
+                                            </div>
+                                        <!-- </div> -->
+                                        <!-- <br/>
+                                        <div class="row"> -->
+                                        <label for="nom" class="col-sm-2 col-form-label">Produit</label>
+                                        <div class="col-sm-3">
+                                            <select class="test" multiple="multiple" onchange="verifier()">
+                                                <% for(let i=0; i<produit.length; i++){ %>
+                                                    <option value='<%= produit[i].nom %>' data-id="<%= produit[i].id %>" name="produit" id="produit"+i><%= produit[i].nom %></option>
+                                                    <% } %>
+                                            </select>
+                                        </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                                            <div class="col-sm-8">
+                                                <textarea type="text" name="description" class="form-control" id="description" placeholder="Veuillez saisir la description" onchange="verifier()" ></textarea>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                       
+                                        <div class="row">
+                                            <label for="dure" class="col-sm-2 col-form-label">Durée</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" name="dure" class="form-control" id="dure" placeholder="Veuillez saisir la durée" onchange="verifier()" required>
+                                            </div>
+                                        <!-- </div> -->
+                                        <!-- <br/>
+                                        <div class="row"> -->
+                                            <label for="nom" class="col-sm-2 col-form-label">Prix</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" name="prix" class="form-control" id="prix" placeholder="Veuillez saisir le prix" onchange="verifier()" required>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <label for="nom" class="col-sm-2 col-form-label">Photo</label>
+                                            <div class="col-sm-8">
+                                                <input type="file" accept="image/*" id="pictureFile" name="pictureFile" onchange="verifier()"  multiple>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! l'offre est bien ajouté.</div>
+                                        <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !champs vide.</div> 
+                                        <div style="height:100pt;overflow-x:auto;overflow-y: hidden;">
+                                            <div class="">
+                                                <div class="row" id="sliderImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button  id="submit" class="btn btn-success mr-2">Confirmer</button>
+                                                <button class="btn btn-light"  onclick="resetFileds()" >Annuler</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                                <div class="col-12 grid-margin">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title text-center">Liste des 10 derniers offres ajoutée</h4>
+                                            <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover" style="table-layout:fixed; width: 100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center"> N°</th>
+                                                                <th class="text-center"> Nom</th>
+                                                                <th class="text-center"> Description</th>
+                                                                <th class="text-center"> Catégorie</th> 
+                                                                <th > Sous catégorie</th>
+                                                                <th class="text-center"> Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                            <% if(locals.offreRec){
+                                                                for(let i=0; i<offreRec.length; i++){ %>
+                                                                    <tr>
+                                                                        <td class="text-center"><%= i+1 %></</td>
+                                                                        <td class="text-center" ><%= offreRec[i].nomOffre %></td>
+                                                                        <td class="text-center" style="word-wrap: break-word !important;white-space: normal"><%= offreRec[i].description %></td>
+                                                                        <td class="text-center"><%= offreRec[i].nomSC %></td>
+                                                                        <td class="text-center"><%= offreRec[i].nomCat %></td>
+                                                                        <td class="text-center"><%= offreRec[i].date %></td>
+                                                                    </tr>
+                                                            <% }  }%>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                        <div class="row flex-grow">
+                            <div class="col-12 stretch-card">
+                                <div class="card">
+                                    <div class="col-12 grid-margin">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title text-center">Liste des offres</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover" id="tableau2" style="table-layout:fixed; width: 100%">
+                                                        <thead>
+                                                            <tr>
+                                                                    <th class="text-center"> N°</th>
+                                                                    <th class="text-center"> Nom</th>
+                                                                    <th class="text-center"> Description</th>
+                                                                    <th class="text-center"> Produit</th>
+                                                                    <th class="text-center"> Prix</th>
+                                                                    <th class="text-center"> Durée</th>
+                                                                    <th class="text-center"> Catégorie</th>
+                                                                    <th class="text-center"> Sous catégorie</th>
+                                                                    <th class="text-center"> Date</th>
+                                                                    <th class="text-center"> Actions</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                            <% if(locals.offre){
+                                                                for(let i=0; i<offre.length - 1; i++){ %>
+                                                                <tr>
+                                                                    <td class="text-center"><%= i+1 %></td>
+                                                                    <td class="text-center" contenteditable="true" id="nomModif<%= offre[i].idOffre %>"><%= offre[i].nomOffre %></td>
+                                                                    <td class="text-center" style="word-wrap: break-word !important;
+                                                                    white-space: normal" contenteditable="true" id="description<%= offre[i].idOffre %>"><%= offre[i].description %></td>
+                                                                    
+                                                                    <td class="text-center" >
+                                                                        <%for(let j=0; j<offre[i].produit.length; j++){ %>
+                                                                            <div class="chip pink lighten-4" id="prod<%= offre[i].idOffre %><%= offre[i].produit[j].idProd %>">
+                                                                                <div id="produit<%= offre[i].idOffre %>">
+                                                                                    <%= offre[i].produit[j].nomProd %>
+                                                                                </div>
+                                                                                <button type="button" style="
+                                                                                margin-top: -13%;" class="close"  aria-label="Close" onclick="div('<%= offre[i].idOffre %>','<%= offre[i].produit[j].idProd %>')">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div> <br/>
+                                                                        <% }  %>
+                                                                        <div class="col-sm-12">
+                                                                        <select class="test" multiple="multiple"  id="produitSelect<%= offre[i].idOffre %>" >
+                                                                            <% for(let z=0; z<produit.length; z++){ %>
+                                                                                <option  value='<%= produit[z].nom %>' data-id="<%= produit[z].id %>" name="produit<%= offre[i].idOffre %>" id="produit<%=z%>"><%= produit[z].nom %></option>
+                                                                                <% } %>
+                                                                        </select>
+                                                                    </div>
+                                                                    </td>
+
+                                                                    <td class="text-center" contenteditable="true" id="prix<%= offre[i].idOffre %>"><%= offre[i].prix %></td>
+                                                                    <td class="text-center" contenteditable="true" id="dure<%= offre[i].idOffre %>"><%= offre[i].dure %></td>
+                                                                    <td class="text-center">
+                                                                        <select class=" form-control" id="categorieModif" onchange="selCatModif('<%= offre[i].idOffre %>'), recupereCat('<%= offre[i].idOffre %>')" >
+                                                                            <option name="cate<%= offre[i].idOffre %>"  value='<%= offre[i].nomCat %>'  name="cat" selected> <%= offre[i].nomCat %></option>
+                                                                            <%for(let k=0; k<categorie.length; k++){ %>
+                                                                                <option  name="cate<%= offre[i].idOffre %>" value='<%= categorie[k].nom %>' data-id="<%= categorie[k].id %>" name="cat" > <%= categorie[k].nom %></option>
+                                                                            <% } %>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="text-center" id="sousCatModif" >
+                                                                        <select class="form-control" id="sousCat<%= offre[i].idOffre %>" onchange="recupereSousCat('<%= offre[i].idOffre %>')">
+                                                                            <option name="sousCat<%= offre[i].idOffre %>"  style="line-height:1" value='<%= offre[i].nomSC %>' name="sousCateg" selected><%= offre[i].nomSC %></option>
+                                                                            <%for(let i=0; i<sousCat.length; i++){ %>
+                                                                                <option name="sousCat<%= offre[i].idOffre %>" style="line-height:1" value='<%= sousCat[i].nom %>' data-id="<%= sousCat[i].id %>" name="sousCateg" > <%= sousCat[i].nom %></option>
+                                                                            <% } %> 
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="text-center"><%= offre[i].date %></td>
+                                                                    <td class="text-center">
+                                                                        <button class=" btn btn-info btn-xs" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPhoto" onclick="ApercuPhoto('<%= offre[i].idOffre %>')"><span class=" fa fa-eye "></span></button>
+                                                                        <button class=" btn btn-success btn-xs" onclick="alertMod('<%= offre[i].idOffre %>')"><span class=" fa fa-edit"></span></button>
+                                                                        <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= offre[i].idOffre %>')"><span class="fa fa-trash"></span></button>
+                                                                    </td>
+                                                                </tr>
+                                                                <% }  }%>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="modalPhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center">Photos Offres</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="modal-body">
+                                        <div class="alert alert-warning" role="alert" style="width: 100%">
+                                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp;&nbsp;&nbsp; Pour supprimer la photo, cliquez dessus.
+                                            </div>
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner" id="photo">
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-sm-8" id="ajouterphoto">
+                                                
+                                            </div>
+                                        </div>
+                                        <div style="height:100pt;overflow-x:auto;overflow-y: hidden;">
+                                            <div class="">
+                                                <div class="row" id="sliderImageAjout">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+<% include ../footer.ejs %>
+                                                                

@@ -66,6 +66,9 @@ const categorie = require('./routes/categorie-sousCat.js')
 app.use(categorie)
 >>>>>>> sihem_branch
 
+const offre = require('./routes/offre.js')
+app.use(offre)
+
 /** Fin Nos Routes **/
 
 app.listen(8083);

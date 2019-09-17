@@ -30,7 +30,6 @@ app.post('/updatePictureProfile', function (req, res) {
         var today = dd + '-' + mm + '-' + yyyy;
         nameImage = nameImage[0] + "_" + today + "." + nameImage[1]
 
-
         image.mv("public/images/profilePicture/" + nameImage, function (err) {
             if (err)
                 res.json("error");

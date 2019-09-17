@@ -10,7 +10,7 @@
     .image {
         position: relative;
         display: inline-block;
-        margin: 10px;
+        margin: 0px;
     }
 
     .overlay {
@@ -30,7 +30,7 @@
         box-sizing: border-box;
         text-align: center;
         color: white;
-        padding-top: 70%;
+        padding-top: 60%;
         font-size: 20px;
     }
 
@@ -71,19 +71,19 @@
                         <hr>
                         <div class="container bootstrap snippet">
                             <div class="row">
-                                <div class="col-sm-3" style="padding-top:5%">
+                                <div class="col-md-3" style="padding-top:5%">
                                     <div class="text-center">
-                                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                                            class="avatar img-circle img-thumbnail" alt="avatar">
-                                            <br/>
-                                            <br/>
-                                        <h6>Upload a different photo...</h6>
-                                        <!--input type="file" class="text-center center-block file-upload"-->
-
-                                        <span class="btn btn-info btn-file">
-                                            Browse <input type="file">
-                                        </span>
-                                        
+                                        <div class="image">
+                                            <img style="
+                                            object-fit: cover;
+                                            width: 100%;
+                                            height: 220px; " id="profilePicture"
+                                                class="avatar img-circle img-thumbnail" alt="avatar">
+                                            <div class="overlay" id="imageButton"><i class="fas fa-camera"></i>Mettre à
+                                                jour</div>
+                                            <input id="pictureFile" name="pictureFile" class="file-upload" type="file"
+                                                accept="image/*" />
+                                        </div>
                                     </div>
 
                                     </hr><br>
@@ -107,7 +107,7 @@
 
                                 </div>
                                 <!--/col-3-->
-                                <div class="col-sm-9">
+                                <div class="col-md-9">
 
 
 
@@ -115,7 +115,8 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body"
+                                                        style="padding-left: 0px;padding-right: 0px;">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <h4>Your Profile</h4>
@@ -127,8 +128,8 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group row">
                                                                     <label for="nom"
-                                                                        class="col-4 col-form-label">Nom</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4 col-form-label">Nom</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="nom" name="nom" placeholder="Nom"
                                                                             class="form-control here" type="text">
                                                                         <div id="nomWarning" class="invalid-feedback">
@@ -137,8 +138,8 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="prenom"
-                                                                        class="col-4 col-form-label">Prenom</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Prenom</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="prenom" name="prenom"
                                                                             placeholder="Prenom"
                                                                             class="form-control here" type="text">
@@ -150,8 +151,8 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="email"
-                                                                        class="col-4 col-form-label">Email*</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Email*</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="email" name="email"
                                                                             placeholder="Email"
                                                                             class="form-control here"
@@ -160,9 +161,9 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="numTlp"
-                                                                        class="col-4 col-form-label">numero
+                                                                        class="col-md-4  col-form-label">numero
                                                                         téléphone</label>
-                                                                    <div class="col-8">
+                                                                    <div class="col-md-8">
                                                                         <input id="numTel" name="numTel"
                                                                             placeholder="numéro téléphone"
                                                                             class="form-control here" type="text">
@@ -174,27 +175,28 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="adresse"
-                                                                        class="col-4 col-form-label">Adresse</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Adresse</label>
+                                                                    <div class="col-md-8">
                                                                         <textarea id="adresse" name="adresse" cols="40"
                                                                             rows="4" class="form-control"></textarea>
                                                                         <div id="adresseWarning"
                                                                             class="invalid-feedback">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="offset-9 col-8">
-                                                                            <button name="submit" type="submit"
-                                                                                class="btn btn-primary">Update
-                                                                                My Profile</button>
-                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group row d-flex justify-content-end">
+                                                                    <div class="">
+                                                                        <button name="submitProfileUtilisateur"
+                                                                            type="button" id="submitProfileUtilisateur"
+                                                                            class="btn btn-primary">Enregistrer</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="card-body">
+                                                    <div class="card-body"
+                                                        style="padding-left: 0px;padding-right: 0px;">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <h4>Changer Mot de passe</h4>
@@ -208,8 +210,8 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group row">
                                                                     <label for="username"
-                                                                        class="col-4 col-form-label">Actuel</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Actuel</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="oldPassword" name="oldPassword"
                                                                             class="form-control " required="required"
                                                                             type="password">
@@ -220,8 +222,8 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="name"
-                                                                        class="col-4 col-form-label">Nouveau</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Nouveau</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="newPassword" name="newPassword"
                                                                             class="form-control " type="password">
                                                                         <div id="newPasswordWarning"
@@ -231,78 +233,77 @@
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <label for="lastname"
-                                                                        class="col-4 col-form-label">Confirmer</label>
-                                                                    <div class="col-8">
+                                                                        class="col-md-4  col-form-label">Confirmer</label>
+                                                                    <div class="col-md-8">
                                                                         <input id="confirmePassword"
                                                                             name="confirmePasword" class="form-control"
                                                                             type="password">
                                                                         <div id="confirmePasswordWarning"
                                                                             class="invalid-feedback"></div>
                                                                     </div>
-                                                                    <div class="form-group row">
-                                                                        <div class="offset-9 col-8">
-                                                                            <button name="submit" type="submit"
-                                                                                class="btn btn-primary">Update
-                                                                                My Profile</button>
-                                                                        </div>
-                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row d-flex justify-content-end"">
+                                                                    <div >
+                                                                        <button name=" submitPasswordUtilisateur"
+                                                                    type="button" id="submitPasswordUtilisateur"
+                                                                    class="btn btn-primary">Enregistrer les
+                                                                    modifications</button>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--/tab-pane-->
                                 </div>
-                                <!--/tab-content-->
-
+                                <!--/tab-pane-->
                             </div>
-                            <!--/col-9-->
+                            <!--/tab-content-->
+
                         </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="modal" id="modalNewPicture">
-                <div class="modal-dialog modal-dialog-centered">
-                    <!-- Modal body -->
-
-                    <div class="modal-content  ">
-
-                        <div class="containter d-flex justify-content-center">
-                            <img id="newImage" src="images/profilePicture/profil.png" style="height: auto;"
-                                class="avatar img-circle img-thumbnail" alt="avatar">
-                        </div>
-
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
-                            <button id="saveNewPicture" type="button" class="btn btn-primary"
-                                onclick="updatePictureFunction()" data-dismiss="modal">Enregistrer</button>
-                        </div>
-
+                        <!--/col-9-->
                     </div>
                 </div>
             </div>
 
+        </div>
 
-            <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés !
-                l'utilisateur est
-                bien ajouté.</div>
-            <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur
-                !champs vide ou pseudo
-                existe déja.</div>
+        <div class="modal" id="modalNewPicture">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Modal body -->
+
+                <div class="modal-content  ">
+
+                    <div class="containter d-flex justify-content-center">
+                        <img id="newImage" src="images/profilePicture/profil.png" style="height: auto;"
+                            class="avatar img-circle img-thumbnail" alt="avatar">
+                    </div>
+
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
+                        <button id="saveNewPicture" type="button" class="btn btn-primary"
+                            onclick="updatePictureFunction()" data-dismiss="modal">Enregistrer</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
 
-
+        <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés !
+            l'utilisateur est
+            bien ajouté.</div>
+        <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur
+            !champs vide ou pseudo
+            existe déja.</div>
     </div>
 
-    <% include ../footer.ejs %>
 
-    <script>    </script>
+
+</div>
+
+<% include ../footer.ejs %>

@@ -1,7 +1,9 @@
 /************************fin pagination, serach **********************/
 
 $(document).ready(function () {
-  getUtilisateur();
+  //getUtilisateur();
+
+
 
 });
 
@@ -10,21 +12,20 @@ $(document).ready(function () {
 
 
 
-
 /************************fonction de recuperation de tous les donnees de profile**********************/
-function getUtilisateur() {
-  $.get("getUtilisateur", {},
-    function (data, status) {
-      if (status == "success") {
-        $("#nom").val(data.nom);
-        $("#prenom").val(data.prenom);
-        $("#email").val(data.email);
-        $("#numTel").val(data.numTel);
-        $("#adresse").val(data.adresse);
-        $("#profilePicture").attr("src", "images/profilePicture/" + data.image);
-      }
-    });
-}
+// function getUtilisateur() {
+//   $.get("getUtilisateur", {},
+//     function (data, status) {
+//       if (status == "success") {
+//         $("#nom").val(data.nom);
+//         $("#prenom").val(data.prenom);
+//         $("#email").val(data.email);
+//         $("#numTel").val(data.numTel);
+//         $("#adresse").val(data.adresse);
+//         $("#profilePicture").attr("src", "images/profilePicture/" + data.image);
+//       }
+//     });
+// }
 /************************fin fonction de recuperation de tous les donnees de profile**********************/
 
 
@@ -125,11 +126,11 @@ $(document).ready(function () {
     if (error) return false
 
     $.post("updateUtilisateur", {
-        nom: $("#nom").val(),
-        prenom: $("#prenom").val(),
-        numTel: $("#numTel").val(),
-        adresse: $("#adresse").val(),
-      },
+      nom: $("#nom").val(),
+      prenom: $("#prenom").val(),
+      numTel: $("#numTel").val(),
+      adresse: $("#adresse").val(),
+    },
       function (data, status) {
         if (data == 'done') {
           var x = document.getElementById("snackbar");
@@ -207,10 +208,10 @@ $(document).ready(function () {
 
 
     $.post("updatePassword", {
-        oldPassword: $("#oldPassword").val(),
-        newPassword: $("#newPassword").val(),
-        confirmePassword: $("#confirmePassword").val(),
-      },
+      oldPassword: $("#oldPassword").val(),
+      newPassword: $("#newPassword").val(),
+      confirmePassword: $("#confirmePassword").val(),
+    },
       function (data, status) {
         if (data == 'done') {
           $("#oldPassword").removeClass("is-invalid");

@@ -162,9 +162,9 @@ function contacts(){
     }else{
       data.contacts.forEach(element => {
         if(element.connected == "oui"){
-          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
+          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }else{
-          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'>"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
+          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }
       });
             // afficher le nombres des notifications sur le header

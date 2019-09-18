@@ -1,5 +1,6 @@
 /***** Search for contacte  *****/
 $(document).ready(function(){
+  
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $(".dropdown-menu li").filter(function() {
@@ -153,6 +154,7 @@ var socket = io.connect('http://localhost:8083');
 
 
 function contacts(){
+  
   /***** inissialisé le variable globale pour conte le nobre des boites des message ouvert à 0 ******/
   nbrBoiteMessage = 0;
   // afficher les contactes

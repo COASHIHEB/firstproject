@@ -36,7 +36,7 @@ app.post('/updatePictureProfile', function (req, res) {
                 res.json("error");
             else {
                 let Profile = require('../models/Admin/profile')
-                req.session.userId = 11;
+                req.session.userId = 11;//<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------------------------
                 Profile.updateProfilePicture({
                     userId: req.session.userId,
                     nameImage: nameImage
@@ -60,6 +60,7 @@ app.get('/profile', (request, response) => {
 
 /*  */
 app.get('/getUtilisateur', (request, response) => {
+    console.log(request.session)
     request.session.userId = 11;
     let Profile = require('../models/Admin/profile')
     Profile.getUtilisateur(request.session.userId, (resp) => {
@@ -68,7 +69,7 @@ app.get('/getUtilisateur', (request, response) => {
 })
 
 app.post('/updateUtilisateur', (request, response) => {
-    request.session.userId = 11;
+    request.session.userId = 11;//<----------------------------------------------------
     let Profile = require('../models/Admin/profile')
     Profile.updateUtilisateur({
         userId: request.session.userId,

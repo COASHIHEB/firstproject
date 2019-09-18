@@ -26,9 +26,13 @@
 
 
 
+    <!--  importer le fichier du socket   -->
+    <script src="../../../../socket.io/socket.io.js"></script>
+
+
 </head>
 
-<body>
+<body onload="contacts()">
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -214,4 +218,31 @@
                 </button>
             </div>
         </nav>
-        <!-- partial -->
+
+
+        <script>
+
+            
+
+  var readURL = function (input) {
+    var file;
+    var len = input.files.length;
+    for(let i=0;i<len;i++){ 
+      if (len && input.files[i]) {
+    var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#sliderImage").append(" <img id='image"+numberIMager+"' style='width:100px;height:100px'>");
+          $('#image'+numberIMager).attr('src', e.target.result);
+          file = document.getElementById("pictureFile").files[i];
+          formData.append("post_file", file);
+          numberIMager++;
+        }
+        reader.readAsDataURL(input.files[i]);
+      }
+    }
+  }
+  $("#pictureFile").change(function(){
+    readURL(this);
+  });
+
+        </script>

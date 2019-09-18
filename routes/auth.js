@@ -14,12 +14,14 @@ var transporter = nodemailer.createTransport({
 });
 
 /**** Redirect l'admin no connecter  vert la page login ****/
-const redirectLogin = (request, response, next) => {
+const redirectLogin = (request, response) => {
     if (!request.session.userType) {
         response.redirect('/login');
     } else {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
+        } else if (request.session.userType === "employe") {
+            return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});
         }
@@ -31,11 +33,13 @@ const redirectHome = (request, response, next) => {
     if (request.session.userId) {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
+        } else if (request.session.userType === "employe") {
+            return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});
         }
     } else {
-        next()
+        next();
     }
 }
 
@@ -59,7 +63,7 @@ app.get('/login', redirectHome, (request, response) => {
 });
 
 /*Lien vert la page d'authentification "Register" */
-app.get('/register', (request, response) => {
+app.get('/register', redirectHome, (request, response) => {
     response.render('pages/clients/register/register', {});
 });
 
@@ -71,12 +75,8 @@ app.get('/register', (request, response) => {
 app.post('/login', (request, response) => {
     require("../models/login").login(request.body, (resp) => {
         if (resp != "error") {
-            const {
-                userId
-            } = request.session;
-            const {
-                userType
-            } = request.session;
+            const { userId} = request.session;
+            const {userType } = request.session;
             request.session.userId = resp.id;
             request.session.userType = resp.statut;
         }
@@ -151,12 +151,18 @@ app.post('/register', (request, response) => {
 
 /* logout pour l'admin*/
 app.get('/logout', (request, response) => {
-    request.session.destroy(err => {
-        if (err) {
+    require("../models/user").disconnectUsre(request.session.userId, (resp) => {
+        if(resp === "error"){
             return response.redirect('/home')
+        }else{
+            request.session.destroy(err => {
+                if (err) {
+                    return response.redirect('/home')
+                }
+            response.redirect('/login')
+           });
         }
-        response.redirect('/login')
-    })
+    });
 });
 /*fin logout pour l'admin*/
 

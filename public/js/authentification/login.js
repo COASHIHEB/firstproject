@@ -14,30 +14,30 @@ $(document).ready(function () {
 
 
 /**** envoyer data du formulaire ****/
-$(document).ready(function () {
-    $("#login").click(function () {
-        $.post("login", {
-                pseudo: $("#email").val(),
-                password: $("#password").val(),
-            },
-            function (data, status) {
-                console.log(status)
-                if (data == 'error') {
-                    $('#emailValide').css("background-color", "red");
-                    $('#passwordValide').css("background-color", "red");
-                    $('#passwordWarning').css("color", "red");
-                    $("#passwordWarning").text("Mot de passe ou email incorect");
-                } else if (data == 'NonValide') {
-                    $('#passwordWarning').css("color", "red");
-                    $("#passwordWarning").text("Compte n'est pas encore validé");
-                } else {
-                    //$(document).ready( function() {
-                    $(location).attr("href", "/home");
-                    //});
-                }
-            });
-    });
-});
+$(document).ready(function() {
+    $("#login").click(function(){
+      $.post("login",
+      {
+        pseudo : $("#email").val(),
+        password : $("#password").val(),
+      },
+      function(data, status){
+        if(data == 'error'){
+            $('#emailValide').css("background-color","red");
+            $('#passwordValide').css("background-color","red");
+            $('#passwordWarning').css("color","red");
+            $("#passwordWarning").text("Mot de passe ou email incorect");
+        }else if(data == 'NonValide'){
+            $('#passwordWarning').css("color","red");
+            $("#passwordWarning").text("Compte n'est pas encore validé");
+        }
+        else{
+            //$(document).ready( function() {
+                $(location).attr("href", "/home");
+             //});
+        }
+      });
+  });
 
 
 /**** envoyer un nouveau mot de passe ****/

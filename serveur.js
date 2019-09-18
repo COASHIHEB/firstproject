@@ -6,7 +6,9 @@ var app = express(); //une déclaration et inistialisation du mosule Express
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-
+/***  declaraion des sockets pour les messages ****/
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 
 /** Moteur de Tamplate **/
@@ -34,31 +36,66 @@ app.use(session({
         secure: false
     }
 }));
+
+
 //Création d'un nouveau Midleware
 app.use(require("./middlewares/flash"));
 //Fin Partie session  !cookie: {secure: false} false car on utilise pas le protocole https
 
+/****  secket traitement *****/
+io.sockets.on('connection', function(socket) {
+
+    socket.on('username', function(id) {
+        socket.userid = id ;
+        io.emit('is_online', socket.userid);
+    });
+
+    socket.on('disconnect', function() {
+        io.emit('is_not_online', socket.userid);
+    })
+
+    socket.on('chat_message', function(message) {
+        io.emit('chat_message', message, socket.userid);
+    });
+
+});
+
 /** Nos Routes **/
 
+app.use(require('./routes/stock.js'))
 
+/** Nos Routes **/
+app.use(require('./routes/achat.js'))
 
-const stock = require('./routes/stock.js')
-app.use(stock)
+app.use( require('./routes/employe.js'))
 
+app.use(require('./routes/stock.js'))
 
-const achat = require('./routes/achat.js')
-app.use(achat)
+app.use(require('./routes/achat.js'))
 
-const employe = require('./routes/employe.js')
-app.use(employe)
+app.use( require('./routes/employe.js'))
 
+app.use(require('./routes/profile.js'))
 
-const profile = require('./routes/profile.js')
-app.use(profile)
+app.use(require('./routes/auth.js'))
 
+app.use(require('./routes/adherent.js'))
 
-const auth = require('./routes/auth.js')
-app.use(auth)
+app.use(require('./routes/categorie-sousCat.js'))
+
+app.use(require('./routes/messenger.js'))
+
+app.use(require('./routes/profile.js'))
+
+app.use(require('./routes/auth.js'))
+
+app.use(require('./routes/adherent.js'))
+
+app.use(require('./routes/categorie-sousCat.js'))
+
 
 /** Fin Nos Routes **/
-app.listen(8083); //Déclaration du port d'écoute de serveur
+
+
+
+const serve = http.listen(8083);

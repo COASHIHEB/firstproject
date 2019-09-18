@@ -31,7 +31,6 @@ app.get('/profile', redirectLogin, (request, response) => {
 
 /*  */
 app.get('/getUtilisateur', redirectLogin, (request, response) => {
-    request.session.userId = 11
     require('../models/Admin/profile').getUtilisateur(request.session.userId, (resp) => {
         response.json(resp);
     })
@@ -64,7 +63,6 @@ app.post('/updatePictureProfile', redirectLogin, function (req, res) {
                 res.json("error");
             else {
                 let Profile = require('../models/Admin/profile')
-                req.session.userId = 11;
                 Profile.updateProfilePicture({
                     userId: req.session.userId,
                     nameImage: nameImage

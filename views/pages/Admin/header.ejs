@@ -32,7 +32,7 @@
 
 </head>
 
-<body>
+<body onload="contacts()">
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -61,6 +61,8 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
+
+                    <!------      Debut notification     ------>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#"
                             data-toggle="dropdown" aria-expanded="false">
@@ -77,6 +79,7 @@
                             <div id="notificationListe"></div>
                         </div>
                     </li>
+                    <!------      Fin notification     ------>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
                             data-toggle="dropdown">
@@ -179,6 +182,7 @@
         </nav>
 
 
+        <% include messenger.ejs %>
         <script>
 
 
@@ -206,5 +210,4 @@
 
         </script>
 
-        <% include messenger.ejs %>
         <!-- partial -->

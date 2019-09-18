@@ -17,18 +17,18 @@ const redirectLogin = (request, response, next) => {
 }
 
 /* lien vers page achat */
-app.get('/achat',redirectLogin, (request, response) => {
+app.get('/achat', redirectLogin, (request, response) => {
     response.render('pages/Admin/achat/achat', {});
 })
 
 /* Ajouter supprimé modifier et selectionner achat */
-app.get('/allAchat',redirectLogin, (request, response) => {
+app.get('/allAchat', redirectLogin, (request, response) => {
     require('../models/Admin/achat').allAchat((resp) => {
         response.json(resp);
     })
 })
 
-app.get('/recentAchat',redirectLogin, (request, response) => {
+app.get('/recentAchat', redirectLogin, (request, response) => {
     require('../models/Admin/achat').recentAchat((resp) => {
         response.json(resp);
     })

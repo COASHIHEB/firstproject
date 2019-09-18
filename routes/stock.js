@@ -37,7 +37,7 @@ app.get('/stockBientotExpire', redirectLogin, (request, response) => {
     })
 })
 
-app.get('/stockMinimum', redirectLogin,(request, response) => {
+app.get('/stockMinimum', redirectLogin, (request, response) => {
     require('../models/Admin/stock').stockMinimum((resp) => {
         response.json(resp);
     })

@@ -10,7 +10,7 @@ $(document).ready(function() {
 	$(add_button).click(function(e){ //on add input button click
     e.preventDefault();
 			x++; //text box increment
-      $(wrapper).after('<div class="row"><label for="nom" class="col-sm-3 col-form-label">Nom sous catégorie</label><div class="col-sm-7"><input type="text" name="nomSC" class="form-control" id="nomSC'+x+'" placeholder="Veuillez saisir le nom " required></div><div class="col-sm-0.5 align-middle" id='+x+'><a id="delete_row2" > <label class="badge badge-danger" style="margin-top: 7px;"><span class="fa fa-minus"></label></a>&nbsp;</div></div>')
+      $(wrapper).after('<div class="row"><label for="nom" class="col-sm-3 col-form-label">Nom sous catégorie</label><div class="col-sm-7"><input type="text"  class="form-control" id="nomSC'+x+'" placeholder="Veuillez saisir le nom " required></div><div class="col-sm-0.5 align-middle" id='+x+'><a id="delete_row2" > <label class="badge badge-danger" style="margin-top: 7px;"><span class="fa fa-minus"></label></a>&nbsp;</div></div>')
 	});
 	
   $(toDelet).on("click","#delete_row2", function(e){ //user click on remove text
@@ -23,16 +23,18 @@ $(document).ready(function() {
 /*******************Fin ajouter ligne***********************/
 $(document).ready(function() {
     $("#submit").click(function(){
-      let sousCat = [];
+      let sousCats = [];
+      let ligneSC;
+
       for( let i=0; i <= x; i++){
-        let ligneSC = {
+        ligneSC = {
         code : $('#nomSC'+i).val(),
         };
-        sousCat.push(ligneSC);
-      }
+        sousCats.push(ligneSC);
+      } 
     
         $.post("addCategorie",  {
-          sousCat: sousCat,
+          a: sousCats,
           categ : $('#nomCat').val(),
         },
 

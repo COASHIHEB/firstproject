@@ -22,8 +22,6 @@ class login{
                         CallBack({
                           id: user.idUtil,
                           statut: user.statut,
-                          nom: user.nom,
-                          prenom: user.prenom,
                         });
                     }else{
                         CallBack('error');

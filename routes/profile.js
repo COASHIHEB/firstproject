@@ -6,12 +6,41 @@ app.use(fileUpload());
 app.use(require("../middlewares/flash"));
 
 
+/**** Redirect l'utilisateur no connecter  vert la page login ****/
+const redirectLogin = (request, response, next) => {
+    if (!request.session.userType) {
+        response.redirect('/login');
+    } else {
+        if (request.session.userType === "Administrateur") {
+            next();
+        } else if (request.session.userType === "employe") {
+            response.redirect('/home');
+        } else {
+            response.redirect('/');
+        }
+    }
+}
+
+
+/* lien vers page profil */
+app.get('/profile', redirectLogin, (request, response) => {
+    response.render('pages/Admin/profile/profile', {});
+});
+
+
+
+/*  */
+app.get('/getUtilisateur', redirectLogin, (request, response) => {
+    request.session.userId = 11
+    require('../models/Admin/profile').getUtilisateur(request.session.userId, (resp) => {
+        response.json(resp);
+    })
+})
 
 
 
 
-
-app.post('/updatePictureProfile', function (req, res) {
+app.post('/updatePictureProfile', redirectLogin, function (req, res) {
     if (req.files) {
         // The name of the input field (i.e. "pictureFile") is used to retrieve the uploaded file
         let image = req.files.post_file;
@@ -50,26 +79,9 @@ app.post('/updatePictureProfile', function (req, res) {
 });
 
 
-/* lien vers page profil */
-app.get('/profile', (request, response) => {
-    response.render('pages/Admin/profile/profile', {});
-});
 
-
-
-/*  */
-app.get('/getUtilisateur', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.getUtilisateur(request.session.userId, (resp) => {
-        response.json(resp);
-    })
-})
-
-app.post('/updateUtilisateur', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.updateUtilisateur({
+app.post('/updateUtilisateur', redirectLogin, (request, response) => {
+    require('../models/Admin/profile').updateUtilisateur({
         userId: request.session.userId,
         user: request.body
     }, (resp) => {
@@ -77,10 +89,8 @@ app.post('/updateUtilisateur', (request, response) => {
     })
 })
 
-app.post('/updatePassword', (request, response) => {
-    request.session.userId = 11;
-    let Profile = require('../models/Admin/profile')
-    Profile.updatePassword({
+app.post('/updatePassword', redirectLogin, (request, response) => {
+    require('../models/Admin/profile').updatePassword({
         userId: request.session.userId,
         user: request.body
     }, (resp) => {

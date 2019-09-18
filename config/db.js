@@ -6,6 +6,15 @@ var connection = mysql.createConnection({
     password: 'bdb753b4',
     database: 'heroku_69b5684b8aa51e5'
 });
+
+/*var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "guara",
+    insecureAuth : true
+});*/
+
 connection.connect();
 
 module.exports = connection;

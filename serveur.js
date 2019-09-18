@@ -43,19 +43,20 @@ app.use(require("./middlewares/flash"));
 //Fin Partie session  !cookie: {secure: false} false car on utilise pas le protocole https
 
 /****  secket traitement *****/
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
 
-    socket.on('username', function(id) {
-        socket.userid = id ;
+    socket.on('username', function (id) {
+        socket.userid = id;
         io.emit('is_online', socket.userid);
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         io.emit('is_not_online', socket.userid);
     })
 
-    socket.on('chat_message', function(message) {
-        io.emit('chat_message', message, socket.userid);
+    socket.on('notification', function (message, id, user) {
+        io.emit('notification', message, id, user);
+        io.emit('chat_message', message, user.idUtil);
     });
 
 });
@@ -64,16 +65,9 @@ io.sockets.on('connection', function(socket) {
 
 app.use(require('./routes/stock.js'))
 
-/** Nos Routes **/
 app.use(require('./routes/achat.js'))
 
-app.use( require('./routes/employe.js'))
-
-app.use(require('./routes/stock.js'))
-
-app.use(require('./routes/achat.js'))
-
-app.use( require('./routes/employe.js'))
+app.use(require('./routes/employe.js'))
 
 app.use(require('./routes/profile.js'))
 
@@ -85,14 +79,8 @@ app.use(require('./routes/categorie-sousCat.js'))
 
 app.use(require('./routes/messenger.js'))
 
-app.use(require('./routes/profile.js'))
-
-app.use(require('./routes/auth.js'))
-
-app.use(require('./routes/adherent.js'))
-
-app.use(require('./routes/categorie-sousCat.js'))
-
+const offre = require('./routes/offre.js')
+app.use(offre)
 
 /** Fin Nos Routes **/
 

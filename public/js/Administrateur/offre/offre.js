@@ -160,7 +160,6 @@ $(document).ready(function () {
       for( let i=1; i < produits.length; i++){
         produitsOffre += "æ"+produits[i];
       }
-
       formData.append("nom", $("#nom").val());
       formData.append("categorie", categorie);
       formData.append("sousCategorie", sousCategorie);
@@ -201,6 +200,7 @@ $(document).ready(function () {
   var readURL = function (input) {
     var file;
     var len = input.files.length;
+    
     for(let i=0;i<len;i++){ 
       if (len && input.files[i]) {
     var reader = new FileReader();
@@ -466,16 +466,19 @@ function recupereCat(id){
   $('option:checked[name=cate'+id+']').each(function(){
     categorieModif = $(this).val();
    });
+
    $('option:checked[name=sous'+id+']').each(function(){
     sousCategorieModif = $(this).val();
-   });console.log("recupereSousCat " +sousCategorieModif)
-   console.log("recupereCat "+categorieModif)
+   });
+   
+  //  console.log("recupereSousCat " +sousCategorieModif)
+  //  console.log("recupereCat "+categorieModif)
 }
 
 function recupereSousCat(id){ 
   $('option:checked[name=sous'+id+']').each(function(){
     sousCategorieModif = $(this).val();
-   });console.log("recupereSousCat " +sousCategorieModif)
+   });
   }
 
 
@@ -486,12 +489,13 @@ function selCatModif(id) {
       },
       function (data, status) {
         if (data != 'error') {
-          let toReplac = '<div class="col-sm-3"  id="sousCat'+id+'"><select class="chercheBarDropDown form-control" onchange="recupereSousCat('+id+')" style="width: auto;">'; 
+          let toReplac = '<div class="col-sm-3"  id="modif'+id+'"><select class="chercheBarDropDown form-control" onchange="recupereSousCat('+id+')" style="width: auto;">'; 
           for(let i=0; i<data.length; i++){ 
-              toReplac+= '<option id="option" value='+data[i].nom+' name="sous'+id+'" > '+data[i].nom+'</option> ';
+              toReplac+= '<option value='+data[i].nom+' name="sous'+id+'"> '+data[i].nom+'</option> ';
           }
           toReplac+= '</select></div>';
-          $("#sousCat"+id).replaceWith (toReplac);
+          $("#modif"+id).replaceWith (toReplac);
+          recupereSousCat(id)
         } 
       });
 }

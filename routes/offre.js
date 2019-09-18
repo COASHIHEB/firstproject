@@ -45,16 +45,27 @@ app.post('/addOffre', (request, response) => {
         mm = '0' + mm;
     }
     var today = dd + '-' + mm + '-' + yyyy+'-'+sec;
-        let nameImage ;
-
-
-    for(let i=0; i< images.length; i++){
-        nameImage = images[i].name.split(".");
-        album[i] = nameImage[0] + "_" + today + "." + nameImage[1];
-        image = request.files.post_file[i];
-        image.mv("public/images/offre/" +album[i], function (err) {
+    let nameImage ;
+    if(images.length)
+    {
+        for(let i=0; i< images.length; i++){
+            nameImage = images[i].name.split(".");
+            album[i] = nameImage[0] + "_" + today + "." + nameImage[1];
+            image = request.files.post_file[i];
+            image.mv("public/images/offre/" +album[i], function (err) {
+                if (err) error =1;
+            });
+        }
+    }
+    else if(typeof images.length == "undefined" )
+    {
+        nameImage = images.name.split(".");
+        album[0]=nameImage[0] + "_" + today + "." + nameImage[1];
+        image = request.files.post_file;
+        image.mv("public/images/offre/" +album[0], function (err) {
             if (err) error =1;
         });
+        
     }
     if(error) response.json("error");
     else {
@@ -156,14 +167,27 @@ app.post('/addPhoto', (request, response) => {
         let nameImage ;
 
 
-    for(let i=0; i< images.length; i++){
-        nameImage = images[i].name.split(".");
-        album[i] = nameImage[0] + "_" + today + "." + nameImage[1]
-         image = request.files.post_file[i];
-        image.mv("public/images/offre/" +album[i], function (err) {
-            if (err) error =1;
-        });
-    }
+        if(images.length)
+        {
+            for(let i=0; i< images.length; i++){
+                nameImage = images[i].name.split(".");
+                album[i] = nameImage[0] + "_" + today + "." + nameImage[1];
+                image = request.files.post_file[i];
+                image.mv("public/images/offre/" +album[i], function (err) {
+                    if (err) error =1;
+                });
+            }
+        }
+        else if(typeof images.length == "undefined" )
+        {
+            nameImage = images.name.split(".");
+            album[0]=nameImage[0] + "_" + today + "." + nameImage[1];
+            image = request.files.post_file;
+            image.mv("public/images/offre/" +album[0], function (err) {
+                if (err) error =1;
+            });
+            
+        }
     if(error) response.json("error");
     else {
         let Offre = require('../models/Admin/offre')

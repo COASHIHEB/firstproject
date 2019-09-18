@@ -310,25 +310,24 @@ class offre{
                 let IdOffre;
                 
                 connexion.query("SELECT idSousCat AS id from souscategorie WHERE nom = ?",[inputs.sousCategorie], (err, resultat)=>{
-                    if (err) throw err;
+                    if (err) CallBack('error');
                     else{
                             let idSC = resultat[0].id;
                             connexion.query("UPDATE offre SET nom=? , description=? , prix=?, dure=?, SousCategorie_idSousCat=?", [inputs.nom, inputs.description, inputs.prix, inputs.dure,idSC], (err, result)=>{
                             if(err) {
-                                throw err;
+                                CallBack('error');
                             }else{
-                                if(inputs.produitsOffre!= ''){
+                                if( typeof inputs.produitsOffre !== "undefined" ){
                                     let produit = inputs.produitsOffre.split('æ');
                                     for(let i =0; i<produit.length ; i++ ){
                                         let prod = produit[i].trim();
-                                        console.log(prod)
                                         connexion.query("SELECT idProd AS id from produit WHERE nom = ?",[prod], (err, resultat)=>{
-                                            if (err) throw err;
+                                            if (err) CallBack('error');
                                             else{
                                                 let idProd = resultat[0].id;
                                                 connexion.query("INSERT INTO offreproduit (Produit_idProd, Offre_idOffre) VALUES (?,?)", [idProd,inputs.id], (err, result)=>{
                                                 if(err) {
-                                                    throw err;
+                                                    CallBack('error');
                                                 }else{
                                                     }
                                                 })

@@ -6,8 +6,6 @@
 <script src="js/fSelect.js"></script>
 <link  rel = "stylesheet"  href = "css/fileSkinCSS.css" >
 
- 
- 
 
 <script>
   (function($) {
@@ -231,12 +229,14 @@
                                                                         </select>
                                                                     </td>
                                                                     <td class="text-center" id="sousCatModif" >
+                                                                        <div id="modif<%= offre[i].idOffre %>">
                                                                         <select class="form-control" id="sousCat<%= offre[i].idOffre %>" onchange="recupereSousCat('<%= offre[i].idOffre %>')">
                                                                             <option name="sousCat<%= offre[i].idOffre %>"  style="line-height:1" value='<%= offre[i].nomSC %>' name="sousCateg" selected><%= offre[i].nomSC %></option>
                                                                             <%for(let i=0; i<sousCat.length; i++){ %>
                                                                                 <option name="sousCat<%= offre[i].idOffre %>" style="line-height:1" value='<%= sousCat[i].nom %>' data-id="<%= sousCat[i].id %>" name="sousCateg" > <%= sousCat[i].nom %></option>
                                                                             <% } %> 
                                                                         </select>
+                                                                    </div>
                                                                     </td>
                                                                     <td class="text-center"><%= offre[i].date %></td>
                                                                     <td class="text-center">

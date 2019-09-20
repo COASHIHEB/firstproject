@@ -20,7 +20,7 @@ const redirectLogin = (request, response) => {
     } else {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
-        } else if (request.session.userType === "employe") {
+        } else if (request.session.userType === "Employe") {
             return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});
@@ -33,7 +33,7 @@ const redirectHome = (request, response, next) => {
     if (request.session.userId) {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
-        } else if (request.session.userType === "employe") {
+        } else if (request.session.userType === "Employe") {
             return response.render('pages/Employee/index', {});
         } else {
             return response.render('pages/index', {});

@@ -6,11 +6,7 @@ let categorieModif = '';
 let sousCategorieModif ='';
 
 $(document).ready(function () {
-  
   document.getElementById("submit").disabled = true;
-
-
-  
 })
 
 
@@ -23,7 +19,7 @@ function ajouterPhoto2()
     if (len && input.files[i]) {
   var reader = new FileReader();
       reader.onload = function (e) {
-        $("#sliderImageAjout").append(" <img id='image"+numberIMager2+"' style='width:100px;height:100px'>");
+        $("#sliderImageAjout").append(" <img id='image"+numberIMager2+"' style='width:100px;height:100px'>&nbsp;&nbsp;");
         $('#image'+numberIMager2).attr('src', e.target.result);
         file = document.getElementById("pictureFileAdd").files[i];
         formData2.append("post_file", file);
@@ -141,6 +137,7 @@ $(document).ready(function () {
     let produitsOffre;
     let categorie;
     let sousCategorie;
+    let dure;
 
 
     $('option:checked[name=cat]').each(function(){
@@ -160,12 +157,16 @@ $(document).ready(function () {
       for( let i=1; i < produits.length; i++){
         produitsOffre += "æ"+produits[i];
       }
+      
+      dure = $("#dure").val()+" h "+$("#min").val()+" min";
+      let prix = $("#prix").val()+" Dh ";
+     
       formData.append("nom", $("#nom").val());
       formData.append("categorie", categorie);
       formData.append("sousCategorie", sousCategorie);
       formData.append("description", $("#description").val());
-      formData.append("dure", $("#dure").val());
-      formData.append("prix", $("#prix").val());
+      formData.append("dure", dure);
+      formData.append("prix", prix);
       formData.append("produit", produitsOffre);
 
       
@@ -205,7 +206,7 @@ $(document).ready(function () {
       if (len && input.files[i]) {
     var reader = new FileReader();
         reader.onload = function (e) {
-          $("#sliderImage").append(" <img id='image"+numberIMager+"' style='width:100px;height:100px'>");
+          $("#sliderImage").append(" <img id='image"+numberIMager+"' style='width:100px;height:100px'>&nbsp;&nbsp;");
           $('#image'+numberIMager).attr('src', e.target.result);
           file = document.getElementById("pictureFile").files[i];
           formData.append("post_file", file);
@@ -240,11 +241,14 @@ function ApercuPhoto(id){
       }
       caroussel += '</div>' 
       $("#photo").replaceWith(caroussel);
-      $("#ajouterphoto").replaceWith('<input type="file" accept="image/*" id="pictureFileAdd" name="pictureFileAdd" onchange="ajouterPhoto2('+id+')" multiple><br/><button  class="btn btn-success mr-2" onclick="ajouterPhoto('+id+')">Confirmer</button>');
-      // 
+      $("#ajouterphoto").replaceWith('<input type="file" style="margin-bottom: 2%;" class="custom-file-input" id="pictureFileAdd"aria-describedby="inputGroupFileAddon01" name="pictureFileAdd" accept="image/*" onchange="ajouterPhoto2('+id+')"  multiple><label class="custom-file-label" for="pictureFileAdd">Sélectioner des photos</label>')
+      $("#btn").replaceWith('<button  class="btn btn-success mr-2 pull-right"  onclick="ajouterPhoto('+id+')">Confirmer</button>');
     } 
   });
 }
+
+
+
 function div(idOffre,idProd){
   swal({
     title: "êtes vous sure ?",
@@ -388,8 +392,6 @@ function ajouterPhoto(id){
 function alertMod(id) {
     let produits = new Array();
     let produitsOffre;
-// console.log("aaaaaaaaaaaaaaaaa  "+categorieModif)
-// console.log("aaaaaaaaaaaaaaaaa  "+sousCategorieModif)
     if(categorieModif == ''){
       $('option:checked[name=cate'+id+']').each(function(){
         categorieModif = $(this).val();
@@ -405,21 +407,12 @@ function alertMod(id) {
     $('option:checked[name=produit'+id+']').each(function(){
       var produit = $(this).val();
       produits.push(produit);
-      });console.log('produits')
+      });
       
       produitsOffre = produits[0];
       for( let i=1; i<produits.length; i++){
         produitsOffre += "æ"+produits[i];
       }
-
-  console.log(id)
-  console.log($('#nomModif'+id).html())
-  console.log($('#produit'+id).html())
-  console.log($('#description'+id).html())
-  console.log($('#prix'+id).html())
-  console.log(categorieModif)
-  console.log(sousCategorieModif)
-  console.log(produitsOffre)
       
   swal({
       title: "vous êtes sure?",
@@ -471,8 +464,6 @@ function recupereCat(id){
     sousCategorieModif = $(this).val();
    });
    
-  //  console.log("recupereSousCat " +sousCategorieModif)
-  //  console.log("recupereCat "+categorieModif)
 }
 
 function recupereSousCat(id){ 
@@ -499,3 +490,4 @@ function selCatModif(id) {
         } 
       });
 }
+

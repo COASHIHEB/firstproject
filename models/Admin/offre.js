@@ -187,7 +187,7 @@ class offre{
 
 
     static selectOffre(CallBack){
-        connexion.query("SELECT offre.idOffre AS idOffre, offre.nom AS nomOffre, offre.description AS description, offre.dure AS dure, offre.prix AS prix , offre.date AS date, souscategorie.nom AS nomSC, categorie.nom AS nomCat,produit.nom AS nomProd,produit.idProd AS idProd FROM  souscategorie LEFT JOIN offre ON souscategorie.idSousCat= offre.SousCategorie_idSousCat LEFT JOIN categorie ON souscategorie.categorie_idCat = categorie.idCat LEFT JOIN offreproduit ON offreproduit.Offre_idOffre = offre.idOffre LEFT JOIN produit ON offreproduit.Produit_idProd = produit.idProd", funcEND);
+        connexion.query("SELECT offre.idOffre AS idOffre, offre.nom AS nomOffre, offre.description AS description, offre.dure AS dure, offre.prix AS prix , offre.date AS date, souscategorie.nom AS nomSC, categorie.nom AS nomCat,produit.nom AS nomProd,produit.idProd AS idProd FROM  souscategorie LEFT JOIN offre ON souscategorie.idSousCat= offre.SousCategorie_idSousCat LEFT JOIN categorie ON souscategorie.categorie_idCat = categorie.idCat LEFT JOIN offreproduit ON offreproduit.Offre_idOffre = offre.idOffre LEFT JOIN produit ON offreproduit.Produit_idProd = produit.idProd ORDER BY offre.idOffre DESC", funcEND);
         function funcEND (err1, rows, fields){
             if(err1) throw err1;
             else{

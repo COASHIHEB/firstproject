@@ -61,6 +61,8 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
+
+                    <!------      Debut notification     ------>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#"
                             data-toggle="dropdown" aria-expanded="false">
@@ -71,11 +73,13 @@
                             <div class="dropdown-item">
                                 <p class="mb-0 font-weight-normal float-left" id="msgNbr">
                                 </p>
-                                <span class="badge badge-info badge-pill float-right" onclick="viewAll()">View all</span>
+                                <span class="badge badge-info badge-pill float-right" onclick="viewAll()">View
+                                    all</span>
                             </div>
                             <div id="notificationListe"></div>
                         </div>
                     </li>
+                    <!------      Fin notification     ------>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
                             data-toggle="dropdown">
@@ -138,7 +142,7 @@
                             aria-expanded="false">
                             <span id="nomUser"
                                 class="profile-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
+                            <img id="profilePictureHeader" class="img-xs rounded-circle" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <a class="dropdown-item p-0">
@@ -158,7 +162,7 @@
                             <a class="dropdown-item mt-2" href="/profile">
                                 Manage Accounts
                             </a>
-                            <a class="dropdown-item" href="/password-setting">
+                            <a class="dropdown-item" href="/profile#passwordCard">
                                 Change Password
                             </a>
                             <a class="dropdown-item">
@@ -176,7 +180,34 @@
                 </button>
             </div>
         </nav>
-        
-        <!-- partial -->
+
 
         <% include messenger.ejs %>
+        <script>
+
+
+
+            var readURL = function (input) {
+                var file;
+                var len = input.files.length;
+                for (let i = 0; i < len; i++) {
+                    if (len && input.files[i]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#sliderImage").append(" <img id='image" + numberIMager + "' style='width:100px;height:100px'>");
+                            $('#image' + numberIMager).attr('src', e.target.result);
+                            file = document.getElementById("pictureFile").files[i];
+                            formData.append("post_file", file);
+                            numberIMager++;
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            }
+            $("#pictureFile").change(function () {
+                readURL(this);
+            });
+
+        </script>
+
+        <!-- partial -->

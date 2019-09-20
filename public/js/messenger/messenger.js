@@ -1,5 +1,6 @@
 /***** Search for contacte  *****/
 $(document).ready(function(){
+  
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $(".dropdown-menu li").filter(function() {
@@ -153,6 +154,7 @@ var socket = io.connect('http://localhost:8083');
 
 
 function contacts(){
+  
   /***** inissialisé le variable globale pour conte le nobre des boites des message ouvert à 0 ******/
   nbrBoiteMessage = 0;
   // afficher les contactes
@@ -168,8 +170,8 @@ function contacts(){
         }
       });
             // afficher le nombres des notifications sur le header
-      if(data.notifications.length > 0){
         $('#messageDropdown').attr('id','messageDropdown'+data.userId);
+      if(data.notifications.length > 0){
         $('#messageDropdown'+data.userId+' i').after("<span class='count'>"+data.notifications.length+"</span>");
       }
 
@@ -265,7 +267,6 @@ socket.on('notification', function(msg,idRcp,user) {
   //si l'utilisateur avoire aucun des notification
   if($('#messageDropdown'+idRcp+' span').text() == ''){
 
-    $('#messageDropdown').attr('id','messageDropdown'+idRcp);
     $('#messageDropdown'+idRcp+' i').after("<span class='count'>1</span>");
     $('#msgNbr'+idRcp).empty();
     $('#msgNbr'+idRcp).append("Tu as <b>1</b> messages non lu");

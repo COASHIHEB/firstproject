@@ -1,7 +1,7 @@
 /************************fin pagination, serach **********************/
 
 $(document).ready(function () {
-  //getUtilisateur();
+  getUtilisateur();
 
 
 
@@ -13,19 +13,19 @@ $(document).ready(function () {
 
 
 /************************fonction de recuperation de tous les donnees de profile**********************/
-// function getUtilisateur() {
-//   $.get("getUtilisateur", {},
-//     function (data, status) {
-//       if (status == "success") {
-//         $("#nom").val(data.nom);
-//         $("#prenom").val(data.prenom);
-//         $("#email").val(data.email);
-//         $("#numTel").val(data.numTel);
-//         $("#adresse").val(data.adresse);
-//         $("#profilePicture").attr("src", "images/profilePicture/" + data.image);
-//       }
-//     });
-// }
+function getUtilisateur() {
+  $.get("getUtilisateur", {},
+    function (data, status) {
+      if (status == "success") {
+        $("#nom").val(data.nom);
+        $("#prenom").val(data.prenom);
+        $("#email").val(data.email);
+        $("#numTel").val(data.numTel);
+        $("#adresse").val(data.adresse);
+        $("#profilePicture").attr("src", "images/profilePicture/" + data.image);
+      }
+    });
+}
 /************************fin fonction de recuperation de tous les donnees de profile**********************/
 
 

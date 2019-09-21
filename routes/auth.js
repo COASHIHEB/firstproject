@@ -1,5 +1,10 @@
 var express = require('express');
-var app = express.Router();
+var app = express();
+var router = express.Router();
+
+
+
+
 
 
 /**** recuperie la bibeo nodemailer ****/
@@ -15,13 +20,15 @@ var transporter = nodemailer.createTransport({
 
 /**** Redirect l'admin no connecter  vert la page login ****/
 const redirectLogin = (request, response) => {
+    console.log(request.sessionID)
+
     if (!request.session.userType) {
         response.redirect('/login');
     } else {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
         } else if (request.session.userType === "employe") {
-            return response.render('pages/Employee/index', {});
+            return response.render('pages/Employe/index', {});
         } else {
             return response.render('pages/index', {});
         }
@@ -34,7 +41,7 @@ const redirectHome = (request, response, next) => {
         if (request.session.userType === "Administrateur") {
             return response.render('pages/Admin/index', {});
         } else if (request.session.userType === "employe") {
-            return response.render('pages/Employee/index', {});
+            return response.render('pages/Employe/index', {});
         } else {
             return response.render('pages/index', {});
         }
@@ -46,24 +53,24 @@ const redirectHome = (request, response, next) => {
 
 
 /* lien vert la pages idex d'admenistrateur */
-app.get('/home', redirectLogin, (request, response) => {
+router.get('/home', redirectLogin, (request, response) => {
     response.render('pages/Admin/index', {});
 });
 
 /* lien vert la pages index pour client */
-app.get('/', redirectLogin, (request, response) => {
+router.get('/dashboard', redirectLogin, (request, response) => {
     response.render('pages/index', {});
 });
 
 
 /*Lien vert la page d'authentification "Login" */
-app.get('/login', redirectHome, (request, response) => {
+router.get('/login', redirectHome, (request, response) => {
     /** accéder à la page login */
     response.render('pages/authentification/login', {});
 });
 
 /*Lien vert la page d'authentification "Register" */
-app.get('/register', redirectHome, (request, response) => {
+router.get('/register', redirectHome, (request, response) => {
     response.render('pages/clients/register/register', {});
 });
 
@@ -72,11 +79,11 @@ app.get('/register', redirectHome, (request, response) => {
 
 
 /*login*/
-app.post('/login', (request, response) => {
+router.post('/login', (request, response) => {
     require("../models/login").login(request.body, (resp) => {
         if (resp != "error") {
-            const { userId} = request.session;
-            const {userType } = request.session;
+            const { userId } = request.session;
+            const { userType } = request.session;
             request.session.userId = resp.id;
             request.session.userType = resp.statut;
         }
@@ -87,7 +94,7 @@ app.post('/login', (request, response) => {
 
 
 /* mot de passe oublier*/
-app.post('/password', (request, response) => {
+router.post('/password', (request, response) => {
     require("../models/login").password(request.body.email, (resp) => {
         if (resp !== "error" && resp !== "nonModifier" && resp !== "NonValide") {
             /** si le compte bien enregistré */
@@ -112,8 +119,8 @@ app.post('/password', (request, response) => {
 
 
 /**  validé le compte d'utilisateur client */
-app.get('/validerEmail', redirectHome, (request, response) => {
-    require("../models/clients/register").valider(request.query.code, (resp) => {
+router.get('/validerEmail', redirectHome, (request, response) => {
+    require("../models/Client/register").valider(request.query.code, (resp) => {
         if (resp === 'error') {
             response.render('pages/Error/error404', {});
         } else {
@@ -125,8 +132,8 @@ app.get('/validerEmail', redirectHome, (request, response) => {
 
 
 /*enregistré un client*/
-app.post('/register', (request, response) => {
-    require("../models/clients/register").register(request.body, (resp) => {
+router.post('/register', (request, response) => {
+    require("../models/Client/register").register(request.body, (resp) => {
         if (resp !== "error" && resp !== "exist" && resp !== "notInsert") {
             /** si le compte bien enregistré */
             transporter.sendMail({
@@ -150,17 +157,18 @@ app.post('/register', (request, response) => {
 
 
 /* logout pour l'admin*/
-app.get('/logout', (request, response) => {
+router.get('/logout', (request, response) => {
     require("../models/user").disconnectUsre(request.session.userId, (resp) => {
-        if(resp === "error"){
+        if (resp === "error") {
             return response.redirect('/home')
-        }else{
+        } else {
             request.session.destroy(err => {
                 if (err) {
                     return response.redirect('/home')
                 }
-            response.redirect('/login')
-           });
+                response.clearCookie(SESS_NAME)
+                response.redirect('/login')
+            });
         }
     });
 });
@@ -170,4 +178,4 @@ app.get('/logout', (request, response) => {
 
 
 
-module.exports = app
+module.exports = router

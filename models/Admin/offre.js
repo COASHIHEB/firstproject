@@ -321,7 +321,6 @@ class offre{
                                     let produit = inputs.produitsOffre.split('æ');
                                     for(let i =0; i<produit.length ; i++ ){
                                         let prod = produit[i].trim();
-                                        console.log(prod)
                                         connexion.query("SELECT idProd AS id from produit WHERE nom = ?",[prod], (err, resultat)=>{
                                             if (err) throw err;
                                             else{

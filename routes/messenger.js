@@ -4,14 +4,11 @@ var app = express.Router();
 
 /*****   lien pour afficher les contactes et les notificatons *****/
 app.post('/contacts', (request, response) => {
-    console.log(request.body)
     /*****   lien pour afficher les contactes *****/
     require("../models/messenger/messenger").selectContacts(request.session.userId, (contact) => {
-        console.log(contact)
 
         /*****   lien pour afficher les notificatons *****/
         require("../models/messenger/messenger").notification(request.session.userId, (notf) => {
-            console.log(notf)
 
             response.json({ contacts: contact, notifications: notf, userId: request.session.userId });
         });

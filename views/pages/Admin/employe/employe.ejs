@@ -166,49 +166,34 @@
                                 <tbody>
                                     <% if(locals.respo){
                                             for(let i=0; i<respo.length; i++){ %>
-                                    <tr>
-                                        <td class="text-center"><%= i+1 %></td>
-                                        <td contenteditable="true" class="text-center" uppercase
-                                            id="nom<%= respo[i].id %>">
-                                            <%= respo[i].nom %></td>
-                                        <td contenteditable="true" class="text-center" id="prenom<%= respo[i].id %>">
-                                            <%= respo[i].prenom %></td>
-                                        <td contenteditable="true" class="text-center" id="mail<%= respo[i].id %>">
-                                            <%= respo[i].mail %></td>
-                                        <td contenteditable="true" class="text-center" id="tel<%= respo[i].id %>">
-                                            <%= respo[i].tel %></td>
-                                        <td contenteditable="true" class="text-center" id="code<%= respo[i].id %>">
-                                            <%= respo[i].code %></td>
-                                        <td class="text-center"><%= respo[i].date %></td>
-                                        <td class="text-center"><%= respo[i].valide %></td>
-                                        <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>">
-                                            <%= respo[i].permis %></td>
-                                        <% if(respo[i].statut == "hors service"){ %>
-                                        <td style="color:red"><i
-                                                class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %>
-                                        </td>
-                                        <%  }%>
-                                        <% if(respo[i].statut == "en ligne"){ %>
-                                        <td style="color:green"><i
-                                                class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %>
-                                        </td>
-                                        <%  }%>
-                                        <td class="text-center">
-                                            <button class=" btn btn-danger btn-xs"
-                                                onclick="alertSupp('<%= respo[i].id %>')"><span
-                                                    class="fa fa-trash"></span></button>
-                                            <button class=" btn btn-success btn-xs"
-                                                onclick="alertMod('<%= respo[i].id %>')"><span
-                                                    class=" fa fa-edit"></span></button>
-                                        </td>
-                                    </tr>
-                                    <% }  }%>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="alert alert-warning" role="alert" style="width: 50%">
-                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier ces
-                            informations: date d'inscirption, statut et valide.
+                                                <tr>
+                                                    <td class="text-center"><%= i+1 %></td>
+                                                    <td contenteditable="true"  uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
+                                                    <td contenteditable="true"  id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
+                                                    <td contenteditable="true"  id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
+                                                    <td contenteditable="true"  id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
+                                                    <td contenteditable="true"  id="code<%= respo[i].id %>"><%= respo[i].code %></td>
+                                                    <td ><%= respo[i].date %></td>
+                                                    <td class="text-center"><%= respo[i].valide %></td>
+                                                    <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>"><%= respo[i].permis %></td>
+                                                    <% if(respo[i].statut == "hors service"){ %>
+                                                         <td  style="color:red"><i class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
+                                                    <%  }%>
+                                                    <% if(respo[i].statut == "en ligne"){ %>
+                                                        <td style="color:green"><i class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
+                                                   <%  }%>
+                                                    <td class="text-center"> 
+                                                        <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].id %>')"><span class="fa fa-trash"></span></button>
+                                                        <button class=" btn btn-success btn-xs" onclick="alertMod('<%= respo[i].id %>')"><span class=" fa fa-edit"></span></button>
+                                                    </td>
+                                                </tr>
+                                            <% }  }%>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="alert alert-warning" role="alert" style="width: 50%">
+                                <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier les informations: date d'inscirption, statut et valide.
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -107,9 +107,9 @@
                                                                 for(let i=0; i<respoAdmin.length; i++){ %>
                                                                     <tr>
                                                                         <td class="text-center"><%= i+1 %></td>
-                                                                        <td class="text-center" uppercase><%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].mail %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].tel %></td>
+                                                                        <td  uppercase><%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %></td>
+                                                                        <td ><%= respoAdmin[i].mail %></td>
+                                                                        <td ><%= respoAdmin[i].tel %></td>
                                                                     </tr>
                                                              <% }  }%>
                                                         </tbody>
@@ -139,7 +139,7 @@
                                             <th class="text-center"> télèphone</th>
                                             <th class="text-center">Code</th>
                                             <th class="text-center">Date</th>
-                                            <th class="text-center">Valde</th>
+                                            <th class="text-center">Valide</th>
                                             <th class="text-center">Permis</th>
                                             <th class="text-center">Statut</th>
                                             <th class="text-center">Actions</th>
@@ -150,12 +150,12 @@
                                             for(let i=0; i<respo.length; i++){ %>
                                                 <tr>
                                                     <td class="text-center"><%= i+1 %></td>
-                                                    <td contenteditable="true" class="text-center" uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
-                                                    <td contenteditable="true" class="text-center" id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
-                                                    <td contenteditable="true" class="text-center" id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
-                                                    <td contenteditable="true" class="text-center" id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
-                                                    <td contenteditable="true" class="text-center" id="code<%= respo[i].id %>"><%= respo[i].code %></td>
-                                                    <td class="text-center"><%= respo[i].date %></td>
+                                                    <td contenteditable="true"  uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
+                                                    <td contenteditable="true"  id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
+                                                    <td contenteditable="true"  id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
+                                                    <td contenteditable="true"  id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
+                                                    <td contenteditable="true"  id="code<%= respo[i].id %>"><%= respo[i].code %></td>
+                                                    <td ><%= respo[i].date %></td>
                                                     <td class="text-center"><%= respo[i].valide %></td>
                                                     <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>"><%= respo[i].permis %></td>
                                                     <% if(respo[i].statut == "hors service"){ %>

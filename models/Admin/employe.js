@@ -117,7 +117,7 @@ class employe{
    }
 
 
-   static modifierEmp(inputs, CallBack){console.log("aaaaa")
+   static modifierEmp(inputs, CallBack){
     connexion.query("UPDATE utilisateur SET  nom = ? , prenom = ?, email = ?, numTel = ? WHERE (idUtil = ?)", [inputs.nom, inputs.prenom, inputs.email, inputs.tel, inputs.id ] ,(err, result)=>{
         if(err) {
             // CallBack('error');

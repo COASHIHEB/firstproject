@@ -18,6 +18,6 @@ module.exports = function (request, response, next){
         response.locals.flash = request.session.flash;
         request.session.flash = undefined;
     }
-
+    
     next();
 }

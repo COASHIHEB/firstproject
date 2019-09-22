@@ -63,6 +63,34 @@ io.sockets.on('connection', function (socket) {
 
 /** Nos Routes **/
 
+
+app.get('/', (request, response) => {
+    response.render('pages/Client/index', {});
+});
+
+app.get('/cart', (request, response) => {
+    response.render('pages/Client/cart', {});
+});
+
+app.get('/contact', (request, response) => {
+    response.render('pages/Client/contact', {});
+});
+
+app.get('/category', (request, response) => {
+    response.render('pages/Client/category', {});
+});
+
+app.get('/checkout', (request, response) => {
+    response.render('pages/Client/checkout', {});
+});
+
+app.get('/product', (request, response) => {
+    response.render('pages/Client/product', {});
+});
+
+
+
+
 app.use(require('./routes/stock.js'))
 
 app.use(require('./routes/achat.js'))

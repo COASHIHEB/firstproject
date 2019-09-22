@@ -23,7 +23,7 @@ const redirectLogin = (request, response, next) => {
 
 
 /* lien vers page profil */
-app.get('/profile', redirectLogin, (request, response) => {
+app.get('/profile', (request, response) => {
     response.render('pages/Admin/profile/profile', {});
 });
 

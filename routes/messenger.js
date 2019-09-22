@@ -6,8 +6,10 @@ var app = express.Router();
 app.post('/contacts', (request, response) => {
     /*****   lien pour afficher les contactes *****/
     require("../models/messenger/messenger").selectContacts(request.session.userId, (contact) => {
+
         /*****   lien pour afficher les notificatons *****/
         require("../models/messenger/messenger").notification(request.session.userId, (notf) => {
+
             response.json({ contacts: contact, notifications: notf, userId: request.session.userId });
         });
     });

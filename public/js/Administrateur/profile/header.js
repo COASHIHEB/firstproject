@@ -1,5 +1,6 @@
 /************************fin pagination, serach **********************/
 
+
 $.get("getUtilisateur", {},
   function (data, status) {
     if (status == "success") {
@@ -16,7 +17,6 @@ $.get("getUtilisateur", {},
       $("#profilePictureSideBar").attr("src", "images/profilePicture/" + data.image);
     }
   });
-
 
 
 

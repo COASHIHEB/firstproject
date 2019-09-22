@@ -121,7 +121,6 @@ class achat {
             if (err) {
                 CallBack('error');
             } else {
-                console.log(inputs.idAchat)
                 CallBack('done');
             }
         });

@@ -18,22 +18,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-/**** Redirect l'admin no connecter  vert la page login ****/
-const redirectLogin = (request, response) => {
-    console.log(request.sessionID)
-
-    if (!request.session.userType) {
-        response.redirect('/login');
-    } else {
-        if (request.session.userType === "Administrateur") {
-            return response.render('pages/Admin/index', {});
-        } else if (request.session.userType === "Employe") {
-            return response.render('pages/Employee/index', {});
-        } else {
-            return response.render('pages/index', {});
-        }
-    }
-}
 
 /**** Redirect l'admin connecté  vert la page index ****/
 const redirectHome = (request, response, next) => {
@@ -49,18 +33,6 @@ const redirectHome = (request, response, next) => {
         next();
     }
 }
-
-
-
-/* lien vert la pages idex d'admenistrateur */
-router.get('/home', redirectLogin, (request, response) => {
-    response.render('pages/Admin/index', {});
-});
-
-/* lien vert la pages index pour client */
-router.get('/dashboard', redirectLogin, (request, response) => {
-    response.render('pages/index', {});
-});
 
 
 /*Lien vert la page d'authentification "Login" */

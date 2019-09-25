@@ -1,5 +1,5 @@
 <% include header.ejs %>
-
+<script src="js/Clients/produits.js"></script>
 <!-- Hero section -->
 <section class="hero-section">
 	<div class="hero-slider owl-carousel">
@@ -170,7 +170,7 @@
 <section class="product-filter-section">
 	<div class="container">
 		<div class="section-title">
-			<h2>BROWSE TOP SELLING PRODUCTS</h2>
+			<h2>Listes du notre article</h2>
 		</div>
 		<ul class="product-filter-menu">
 			<li><a href="#">TOPS</a></li>
@@ -183,128 +183,49 @@
 			<li><a href="#">LEGGINGS</a></li>
 		</ul>
 		<div class="row">
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/5.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+			<% if(locals.produits){ 
+				for(let i=0; i<produits.length; i++){ %> 
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<img src="images/offre/<%= produits[i].image %>" alt="produitImage" style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal" data-target="#myModal<%= produits[i].idOffre %>">
+							<div class="pi-links">
+								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6><%= produits[i].prix %></h6>
+							<p><%= produits[i].nom %></p>
+							<p><%= produits[i].description %></p>
 						</div>
 					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
 				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<div class="tag-sale">ON SALE</div>
-						<img src="divisima/img/product/6.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Black and White Stripes Dress</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/7.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/8.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/9.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/10.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Black and White Stripes Dress</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/11.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6">
-				<div class="product-item">
-					<div class="pi-pic">
-						<img src="divisima/img/product/12.jpg" alt="">
-						<div class="pi-links">
-							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-						</div>
-					</div>
-					<div class="pi-text">
-						<h6>$35,00</h6>
-						<p>Flamboyant Pink Top </p>
-					</div>
-				</div>
-			</div>
+			<%}} %>
 		</div>
+		<% if(locals.produits){ 
+			for(let i=0; i<produits.length; i++){ %>
+					<!-- Debut Modal-->
+				<div id="myModal<%= produits[i].idOffre %>" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<button type="button" class="close" data-dismiss="modal">&times;</button><br>
+							  <!-- Modal content-->
+						<div class=" modal-content" id="content"  style="height: 10px">
+				           <% if(locals.images){ %>
+							<img src='images/offre/<%= produits[i].image %>' alt='produitImage' >
+							<div class='product-slider owl-carousel' id='imageSlide'>
+							<% for(let j=0; j<images.length; j++){ %> 
+								<% if(produits[i].idOffre === images[j].Offre_idOffre){ %>
+									<img id="image<%= j %>" style="height: 135px" src='images/offre/<%= images[j].nom %>' style="cursor:pointer" onclick="updateImage('<%= j %>','<%= produits[i].idOffre %>')" alt='produitImage'>
+					            <%}}%>
+							</div>
+							<%}%>
+			            </div>		
+					</div>
+				</div>
+				<!-- Fin Modal-->
+			<%}
+		} %>
 		<div class="text-center pt-5">
 			<button class="site-btn sb-line sb-dark">LOAD MORE</button>
 		</div>

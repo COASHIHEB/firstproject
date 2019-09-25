@@ -63,11 +63,6 @@ io.sockets.on('connection', function (socket) {
 
 /** Nos Routes **/
 
-
-app.get('/', (request, response) => {
-    response.render('pages/Client/index', {});
-});
-
 app.get('/cart', (request, response) => {
     response.render('pages/Client/cart', {});
 });
@@ -107,8 +102,9 @@ app.use(require('./routes/categorie-sousCat.js'))
 
 app.use(require('./routes/messenger.js'))
 
-const offre = require('./routes/offre.js')
-app.use(offre)
+app.use(require('./routes/offre.js'))
+
+app.use(require('./routes/home.js'))
 
 /** Fin Nos Routes **/
 

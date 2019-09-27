@@ -5,7 +5,24 @@
 <link href="css/fSelect.css" rel="stylesheet">
 <script src="js/fSelect.js"></script>
 <link  rel = "stylesheet"  href = "css/fileSkinCSS.css" >
-
+<style>
+    .DivDure {
+    background-color: white;
+    display: inline-flex;
+    border: 1px solid #ccc;
+    color: #555;
+    margin-left: 1.6%;} 
+    .inputHeur {
+    border: none;
+    color: #555;
+    text-align: center;
+    width: 35px;} 
+    .inputMin {
+    border: none;
+    color: #555;
+    text-align: center;
+    width: 42px;}  
+</style>
 
 <script>
   (function($) {
@@ -34,9 +51,6 @@
                                                         <% } %>
                                                     </select>
                                                 </div>
-                                            <!-- </div>
-                                            <br/>
-                                            <div class="row"> -->
                                                     <label for="nom" class="col-sm-2 col-form-label">Sous catégorie</label>
                                                     <div class="col-sm-3"  id="sousCat">
                                                         <select class="form-control" onchange="verifier()">
@@ -75,22 +89,32 @@
                                        
                                         <div class="row">
                                             <label for="dure" class="col-sm-2 col-form-label">Durée</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" name="dure" class="form-control" id="dure" placeholder="Veuillez saisir la durée" onchange="verifier()" required>
+                                            <div class="col-sm-2.9 DivDure input-group-prepend">
+                                                <!-- <input type="text" name="dure" class="form-control" id="dure" placeholder="Veuillez saisir la durée" onchange="verifier()" required> -->
+                                                <input class="inputHeur" type="number" min="0" max="23"  id="dure" value = "00" onchange="verifier()"><span class="input-group-text" style="padding: 0.1rem 0.2rem;
+                                                ">h</span>
+                                                <input class="inputMin" type="number" min="0" max="59" id="min" value="00"><span class="input-group-text" style="padding: 0.1rem 0.2rem;">m</span>
                                             </div>
                                         <!-- </div> -->
                                         <!-- <br/>
                                         <div class="row"> -->
+                                            <div class="col-sm-1"></div>
                                             <label for="nom" class="col-sm-2 col-form-label">Prix</label>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3 input-group-prepend" style="padding-left: 0.1%; padding-right: 3%;">
                                                 <input type="text" name="prix" class="form-control" id="prix" placeholder="Veuillez saisir le prix" onchange="verifier()" required>
+                                                <span class="input-group-text" style="padding: 0.1rem 0.2rem;">Dh</span>
                                             </div>
                                         </div>
                                         <br/>
+                                        <br/>
                                         <div class="row">
                                             <label for="nom" class="col-sm-2 col-form-label">Photo</label>
-                                            <div class="col-sm-8">
-                                                <input type="file" accept="image/*" id="pictureFile" name="pictureFile" onchange="verifier()"  multiple>
+                                            <div class="input-group col-sm-8">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="pictureFile"
+                                                    aria-describedby="inputGroupFileAddon01" name="pictureFile" accept="image/*" onchange="verifier()"  multiple>
+                                                    <label class="custom-file-label" for="pictureFile">Sélectioner des photos</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <br/>
@@ -284,17 +308,22 @@
                                                 <span class="sr-only">Next</span>
                                             </a>
                                             </div>
-                                            <div class="row">
+                                            <div class="row input-group custom-file" style="margin-left: 1px;">
                                             <div class="col-sm-8" id="ajouterphoto">
                                                 
                                             </div>
+                                            
                                         </div>
+                                        <br/>
                                         <div style="height:100pt;overflow-x:auto;overflow-y: hidden;">
+                                            <br/>
                                             <div class="">
                                                 <div class="row" id="sliderImageAjout">
                                                 </div>
                                             </div>
                                         </div>
+                                        <br/>
+                                        <div id="btn"></div>
                                     </div>
                                 </div>
                             </div>

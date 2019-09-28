@@ -43,23 +43,6 @@ class adherent{
             }
         });
     }
-
-  
-        /******  Methode pour modifier un client ******/
-    static updateAdherent(inputs,CallBack){
-        /*connexion.query("UPDATE utilisateur SET  WHERE idUtil = ?",[ inputs.id], (err, result)=>{
-            if(err) {
-                CallBack('error');
-            }else { 
-                connexion.query("UPDATE adherent SET WHERE utilisateur_idUtil = ?",[parseFloat(inputs.points), inputs.id], (err, reslt)=>{
-                    if(err){
-                        CallBack('error');
-                    }else{
-                        CallBack('done');
-                    }
-                });
-            }
-        });*/CallBack('done');
             
     }
 

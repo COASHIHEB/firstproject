@@ -48,7 +48,7 @@ function sousCategorie(idSousCat,idCatt, cat, sousCat){
     $('#prduitsListes').empty();
     produits.forEach(element => {
          if(element.SousCategorie_idSousCat == idSousCat){
-          $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p>"+element.description+"</p></div></div>");  
+          $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
          }
        });
        $('#categorie').attr('onclick','categorie('+idCatt+',\''+cat+'\')');
@@ -72,13 +72,13 @@ function categorie(id, nom){
     $('#categorie').empty();
     $('#separateur1').empty();
     produits.forEach(element => {
-       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p>"+element.description+"</p></div></div>");  
+       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
     });
 
   }else{
     produits.forEach(element => {
       if(element.idCat == id){
-       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p>"+element.description+"</p></div></div>");  
+       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
       }
     });
     $('#categorie').attr('onclick','categorie('+id+',\''+nom+'\')');

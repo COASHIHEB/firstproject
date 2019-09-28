@@ -79,10 +79,6 @@ app.get('/checkout', (request, response) => {
     response.render('pages/Client/checkout', {});
 });
 
-app.get('/product', (request, response) => {
-    response.render('pages/Client/product', {});
-});
-
 
 
 

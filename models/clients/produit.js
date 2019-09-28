@@ -1,8 +1,34 @@
 var connexion = require('../../config/db');
 class produit{
+       //la methode pour afficher un offres
+    static selectProduit(input,CallBack){
+        connexion.query("SELECT offre.*, souscategorie.nom as sousCategorieNom, categorie.*, categorie.nom as categorieNom, photo.nom as image FROM offre LEFT JOIN souscategorie ON offre.SousCategorie_idSousCat = souscategorie.idSousCat LEFT JOIN categorie ON categorie.idCat = souscategorie.Categorie_idCat LEFT JOIN photo ON offre.idOffre = photo.Offre_idOffre GROUP BY offre.idOffre HAVING offre.idOffre = ?",[input], (err, produit)=>{
+            
+            if(err) {
+              CallBack("error");
+            }else { 
+                CallBack(produit[0]);
+            }
+        });
+    }
+
+
        //la methode pour afficher les 6 premier offres
-    static selectProduit(CallBack){
-        connexion.query("SELECT offre.*, souscategorie.nom as sousCategorieNom, souscategorie.nom as categorieNom, photo.nom as image FROM offre LEFT JOIN souscategorie ON offre.SousCategorie_idSousCat = souscategorie.idSousCat LEFT JOIN categorie ON categorie.idCat = souscategorie.Categorie_idCat LEFT JOIN photo ON offre.idOffre = photo.Offre_idOffre GROUP BY offre.idOffre LIMIT 6",[], (err, produits)=>{
+    static selectProduits(CallBack){
+        connexion.query("SELECT offre.*, souscategorie.nom as sousCategorieNom, categorie.*, categorie.nom as categorieNom, photo.nom as image FROM offre LEFT JOIN souscategorie ON offre.SousCategorie_idSousCat = souscategorie.idSousCat LEFT JOIN categorie ON categorie.idCat = souscategorie.Categorie_idCat LEFT JOIN photo ON offre.idOffre = photo.Offre_idOffre GROUP BY offre.idOffre LIMIT 6",[], (err, produits)=>{
+            
+            if(err) {
+              CallBack("error");
+            }else { 
+                CallBack(produits);
+            }
+        });
+    }
+
+
+       //la methode pour afficher les 6 premier offres sur le meme categories
+    static selectProduitsParCategorie(inputs,CallBack){
+        connexion.query("SELECT offre.*, souscategorie.nom as sousCategorieNom, categorie.*, categorie.nom as categorieNom, photo.nom as image FROM offre LEFT JOIN souscategorie ON offre.SousCategorie_idSousCat = souscategorie.idSousCat LEFT JOIN categorie ON categorie.idCat = souscategorie.Categorie_idCat LEFT JOIN photo ON offre.idOffre = photo.Offre_idOffre GROUP BY offre.idOffre HAVING categorie.idCat=? AND offre.idOffre<>? LIMIT 6",[inputs.code,inputs.id], (err, produits)=>{
             
             if(err) {
               CallBack("error");

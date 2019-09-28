@@ -9,17 +9,29 @@
             <div class="section-title">
                 <h2>Listes du notre articles </h2>
             </div>
-            <div id="chemain">
+            <div class="text-center col-lg-12">
+                <div class="input-group col-lg-6 col-sm-8 col-xs-12">
+                    <input id="myInputt" class="form-control search" type="text" placeholder="Rechercher sur ce categorie..">
+                    <div class="input-group-append">
+                        <span class="input-group-text"  id="nomValide">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="chemain" class="co-lg-12">
+                <hr class="co-lg-12">
                 <a href="#" id="produits" onclick="categorie(0,'accueil')">Articles</a>
                 <i id="separateur1"></i>
                 <a href="#" id="categorie" onclick="categorie(0)"></a>
                 <i id="separateur2"></i>
                 <a href="#" id="sousCat" onclick="categorie(0)"></a>
+                <hr class="co-lg-12">
             </div>
             <div class="row"  id="prduitsListes" >
                 <% if(locals.produits){ 
                     for(let i=0; i<produits.length; i++){ %> 
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-3 col-sm-6 class">
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="images/offre/<%= produits[i].image %>" alt="produitImage" style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal" data-target="#myModal<%= produits[i].idOffre %>">
@@ -37,6 +49,13 @@
                     </div>
                 <%}} %>
             </div>
+            <script>
+                $(document).ready(function () {
+                    $('#prduitsListes').buzinaPagination({
+                        itemsOnPage:5
+                    });
+                });
+            </script>
             <% if(locals.produits){ 
                 for(let i=0; i<produits.length; i++){ %>
                         <!-- Debut Modal-->

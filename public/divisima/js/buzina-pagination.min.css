@@ -1,0 +1,25 @@
+/**
+ * Buzina Pagination http://github.com/mikebrsv/buzina-pagination
+ * Author: Mikhail Borisov http://github.com/mikebrsv
+ * License: https://github.com/mikebrsv/buzina-pagination/blob/master/LICENSE
+ */
+
+.content-page{
+    display:none;
+}
+.content-page-active{
+    display:block; 
+    display: inherit;
+}
+.page-item a{
+    background-color: #282828;
+    color: white;
+}
+#item1 a{
+    color: #282828;
+    background-color: mediumvioletred;
+}
+.page-item a:hover{
+    color: #282828;
+    background-color: mediumvioletred;
+}

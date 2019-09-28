@@ -1,7 +1,32 @@
 var produits=[];
+
+/************************serach **********************/
+$(document).ready(function(){
+  $("#myInputt").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#prduitsListes div.class").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      //$("#prduitsListes div.content-page").clone().appendTo("#prduitsListes");
+    });
+  });
+});
+
 /********     Methode pour modifier l'image du galrie    *******/
 function updateImage(idImage,idOffre){
-    $('#myModal'+idOffre+' #content img').attr('src',$('#image'+idImage).attr('src'));
+  $('#myModal'+idOffre+' #content img').attr('src',$('#image'+idImage).attr('src'));
+}
+
+/********     Methode pour modifier le css du botton active du paggination    *******/
+function page(total,item){
+  for(var i = 1; i<=total; i++){
+    if(item == i){
+      $('#item'+i+' a').css('background-color','mediumvioletred');
+      $('#item'+i+' a').css('color','#282828');
+    }else{
+      $('#item'+i+' a').css('background-color','#282828');
+      $('#item'+i+' a').css('color','white');
+    }
+  }
 }
 
 
@@ -48,7 +73,7 @@ function sousCategorie(idSousCat,idCatt, cat, sousCat){
     $('#prduitsListes').empty();
     produits.forEach(element => {
          if(element.SousCategorie_idSousCat == idSousCat){
-          $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
+          $('#prduitsListes').append("<div class='col-lg-3 col-sm-6 class'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
          }
        });
        $('#categorie').attr('onclick','categorie('+idCatt+',\''+cat+'\')');
@@ -57,6 +82,10 @@ function sousCategorie(idSousCat,idCatt, cat, sousCat){
        $('#sousCat').text(sousCat);
        $('#sousCat').attr('onclick','sousCategorie('+idSousCat+','+idCatt+',\''+cat+'\',\''+sousCat+'\')');
        $('#separateur1').text('>');
+       $('#prduitsListes--pager').remove();
+       $('#prduitsListes').buzinaPagination({
+          itemsOnPage:5
+        });
      
 }
 
@@ -72,18 +101,22 @@ function categorie(id, nom){
     $('#categorie').empty();
     $('#separateur1').empty();
     produits.forEach(element => {
-       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
+       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6 class'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
     });
 
   }else{
     produits.forEach(element => {
       if(element.idCat == id){
-       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
+       $('#prduitsListes').append("<div class='col-lg-3 col-sm-6 class'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
       }
     });
     $('#categorie').attr('onclick','categorie('+id+',\''+nom+'\')');
     $('#categorie').text(cat);
     $('#separateur2').text('>');
+    $('#prduitsListes--pager').remove();
+    $('#prduitsListes').buzinaPagination({
+       itemsOnPage:5
+     });
   }
   
 }

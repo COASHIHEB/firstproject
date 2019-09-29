@@ -5,8 +5,6 @@ var router = express.Router();
 
 /**** Redirect l'admin no connecter  vert la page login ****/
 const redirectLogin = (request, response) => {
-    console.log(request.sessionID)
-
     if (!request.session.userType) {
         response.redirect('/login');
     } else {
@@ -22,9 +20,10 @@ const redirectLogin = (request, response) => {
 
 
 /* lien vert la pages idex d'admenistrateur */
-router.get('/home', redirectLogin, (request, response) => {
-    response.render('pages/Admin/index', {});
+router.get('/dashbordAdmin', redirectLogin, (request, responsess) => {
+    responsess.render('pages/Admin/index', {});
 });
+
 
 /* lien vert la pages index générale du site */
 router.get('/', (request, response) => {

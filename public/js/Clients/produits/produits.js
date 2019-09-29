@@ -1,15 +1,42 @@
 var produits=[];
 
-/************************serach **********************/
 $(document).ready(function(){
+  /************************serach **********************/
   $("#myInputt").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $("#prduitsListes div.class").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      //$("#prduitsListes div.content-page").clone().appendTo("#prduitsListes");
     });
   });
+
+  /************************Global serach **********************/
+  $("#searchButton").click(function(){
+    search();
+  });
+
 });
+
+
+/************************Global serach Function**********************/
+function search(){
+  if($('#search').val() != ''){
+     $('#prduitsListes').empty();
+     $('#sousCat').empty();
+     $('#separateur2').empty();
+     $('#categorie').empty();
+     $('#separateur1').empty();
+       produits.forEach(element => {
+         if(element.nom.toLowerCase() == $('#search').val().toLowerCase() || element.prix.toLowerCase() == $('#search').val().toLowerCase() || element.description.toLowerCase() == $('#search').val().toLowerCase() || element.categorieNom.toLowerCase() == $('#search').val().toLowerCase() || element.sousCategorieNom.toLowerCase() == $('#search').val().toLowerCase() ){
+          $('#prduitsListes').append("<div class='col-lg-3 col-sm-6 class'><div class='product-item'><div class='pi-pic'><img src='images/offre/"+element.image+"' alt='produitImage' style='cursor:pointer; width: 100%; height: 300px;' data-toggle='modal' data-target='#myModal"+element.idOffre+"'><div class='pi-links'><a href='#' class='add-card'><i class='flaticon-bag'></i><span>ADD TO CART</span></a><a href='#' class='wishlist-btn'><i class='flaticon-heart'></i></a></div></div><div class='pi-text'><h6>"+element.prix+"</h6><p>"+element.nom+"</p><p><a href='produit?code="+element.idOffre+"' target='_blank'>Plus...</a></p></div></div>");  
+         }
+       });
+       $('#prduitsListes--pager').remove();
+       $('#prduitsListes').buzinaPagination({
+          itemsOnPage:5
+        });
+  }
+}
+   
 
 /********     Methode pour modifier l'image du galrie    *******/
 function updateImage(idImage,idOffre){

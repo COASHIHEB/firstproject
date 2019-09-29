@@ -5,8 +5,6 @@ var router = express.Router();
 
 
 
-
-
 /**** recuperie la bibeo nodemailer ****/
 var nodemailer = require('nodemailer');
 /**** création sur fichier serveur le transporteur qui sera capable d'envoyer notre email ****/
@@ -52,6 +50,7 @@ router.get('/register', redirectHome, (request, response) => {
 
 /*login*/
 router.post('/login', (request, response) => {
+    console.log('postLogin');
     require("../models/login").login(request.body, (resp) => {
         if (resp != "error") {
             const { userId } = request.session;

@@ -1,20 +1,16 @@
-/**** vérifier le nom d'utiisateur****/
+
 $(document).ready(function() {
+ /**** vérifier le nom d'utiisateur****/
     $('#email').blur(function(){
         verefierEmail("email");
     });
-});
 
 /**** vérifier le mot de passe ****/ 
-$(document).ready(function() {
     $('#password').blur(function(){        
         verefirMdp();
     });
-});
-
 
 /**** envoyer data du formulaire ****/
-$(document).ready(function() {
     $("#login").click(function(){
       $.post("login",
       {
@@ -33,7 +29,7 @@ $(document).ready(function() {
         }
         else{
             //$(document).ready( function() {
-                $(location).attr("href", "/home");
+                $(location).attr("href", "/dashbordAdmin");
              //});
         }
       });

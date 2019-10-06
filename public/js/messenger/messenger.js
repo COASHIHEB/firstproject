@@ -1,35 +1,68 @@
+
+  var fenetre = ['0','0'];
+  var user = []
+
+  /***** variable globale pour conte le nobre des boites des message ouvert ******/
+  var nbrBoiteMessage;
+  function conteur(){
+    if(nbrBoiteMessage == 0){
+      //caché les boites du messages
+      $("#boitMessage1").show(); //hide()
+      nbrBoiteMessage+=1;
+    }else if(nbrBoiteMessage == 1){
+      //caché les boites du messages
+      $("#boitMessage2").show();
+      nbrBoiteMessage+=1;
+    }else{
+      nbrBoiteMessage=1;
+    }
+    return nbrBoiteMessage;
+  }
+
+/***** Fenetre massenger ******/
+(function($) {
+  $(document).ready(function() {
+      $('.chatbox__title__Liste').on('click', function() {
+        $('.chatbox__Liste').toggleClass('chatbox--tray');
+      });
+      $('.chatbox__title__Fenetre1').on('click', function() {
+        $('.chatbox__Fenetre1').toggleClass('chatbox--tray');
+        var messageBody = document.querySelector('.message1');
+        console.log('aaaaa');
+console.log(messageBody.scrollHeight);
+        
+      });
+      $('.chatbox__title__Fenetre2').on('click', function() {
+        $('.chatbox__Fenetre2').toggleClass('chatbox--tray');
+      });
+      $('.close__Fenetre1').on('click', function(e) {
+          e.stopPropagation();
+          $('.chatbox__Fenetre1').addClass('chatbox--closed');
+          fermer(1);
+      });
+      $('.close__Fenetre2').on('click', function(e) {
+          e.stopPropagation();
+          $('.chatbox__Fenetre2').addClass('chatbox--closed');
+          fermer(2);
+      });
+      $('.chatbox__credentials').on('submit', function(e) {
+          e.preventDefault();
+          $('.chatbox').removeClass('chatbox--empty');
+      });
+  });
+})(jQuery);
+
+
 /***** Search for contacte  *****/
 $(document).ready(function(){
   
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
-      $(".dropdown-menu li").filter(function() {
+      $("#contactsListe li").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
   });
-
-
-  var fenetre = ['0','0'];
-
-
-
-/***** variable globale pour conte le nobre des boites des message ouvert ******/
-var nbrBoiteMessage;
-function conteur(){
-  if(nbrBoiteMessage == 0){
-    //caché les boites du messages
-    $("#boitMessage1").show(); //hide()
-    nbrBoiteMessage+=1;
-  }else if(nbrBoiteMessage == 1){
-    //caché les boites du messages
-    $("#boitMessage2").show();
-    nbrBoiteMessage+=1;
-  }else{
-    nbrBoiteMessage=1;
-  }
-  return nbrBoiteMessage;
-}
 
 
 /*********     Methode pour fermer la boite du message      *********/
@@ -39,7 +72,7 @@ function fermer(val){
     nbrBoiteMessage = 0;
   }else if(nbrBoiteMessage==2){
     if(val == 2){
-      nbrBoiteMessage = 1;
+      nbrBoiteMessage = 1;     
     }
   }
   $("#boitMessage"+val).hide();
@@ -70,18 +103,23 @@ function messages(id){
     }else{
       
       if(fenetre[0] != id && fenetre[1] != id){
-        $('#nomContacte'+conteur()).text(data.contactName);
+        $('.chatbox__Fenetre'+conteur()).toggleClass('chatbox--tray');
+        $('.chatbox__Fenetre'+nbrBoiteMessage).removeClass('chatbox--closed');
+        $('#nomContacte'+nbrBoiteMessage+" i").text(data.contactName);
         fenetre[nbrBoiteMessage-1]=id;
         $('#button'+nbrBoiteMessage).attr('onclick', 'newMessage('+id+','+nbrBoiteMessage+')');
         $('.message'+nbrBoiteMessage).attr('id', 'message'+id);
         $('.message'+nbrBoiteMessage).text("");
         data.messages.forEach(element => {
           if(id == element.idEmeteur){
-            $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
+            $('#message'+id).append("<div class='chatbox__body__message chatbox__body__message--right'><img src='images/profilePicture/"+user.image+"' alt=''><p>"+element.message+"</p></div>");
           }else{
-            $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+element.message+"&nbsp;</p></li>");
+            $('#message'+id).append("<div class='chatbox__body__message chatbox__body__message--left'><img src='images/profilePicture/"+data.image+"' alt=''> <p>"+element.message+"</p></div>");
           }
         });
+
+        var messageBody = document.querySelector('#message'+id);
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
         
       }
       
@@ -163,10 +201,13 @@ function contacts(){
     if(data == 'error'){
     }else{
       data.contacts.forEach(element => {
-        if(element.connected == "oui"){
-          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
+        if(element.idUtil == data.userId){
+          user = element;
+
+         }else if(element.connected == "oui"){
+          $('#contactsListe').append("<li><a class='list-group-item' style='padding: 0.2rem 0.5rem; font-size: small;' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: green' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }else{
-          $('#contactsListe').append("<li><a class='list-group-item' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
+          $('#contactsListe').append("<li><a class='list-group-item' style='padding: 0.2rem 0.5rem; font-size: small;' href='#' onclick='messages("+element.idUtil+")'><img src='images/profilePicture/"+element.image+"' alt='image' style='vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;'> &nbsp;&nbsp;"+element.nom+" "+element.prenom+" <i id='"+element.idUtil+"' style='color: red' class='menu-icon fas fa-circle float-right'></i></a></li>");
         }
       });
             // afficher le nombres des notifications sur le header
@@ -238,8 +279,8 @@ function newMessage(id,nbrFenetre){
     },
     function(data, status){
       if(data != 'error'){
-       $('#message'+id).append("<li style='color:midnightblue'><p style='background-color: white;border: 1px solid green; border-radius: 10px 25px 0px 12px;'> &nbsp;&nbsp;"+ $('#myMessage'+nbrFenetre).val() +"&nbsp;</p></li>");
-        socket.emit('notification', $('#myMessage'+nbrFenetre).val() , id , data);        
+       $('#message'+id).append("<div class='chatbox__body__message chatbox__body__message--right'><img src='images/profilePicture/"+user.image+"' alt=''><p>"+$('#myMessage'+nbrFenetre).val()+"</p></div>");
+        socket.emit('notification', $('#myMessage'+nbrFenetre).val() , id , data, user.image);        
         $('#myMessage'+nbrFenetre).val("");
       }else{}
     });
@@ -247,8 +288,8 @@ function newMessage(id,nbrFenetre){
 }
 
 // append the chat text message
-socket.on('chat_message', function(msg,id){
-  $('#message'+id).append("<li style='color:dimgray'><p style='background-color: white;border: 1px solid green; border-radius: 25px 10px 12px 0px;'> &nbsp;&nbsp;&nbsp;&nbsp;"+msg+"&nbsp;</p></li>")
+socket.on('chat_message', function(msg,id,image){
+  $('#message'+id).append("<div class='chatbox__body__message chatbox__body__message--left'><img src='images/profilePicture/"+image+"' alt=''><p>"+msg+"</p></div>")
 });
 
 // statut connected someone is online

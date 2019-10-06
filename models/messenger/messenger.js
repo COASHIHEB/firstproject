@@ -3,8 +3,8 @@ var moment = require('../../config/moment');
 
 class messenger{
         /******  Methode pour afficher les contacts ******/
-    static selectContacts(input,CallBack){
-        connexion.query("SELECT * FROM utilisateur WHERE (statut='Administrateur' OR statut='Employe') AND idUtil <> ?",[input], (err, contacts)=>{
+    static selectContacts(CallBack){
+        connexion.query("SELECT * FROM utilisateur WHERE statut='Administrateur' OR statut='Employe'",[], (err, contacts)=>{
          
             if(err){
                 CallBack('error');
@@ -29,7 +29,7 @@ class messenger{
                             if(err){
                                 CallBack('error');
                             }else{
-                                CallBack({messages: msg , name: user[0].nom+" "+user[0].prenom});
+                                CallBack({messages: msg , name: user[0].nom+" "+user[0].prenom, image: user[0].image});
                             }
                         });
                     }

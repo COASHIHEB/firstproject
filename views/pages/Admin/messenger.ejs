@@ -1,19 +1,88 @@
+
 <script src="js/messenger/messenger.js"></script>
 
-<div class="fixed-bottom">
-    <!--      debut liste du contacts      -->
-    <div class="dropdown col-lg-3 text-center d-flex justify-content-end" style="margin-top: 23.7rem;  ">
-        <button style="width: 100%" class="btn btn-primary dropdown-toggle" type="button"
-            data-toggle="dropdown">Messenger</button>
-        <div style="width: 91%" class="dropdown-menu">
-            <div class="text-center list-group-item active">
-                La liste des contactes <span class="fa fa-group"></span>
-            </div>
-            <div style="width: 100%; height: 400px; overflow: auto;" id="contactsListe">
-            </div>
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+<!--  Debut Messenger partie  -->
+<div class="fixed-bottom row">
+<div class="col-lg-3 col-sm-0 col-xs-0"></div>
+<!--      debut boites des messages      -->
+<div class="col-lg-3 col-sm-4 col-xs-4">
+<div class="chatbox chatbox__Fenetre2 chatbox--tray chatbox--closed" style="z-index: 9999;">
+    <div id="fenetre2">
+        <div class="chatbox__title chatbox__title__Fenetre2">
+            <h5><a id="nomContacte2" href="#"><span class="fa fa-user-circle-o"></span> <i>contacte</i></a></h5>
+            <button class="chatbox__title__tray">
+                <span></span>
+            </button>
+            <button class="chatbox__title__close close__Fenetre2">
+                <span>
+                    <svg viewBox="0 0 12 12" width="12px" height="12px">
+                        <line stroke="#FFFFFF" x1="11.75" y1="0.25" x2="0.25" y2="11.75"></line>
+                        <line stroke="#FFFFFF" x1="11.75" y1="11.75" x2="0.25" y2="0.25"></line>
+                    </svg>
+                </span>
+            </button>
+        </div>
+            <!--      debut 1er boite des messages  style="height: 315px; overflow: auto;"    -->
+        <div class="chatbox__body message2" style="height: 300px; overflow: auto"  id="message2">
+        </div>
+            <!--      fin 1er boite des messages      -->
+        <div class="input-group col-xs-12">
+            <textarea  style="border-color:lightslategrey" class="form-control" id="myMessage2" placeholder="Message.."></textarea>
+            <button class="btn" id="button2" type="button" >Envoyer</button>
         </div>
     </div>
-
-    <!--      fin liste du contacts      -->
 </div>
+</div>
+<div class="col-lg-3 col-sm-4 col-xs-4">
+<div class="chatbox chatbox__Fenetre1 chatbox--tray  chatbox--closed" style="z-index: 9999;">
+    <div id="fenetre1">
+        <div class="chatbox__title chatbox__title__Fenetre1">
+            <h5><a id="nomContacte1" href="#"><span class="fa fa-user-circle-o"></span> <i>contacte</i></a></h5>
+            <button class="chatbox__title__tray">
+                <span></span>
+            </button>
+            <button class="chatbox__title__close close__Fenetre1">
+                <span>
+                    <svg viewBox="0 0 12 12" width="12px" height="12px">
+                        <line stroke="#FFFFFF" x1="11.75" y1="0.25" x2="0.25" y2="11.75"></line>
+                        <line stroke="#FFFFFF" x1="11.75" y1="11.75" x2="0.25" y2="0.25"></line>
+                    </svg>
+                </span>
+            </button>
+        </div>
+            <!--      debut 1er boite des messages  style="height: 315px; overflow: auto;"    -->
+        <div class="chatbox__body message1" style="height: 300px; overflow: auto"  id="message1">
+        </div>
+            <!--      fin 1er boite des messages      -->
+        <div class="input-group col-xs-12">
+            <textarea  style="border-color:lightslategrey" class="form-control" id="myMessage1" placeholder="Message.."></textarea>
+            <button class="btn" id="button1" type="button" >Envoyer</button>
+        </div>
+    </div>
+</div>
+</div>
+<!--      fin boites des messages      -->
+<!--      debut liste du contacts      -->  
+<div class="col-lg-3 col-sm-4 col-xs-4">  
+<div class="chatbox chatbox__Liste chatbox--tray" style="z-index: 9999">      
+<div id="massenger">
+    <div class="chatbox__title chatbox__title__Liste">
+        <h6><a href="#">La liste des contactes <span class="fa fa-group"></span></a></h6>
+        <button class="chatbox__title__tray">
+            <span></span>
+        </button>
+    </div>
+    <div style="list-style: none;">
+        <!--------   Debut liste     -------->
+        <div style="overflow: auto; height: 315px;" id="contactsListe">
+        </div>
+        <!--------   fin liste     -------->
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    </div>
+</div>
+</div>
+</div>
+<!--      fin liste du contacts      -->
+</div>
+
+    <!--  Fin Messenger partie  -->

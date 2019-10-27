@@ -1,0 +1,155 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+
+<script src="js/Admin/commande/commande.js"></script>
+<style>
+    .fa-star {
+        color: gray;
+    }
+
+    .fa-star.gold {
+        color: #ffdc0f;
+    }
+</style>
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Historique des commandes faites</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="tableau2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">N°</th>
+                                                        <th class="text-center">Client</th>
+                                                        <th class="text-center">Prix</th>
+                                                        <th class="text-center">Date</th>
+                                                        <th class="text-center">Offre</th>
+                                                        <th class="text-center">Evaluation</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(locals.commandeFaite){
+                                                                for(let i=0; i<commandeFaite.length; i++){ %>
+                                                    <tr>
+                                                        <td class="text-center"><%= i+1 %></td>
+                                                        <td uppercase>
+                                                            <%= commandeFaite[i].nomAdherent %>&nbsp;<%= commandeFaite[i].prenomAdherent %>
+                                                        </td>
+                                                        <td class="text-center"><%= commandeFaite[i].prixTotal %> Dh
+                                                        </td>
+                                                        <td class="text-center"><%= commandeFaite[i].dateCommande %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%for(let j=0; j<commandeFaite[i].nomOffre.length; j++){ %>
+                                                            <%= commandeFaite[i].nomOffre[j].nomOffre %>
+                                                            <br /><br />
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <%for(let k=0; k<commandeFaite[i].etoile.length; k++){ %>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 0) { %>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="margin-bottom: -9%;">
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 1) {%>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="margin-bottom: -9%;">
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 2) {%>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="margin-bottom: -9%;">
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star "></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 3) {%>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="margin-bottom: -9%;">
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 4) {%>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="margin-bottom: -9%;">
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <%if(commandeFaite[i].etoile[k].etoile == 5) {%>
+                                                            <div class="text-center">
+                                                                <div class="stars" style="
+                                                                                        margin-bottom: -9%;">
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                    <i class="fa fa-star gold"></i>
+                                                                </div>
+                                                            </div>
+                                                            <% }%>
+                                                            <br /><br />
+                                                            <% }%>
+                                                        </td>
+                                                    </tr>
+                                                    <% }  }%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <% include ../layouts/footer.ejs %>

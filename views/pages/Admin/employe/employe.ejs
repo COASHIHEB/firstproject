@@ -1,20 +1,10 @@
-<% include ../header.ejs %>
-<% include ../sideBar.ejs %>
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
 
-<script src="js/Administrateur/employe/employe.js"></script>
+<script src="js/Admin/employe/employe.js"></script>
 
 <div class="main-panel">
     <div class="content-wrapper">
-        <div class="content-wrapper" id="pages_breadcrumb">
-            <div class="card">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Employe</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-6 d-flex align-items-stretch grid-margin">
                 <div class="row flex-grow">
@@ -105,35 +95,42 @@
 
 
             <div class="col-md-6 d-flex align-items-stretch grid-margin">
-                <div class="row flex-grow" style="overflow-x: auto;">
+                <div class="row flex-grow">
                     <div class="col-12 stretch-card">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title text-center">Liste des administrateurs</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" id="tableau2">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center"> N°</th>
-                                                <th class="text-center"> Nom</th>
-                                                <th class="text-center"> email</th>
-                                                <th class="text-center"> télèphone</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% if(locals.respoAdmin){
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Liste des administrateurs</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="tableau2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> </th>
+                                                        <th class="text-center"> Nom</th>
+                                                        <th class="text-center"> Email</th>
+                                                        <th class="text-center"> Télèphone</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(locals.respoAdmin){
                                                                 for(let i=0; i<respoAdmin.length; i++){ %>
-                                            <tr>
-                                                <td class="text-center"><%= i+1 %></td>
-                                                <td class="text-center" uppercase>
-                                                    <%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %>
-                                                </td>
-                                                <td class="text-center"><%= respoAdmin[i].mail %></td>
-                                                <td class="text-center"><%= respoAdmin[i].tel %></td>
-                                            </tr>
-                                            <% }  }%>
-                                        </tbody>
-                                    </table>
+                                                    <tr>
+                                                        <td class="text-center"><img
+                                                                class="img-sm rounded-circle mb-4 mb-md-0"
+                                                                src="images/profilePicture/<%= respoAdmin[i].image %>">
+                                                        </td>
+                                                        <td uppercase>
+                                                            <%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %>
+                                                        </td>
+                                                        <td><%= respoAdmin[i].mail %></td>
+                                                        <td><%= respoAdmin[i].tel %></td>
+                                                    </tr>
+                                                    <% }  }%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -150,15 +147,16 @@
                             <table class="table table-bordered table-hover" id="tableau">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"> N°</th>
+                                        <th class="text-center"> </th>
                                         <th class="text-center"> Nom</th>
                                         <th class="text-center"> Prénom</th>
-                                        <th class="text-center"> email</th>
-                                        <th class="text-center"> télèphone</th>
+                                        <th class="text-center"> Email</th>
+                                        <th class="text-center"> Télèphone</th>
                                         <th class="text-center">Code</th>
                                         <th class="text-center">Date</th>
-                                        <th class="text-center">Valde</th>
+                                        <th class="text-center">Validation</th>
                                         <th class="text-center">Permis</th>
+                                        <th class="text-center">Evaluation</th>
                                         <th class="text-center">Statut</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
@@ -166,38 +164,82 @@
                                 <tbody>
                                     <% if(locals.respo){
                                             for(let i=0; i<respo.length; i++){ %>
-                                                <tr>
-                                                    <td class="text-center"><%= i+1 %></td>
-                                                    <td contenteditable="true"  uppercase id="nom<%= respo[i].id %>"><%= respo[i].nom %></td>
-                                                    <td contenteditable="true"  id="prenom<%= respo[i].id %>"><%= respo[i].prenom %></td>
-                                                    <td contenteditable="true"  id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
-                                                    <td contenteditable="true"  id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
-                                                    <td contenteditable="true"  id="code<%= respo[i].id %>"><%= respo[i].code %></td>
-                                                    <td ><%= respo[i].date %></td>
-                                                    <td class="text-center"><%= respo[i].valide %></td>
-                                                    <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>"><%= respo[i].permis %></td>
-                                                    <% if(respo[i].statut == "hors service"){ %>
-                                                         <td  style="color:red"><i class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
-                                                    <%  }%>
-                                                    <% if(respo[i].statut == "en ligne"){ %>
-                                                        <td style="color:green"><i class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;<%= respo[i].statut %></td>
-                                                   <%  }%>
-                                                    <td class="text-center"> 
-                                                        <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].id %>')"><span class="fa fa-trash"></span></button>
-                                                        <button class=" btn btn-success btn-xs" onclick="alertMod('<%= respo[i].id %>')"><span class=" fa fa-edit"></span></button>
-                                                    </td>
-                                                </tr>
-                                            <% }  }%>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="alert alert-warning" role="alert" style="width: 50%">
-                                <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier les informations: date d'inscirption, statut et valide.
-                            </div>
+                                    <tr>
+                                        <td class="text-center"><img class="img-sm rounded-circle mb-4 mb-md-0"
+                                                src="images/profilePicture/<%= respo[i].image %>"></td>
+                                        <td contenteditable="true" uppercase id="nom<%= respo[i].id %>">
+                                            <%= respo[i].nom %></td>
+                                        <td contenteditable="true" id="prenom<%= respo[i].id %>"><%= respo[i].prenom %>
+                                        </td>
+                                        <td contenteditable="true" id="mail<%= respo[i].id %>"><%= respo[i].mail %></td>
+                                        <td contenteditable="true" id="tel<%= respo[i].id %>"><%= respo[i].tel %></td>
+                                        <td contenteditable="true" id="code<%= respo[i].id %>"><%= respo[i].code %></td>
+                                        <td><%= respo[i].date %></td>
+                                        <td class="text-center"><%= respo[i].valide %></td>
+                                        <td contenteditable="true" class="text-center" id="permis<%= respo[i].id %>">
+                                            <%= respo[i].permis %></td>
+                                        <td>
+                                            <div class="wrapper">
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="mb-2"><%= respo[i].pourcentage %>%</p>
+                                                    <p class="mb-2 text-primary">
+                                                        <%= respo[i].etoile %>/<%= respo[i].nombre %></p>
+                                                </div>
+                                                <% if(respo[i].pourcentage < 25){%>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                                        role="progressbar" style="width: <%= respo[i].pourcentage %>%"
+                                                        aria-valuenow="<%= respo[i].pourcentage %>" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <% }%>
+                                                <% if((25 <= respo[i].pourcentage) && (respo[i].pourcentage <= 50)){%>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                                        role="progressbar" style="width: <%= respo[i].pourcentage %>%"
+                                                        aria-valuenow="<%= respo[i].pourcentage %>" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <% }%>
+                                                <% if(respo[i].pourcentage > 50){%>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                                        role="progressbar" style="width:<%= respo[i].pourcentage %>%"
+                                                        aria-valuenow="<%= respo[i].pourcentage %>" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <% }%>
+                                            </div>
+                                        </td>
+                                        <% if(respo[i].isconnected == "non"){ %>
+                                        <td style="color:red"><i
+                                                class="menu-icon fas fa-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;Hors service
+                                        </td>
+                                        <%  }%>
+                                        <% if(respo[i].isconnected == "oui"){ %>
+                                        <td style="color:green"><i
+                                                class="menu-icon fas fa-circle">&nbsp;&nbsp;&nbsp;&nbsp;En ligne</td>
+                                        <%  }%>
+                                        <td class="text-center">
+                                            <button class=" btn btn-danger btn-xs"
+                                                onclick="alertSupp('<%= respo[i].id %>')"><span
+                                                    class="fa fa-trash"></span></button>
+                                            <button class=" btn btn-success btn-xs"
+                                                onclick="alertMod('<%= respo[i].id %>')"><span
+                                                    class=" fa fa-edit"></span></button>
+                                        </td>
+                                    </tr>
+                                    <% }  }%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-warning" role="alert" style="width: 50%">
+                            <i class="menu-icon fas fa-warning"></i>&nbsp;&nbsp; Vous ne pouvez pas modifier les
+                            informations: date d'inscirption, statut et valide.
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <% include ../footer.ejs %>
+            <% include ../layouts/footer.ejs %>

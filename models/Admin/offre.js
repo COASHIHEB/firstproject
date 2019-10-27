@@ -1,5 +1,5 @@
 var connexion = require('../../config/db');
-var moment = require('../../config/moment');
+var moment = require('../../config/moment').moment;
 
 class offre{
 
@@ -32,8 +32,14 @@ class offre{
         let input = inputs.data;
         let IdOffre;
         let produit = input.produit.split('æ');
-
-        connexion.query("SELECT idSousCat AS id from souscategorie WHERE nom = ?",[input.sousCategorie], (err, resultat)=>{
+        let cat = input.sousCategorie.split('_')
+        let categorie;
+        categorie = cat[0];
+        for(let i=1; i<cat.length; i++){
+            categorie += " "+cat[i];
+        }
+      
+        connexion.query("SELECT idSousCat AS id from souscategorie WHERE nom = ?",[categorie], (err, resultat)=>{
             if (err) throw err;
             else{
                  let idSC = resultat[0].id;
@@ -85,8 +91,9 @@ class offre{
                     else{
                         let sousCats = [];
                         rows.forEach(function(row) {
+                            let nomSC = row.nom.replace(/\s/g, "_");
                             let sousCat = {
-                                nom: row.nom,
+                                nom: nomSC,
                                 id: row.idSousCat,
                             };
                             sousCats.push(sousCat);
@@ -125,8 +132,9 @@ class offre{
                     if (err) throw err;
                     else{
                         rows.forEach(function(row) {
+                            let nomSC = row.nom.replace(/\s/g, "_");
                             let sousCat = {
-                                nom: row.nom,
+                                nom: nomSC,
                                 id: row.idSousCat,
                             };
                             sousCats.push(sousCat);
@@ -142,15 +150,16 @@ class offre{
     static selectSousCatModif(inputs, CallBack){
         let sousCats = [];
         connexion.query("SELECT idCat AS id from categorie WHERE nom= ?",[inputs.categorie], (err, resultat)=>{
-            if (err) throw err;
+            if (err) CallBack('error');
             else{
                 let idCat = resultat[0].id;
                 connexion.query("SELECT * from souscategorie WHERE Categorie_idCat= ?",[idCat], (err, rows)=>{
-                    if (err) throw err;
+                    if (err) CallBack('error');
                     else{
                         rows.forEach(function(row) {
+                            let nomSC = row.nom.replace(/\s/g, "_");
                             let sousCat = {
-                                nom: row.nom,
+                                nom: nomSC,
                                 id: row.idSousCat,
                             };
                             sousCats.push(sousCat);
@@ -187,7 +196,9 @@ class offre{
 
 
     static selectOffre(CallBack){
-        connexion.query("SELECT offre.idOffre AS idOffre, offre.nom AS nomOffre, offre.description AS description, offre.dure AS dure, offre.prix AS prix , offre.date AS date, souscategorie.nom AS nomSC, categorie.nom AS nomCat,produit.nom AS nomProd,produit.idProd AS idProd FROM  souscategorie LEFT JOIN offre ON souscategorie.idSousCat= offre.SousCategorie_idSousCat LEFT JOIN categorie ON souscategorie.categorie_idCat = categorie.idCat LEFT JOIN offreproduit ON offreproduit.Offre_idOffre = offre.idOffre LEFT JOIN produit ON offreproduit.Produit_idProd = produit.idProd ORDER BY offre.idOffre DESC", funcEND);
+        let nomSC ;
+
+        connexion.query("SELECT offre.idOffre AS idOffre, offre.nom AS nomOffre, offre.description AS description, offre.dure AS dure, offre.prix AS prix , offre.date AS date, souscategorie.nom AS nomSC, categorie.nom AS nomCat, categorie.idCat AS idCat,produit.nom AS nomProd,produit.idProd AS idProd FROM  souscategorie LEFT JOIN offre ON souscategorie.idSousCat= offre.SousCategorie_idSousCat LEFT JOIN categorie ON souscategorie.categorie_idCat = categorie.idCat LEFT JOIN offreproduit ON offreproduit.Offre_idOffre = offre.idOffre LEFT JOIN produit ON offreproduit.Produit_idProd = produit.idProd ORDER BY offre.idOffre DESC", funcEND);
         function funcEND (err1, rows, fields){
             if(err1) throw err1;
             else{
@@ -196,6 +207,11 @@ class offre{
                 rows.forEach(function(row) {
                         let notificationContents = notificationMap[row.idOffre];
                         if (!notificationContents) {
+                            if(row.nomSC){
+                                nomSC = row.nomSC.replace(/\s/g, "_");
+                            }else{
+                                nomSC = ' ';
+                            }
                                 notificationContents = {
                                     idOffre: row.idOffre,
                                     nomOffre: row.nomOffre,
@@ -203,21 +219,21 @@ class offre{
                                     dure: row.dure,
                                     date: moment(row.date).format('YYYY-MM-DD'),
                                     prix: row.prix,
-                                    nomSC: row.nomSC,
+                                    nomSC: nomSC,
                                     nomCat: row.nomCat,
                                     produit: [],
                                 };
 
                                 notificationMap[row.idOffre] = notificationContents;
                                 notifications.push(notificationContents);
+
                             }
+                            notificationContents.produit.push({
+                                nomProd: row.nomProd,
+                                idProd: row.idProd,
 
-                                notificationContents.produit.push({
-                                    nomProd: row.nomProd,
-                                    idProd: row.idProd,
-
-                                });
                             });
+                            }); 
                         CallBack(notifications);
                     }
                 }
@@ -228,7 +244,7 @@ class offre{
 
             static SelectPhoto(inputs,CallBack){
                 let photos = [];
-                connexion.query("SELECT * FROM photo WHERE Offre_idOffre = ? ",[inputs.idOffre], (err, rows)=>{
+                connexion.query("SELECT * FROM photo WHERE Offre_idOffre = ? ",[inputs.id], (err, rows)=>{
                     if (err) CallBack('error');
                     else{
                         rows.forEach(function(row) {
@@ -238,7 +254,7 @@ class offre{
                             };photos.push(photo);
                         })
                         
-                    }CallBack(photos)
+                    }console.log(photos);CallBack(photos)
                 })
             }
 
@@ -308,12 +324,17 @@ class offre{
 
             static modifierOffre( inputs,CallBack){
                 let IdOffre;
-                
-                connexion.query("SELECT idSousCat AS id from souscategorie WHERE nom = ?",[inputs.sousCategorie], (err, resultat)=>{
+                let cat = inputs.sousCategorie.split('_')
+                let categorie;
+                categorie = cat[0];
+                for(let i=1; i<cat.length; i++){
+                    categorie += " "+cat[i];
+                }
+                connexion.query("SELECT idSousCat AS id from souscategorie WHERE nom = ?",[categorie], (err, resultat)=>{
                     if (err) CallBack('error');
                     else{
                             let idSC = resultat[0].id;
-                            connexion.query("UPDATE offre SET nom=? , description=? , prix=?, dure=?, SousCategorie_idSousCat=?", [inputs.nom, inputs.description, inputs.prix, inputs.dure,idSC], (err, result)=>{
+                            connexion.query("UPDATE offre SET nom=? , description=? , prix=?, dure=?, SousCategorie_idSousCat=? Where idOffre = ?", [inputs.nom, inputs.description, inputs.prix, inputs.dure,idSC, inputs.id], (err, result)=>{
                             if(err) {
                                 CallBack('error');
                             }else{
@@ -341,9 +362,37 @@ class offre{
                     }
                 })
                 }
-}
 
 
 
 
-module.exports = offre;
+                static selectSousCatOffre(CallBack){
+                    let sousCats = [];
+                    let nomSC;
+                    connexion.query("SELECT categorie.nom AS nomCat, souscategorie.nom AS nomSSCat from categorie LEFT JOIN souscategorie ON categorie.idCat = souscategorie.Categorie_idCat", (err, rows)=>{
+                        if (err) CallBack('error');
+                        else{
+                            
+                            rows.forEach(function(row) {
+                                if(row.nomSSCat){
+                                    nomSC = row.nomSSCat.replace(/\s/g, "_");
+                                }else{
+                                    nomSC = ' ';
+                                }
+                                let sousCat = {
+                                    nomCat: row.nomCat,
+                                    nomSC: nomSC,
+                                };
+                                sousCats.push(sousCat);
+                            });
+                            CallBack(sousCats);
+                               
+                        }
+                    })
+                }
+            }
+
+
+
+
+            module.exports = offre;

@@ -1,0 +1,90 @@
+<% include ../layout/header.ejs %>
+
+	<!-- product section -->
+	<section class="product-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="product-pic-zoom">
+						<img class="product-big-img" src="images/offre/<% if(locals.produit){%><%= produit.image %><%}%>" alt="ProduitImage">
+					</div>
+					<div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
+						<div class="product-thumbs-track">
+							<% if(locals.images){ 
+								for(let i=0; i<images.length; i++){ %>
+									<div class="pt active" data-imgbigurl="images/offre/<%= images[i].nom %>">
+										<img src="images/offre/<%= images[i].nom %>" alt="">
+									</div>
+							<%}}%>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 product-details">
+					<h2 class="p-title"><% if(locals.produit){%><%= produit.nom %><%}%></h2>
+					<h3 class="p-price"><% if(locals.produit){%><%= produit.prix %><%}%> <% if(locals.devis){%><%= locals.devis %><%}%></h3>
+					<!--<h4 class="p-stock">Available: <span>In Stock</span></h4>-->
+					<div class="p-rating">
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star-o fa-fade"></i>
+					</div>
+					<div class="p-review">
+						<a href="">3 reviews</a><!--|<a href="">Add your review</a>-->
+					</div>
+					<!--<div class="quantity">
+						<p>Quantity</p>
+						<div class="pro-qty"><input type="text" value="1"></div>
+					</div>-->
+					<a <% if(locals.produit){%> onclick="addItem('<%= produit.idOffre %>','<%= produit.prix %>')"<%}%> class="site-btn"> Ajouter au panier</a>
+					<div id="accordion" class="accordion-area">
+						<div class="panel">
+							<div class="panel-header" id="headingOne">
+								<button class="panel-link active" data-toggle="collapse" data-target="#collapse1"
+									aria-expanded="true" aria-controls="collapse1">information</button>
+							</div>
+							<div id="collapse1" class="collapse show" aria-labelledby="headingOne"
+								data-parent="#accordion">
+								<div class="panel-body">
+									<p><% if(locals.produit){%><%= produit.description %><%}%></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- product section end -->
+
+
+	<!-- RELATED PRODUCTS section -->
+	<section class="related-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>RELATED PRODUCTS</h2>
+			</div>
+			<div class="product-slider owl-carousel">
+					<% if(locals.produits){ 
+						for(let i=0; i<produits.length; i++){ %>
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="images/offre/<%= produits[i].image %>" alt="">
+						<div class="pi-links">
+							<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6><%= produits[i].prix %></h6>
+						<p><%= produits[i].nom %> </p>
+						<p><a href="produit?code=<%= produits[i].idOffre %>" target="_blank">Plus...</a></p>
+					</div>
+				</div>
+					<%}}%>
+			</div>
+		</div>
+	</section>
+	<!-- RELATED PRODUCTS section end -->
+	<% include ../layout/footer.ejs %>

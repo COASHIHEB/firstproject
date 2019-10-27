@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>Gaura</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="divisima/img/favicon.ico" rel="shortcut icon" />
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+	<link rel="stylesheet" href="fontawesome/css/all.css">
+	<link rel="stylesheet" href="vendors/iconfonts/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="divisima/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="divisima/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="divisima/css/flaticon.css" />
+	<link rel="stylesheet" href="divisima/css/slicknav.min.css" />
+	<link rel="stylesheet" href="divisima/css/jquery-ui.min.css" />
+	<link rel="stylesheet" href="divisima/css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="divisima/css/animate.css" />
+	<link rel="stylesheet" href="divisima/css/style.css" />
+	<link rel="stylesheet" href="divisima/js/buzina-pagination.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="../../../../socket.io/socket.io.js"></script>
+	<script src="js/moment.js"></script>
+	<script src="js/moment-timezone-with-data.js"></script>
+	
+	<style>
+		/*****************   side bare css   ******/
+		.sidenav {
+			width: 180px;
+			/*position: fixed;*/
+			position: absolute;
+			z-index: 1;
+			top: 130px;
+			background: #282828;
+			overflow-x: hidden;
+			padding: 8px 0;
+		}
+
+		.sidenav a,
+		.sidenav li {
+			padding: 6px 8px 6px 16px;
+			text-decoration: none;
+			font-size: 15px;
+			color: white;
+			display: block;
+		}
+
+		.sidenav a:hover {
+			color: mediumvioletred;
+		}
+
+		.main {
+			margin-left: 200px;
+			/* Same width as the sidebar + left position in px */
+			padding: 0px 10px;
+			padding-top: 20px;
+		}
+
+		@media screen and (max-height: 450px) {
+			.sidenav {
+				padding-top: 15px;
+			}
+
+			.sidenav a {
+				font-size: 18px;
+			}
+		}
+
+		/*********       Panier css     *******/
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+			z-index: 100;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f1f1f1;
+			min-width: 400px;
+			max-height: 500px;
+			margin-left: -200px;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		}
+
+		.dropdown-content .panier-content {
+			max-height: 400px;
+			overflow: auto;
+		}
+
+		.dropdown-content li {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+			border: solid 1px #282828;
+		}
+
+		.dropdown-content li.active {
+			background-color: #282828;
+		}
+
+		.dropdown-content li.active h4 {
+			color: white;
+		}
+
+		.dropdown-content .commande:hover,
+		.dropdown-content .commande a:hover {
+			background-color: mediumvioletred;
+			color: white;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #ddd;
+		}
+
+		.show {
+			display: block;
+		}
+	</style>
+</head>
+
+
+<body onload="afficherCategorie();">
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="/" class="site-logo">
+							<img src="divisima/img/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<div class="header-search-form">
+							<input id="search" onsearch="search()" type="search" placeholder="Search on divisima ....">
+							<button id="searchButton"><i class="flaticon-search"></i></button>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							<div class="up-item" id="login">
+								<% if(!locals.statut){ %>
+								<i class="flaticon-profile"></i>
+								<a href="/login" target='_blank'>Sign In</a> or <a href="/register"
+									target='_blank'>Create Account</a>
+								<%} %>
+							</div>
+							<div class="up-item dropdown">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span id="numberOfItem">0</span>
+								</div>
+								<a onclick="afficherPanier()" class="dropbtn">Shopping Cart</a>
+								<div id="myDropdown" class="dropdown-content">
+									<li class="active text-center">
+										<h4>Liste du commande à validés
+											<span style='float: right; cursor: pointer' onclick="fermerPanier()">
+												<svg viewBox='0 0 12 12' width='12px' height='12px'>
+													<line stroke="#fff" x1='11.75' y1='0.25' x2='0.25' y2='11.75'>
+													</line>
+													<line stroke="#fff" x1='11.75' y1='11.75' x2='0.25' y2='0.25'>
+													</line>
+												</svg>
+											</span>
+										</h4>
+									</li>
+									<div class="panier-content"></div>
+									<li class="active text-center" id="pixTotal">
+										<h4>Le prix totale : <prix></prix>
+										</h4>
+									</li>
+								</div>
+							</div>
+							<% if(locals.statut == 'client'){ %>
+
+							<div class="up-item main-menu" id="profile">
+								<li><a href="#">user static<i class="fas fa-caret-down"></i>
+									</a>
+									<ul class="sub-menu">
+										<li><a href="/Dashboard">Dashboard</a></li>
+										<li><a href="/profile">Profile</a></li>
+										<li><a href="/loogout">Déconnecter</a></li>
+									</ul>
+								</li>
+							</div>
+							<% } %>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Women</a></li>
+					<li><a href="#">Men</a></li>
+					<li><a href="#">Jewelry
+							<span class="new">New</span>
+						</a></li>
+					<li><a href="#">Shoes</a>
+						<ul class="sub-menu">
+							<li><a href="#">Sneakers</a></li>
+							<li><a href="#">Sandals</a></li>
+							<li><a href="#">Formal Shoes</a></li>
+							<li><a href="#">Boots</a></li>
+							<li><a href="#">Flip Flops</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Pages</a>
+						<ul class="sub-menu">
+							<li><a href="/articles">Product Page</a></li>
+							<li><a href="/category">Category Page</a></li>
+							<li><a href="/cart">Cart Page</a></li>
+							<li><a href="/checkout">Checkout Page</a></li>
+							<li><a href="/contact">Contact Page</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Blog</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!-- Header section end -->
+	<script src="js/Client/panier/panier.js"></script>

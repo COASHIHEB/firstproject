@@ -1,7 +1,7 @@
-<% include ../header.ejs %>
-<% include ../sideBar.ejs %>
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
 
-<script src="js/Administrateur/categorie-sousCat/categorie-sousCat.js"></script>
+<script src="js/Admin/categorie-sousCat/categorie-sousCat.js"></script>
 
 <div class="main-panel">
     <div class="content-wrapper">
@@ -12,85 +12,135 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title  text-center">Ajouter une catégorie</h4>
-                                    <div class="forms-sample form-group ">
-                                        <div class="row">
-                                            <label for="nom" class="col-sm-3 col-form-label">Nom catégorie</label>
+                                <div class="forms-sample form-group ">
+                                    <div class="row">
+                                        <label for="nom" class="col-sm-3 col-form-label">Nom catégorie</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" name="nom" class="form-control" id="nomCat"
+                                                placeholder="Veuillez saisir le nom" required>
+                                        </div>
+                                    </div>
+                                    <br /><br /><br />
+                                    <h6 class=" text-center">Ajouter ses sous catégories</h6>
+                                    <div id="toDelet2">
+                                        <div class="row" id='tab_logic2'>
+                                            <label for="nom" class="col-sm-3 col-form-label">Nom sous catégorie</label>
                                             <div class="col-sm-7">
-                                                <input type="text" name="nom" class="form-control" id="nomCat" placeholder="Veuillez saisir le nom" required>
+                                                <input type="text" name="nomSC" class="form-control" id="nomSC0"
+                                                    placeholder="Veuillez saisir le nom " required>
                                             </div>
-                                        </div>
-                                        <br/><br/><br/>
-                                        <h6 class=" text-center">Ajouter ses sous catégories</h6>
-                                        <div id="toDelet2"> 
-                                            <div class="row" id='tab_logic2'>
-                                                <label for="nom" class="col-sm-3 col-form-label">Nom sous catégorie</label>
-                                                <div class="col-sm-7">
-                                                    <input type="text" name="nomSC" class="form-control" id="nomSC0" placeholder="Veuillez saisir le nom " required>
-                                                </div>
-                                                <div class="col-sm-0.5 align-middle">
-                                                    <a id="add_row2"><label class="badge badge-success" style="margin-top: 7px;"><span class="fa fa-plus"></label></a>&nbsp;
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <div id="snackbar"> <span class="fa fa-check" style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! l'utilisateur est bien ajouté.</div>
-                                        <div id="snackbarError"> <span class="fa fa-times" style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !champs vide ou pseudo existe déja.</div> 
-                                       
-                                        <br/><br/>
-                                        <div class="row">
-                                            <div class="col-md-12 text-right">
-                                                <button  id="submit" class="btn btn-success mr-2">Confirmer</button>
-                                                <button class="btn btn-light"  onclick="resetFileds()" >Annuler</button>
+                                            <div class="col-sm-0.5 align-middle">
+                                                <a id="add_row2"><label class="badge badge-success"
+                                                        style="margin-top: 7px;"><span
+                                                            class="fa fa-plus"></label></a>&nbsp;
                                             </div>
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-           
-            <div class="col-md-6 d-flex align-items-stretch grid-margin">
-                <div class="row flex-grow">
-                    <div class="col-12 stretch-card">
-                        <div class="card">
-                                <div class="col-12 grid-margin">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title text-center">Liste des administrateurs</h4>
-                                            <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover" id="tableau2">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center"> N°</th>
-                                                                <th class="text-center"> Nom</th>
-                                                                <th class="text-center"> email</th>
-                                                                <th class="text-center"> télèphone</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody >
-                                                            <% if(locals.respoAdmin){
-                                                                for(let i=0; i<respoAdmin.length; i++){ %>
-                                                                    <tr>
-                                                                        <td class="text-center"><%= i+1 %></td>
-                                                                        <td class="text-center" uppercase><%= respoAdmin[i].nom %>&nbsp;<%= respoAdmin[i].prenom %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].mail %></td>
-                                                                        <td class="text-center"><%= respoAdmin[i].tel %></td>
-                                                                    </tr>
-                                                             <% }  }%>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                    <br />
+                                    <div id="snackbar"> <span class="fa fa-check"
+                                            style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! la catégorie est
+                                        bien ajoutée.</div>
+                                    <div id="snackbarError"> <span class="fa fa-times"
+                                            style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !champs vide ou
+                                        catégorie existe déja.</div>
+
+                                    <br /><br />
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button id="submit" class="btn btn-success mr-2" id="btn">Confirmer</button>
+                                            <button class="btn btn-light" onclick="resetFileds()">Annuler</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Liste des catégorie</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="tableau2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> N°</th>
+                                                        <th class="text-center"> Catégorie</th>
+                                                        <th class="text-center"> Sous catégorie</th>
+                                                        <th class="text-center"> Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(locals.categorie){
+                                                                for(let i=0; i<categorie.length; i++){ %>
+                                                    <tr id="<%= categorie[i].idCat %>">
+                                                        <td class="text-center"><%= i+1 %></td>
+                                                        <td class="text-center" contenteditable="true"
+                                                            id="categ<%= categorie[i].idCat %>">
+                                                            <%= categorie[i].nomCat %></td>
+                                                        <td class="text-center">
+                                                            <%for(let j=0; j<categorie[i].sousCat.length; j++){ %>
+                                                            <div class="chip pink lighten-4">
+                                                                <div contenteditable="true"
+                                                                    id="sc<%=categorie[i].sousCat[j].idSousCa%>">
+                                                                    <%= categorie[i].sousCat[j].nomSousCat%>
+                                                                </div>
+                                                                <button type="button" style="
+                                                                                margin-top: -8%;" class="close"
+                                                                    aria-label="Close"
+                                                                    onclick="div('<%= categorie[i].sousCat[j].idSousCa %>')">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+
+                                                                <button class=" btn btn-md"
+                                                                    style="margin-top:-11%;color: #fff;background-color: #fafafa00;
+                                                                                border-color: #fafafa00;margin-left:74%" type="button"
+                                                                    class="btn btn-primary"
+                                                                    onclick="ModifierSousCat('<%= categorie[i].sousCat[j].idSousCa%>')"><span
+                                                                        class=" fa fa-edit "
+                                                                        style="color: darkolivegreen"></span></button>
+                                                            </div> <br />
+                                                            <% } %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button class="btn btn-success btn-xs"
+                                                                id="afficher<%= categorie[i].idCat %>"
+                                                                onclick="affiche('<%= categorie[i].idCat %>')"><span
+                                                                    class="fa fa-plus"
+                                                                    id="plus<%= categorie[i].idCat %>"></span></button>
+                                                            <button style="display: none" class="btn btn-warning btn-xs"
+                                                                id="cache<%= categorie[i].idCat %>"
+                                                                onclick="cache('<%= categorie[i].idCat %>')"><span
+                                                                    class="fa fa-minus"
+                                                                    id="plus<%= categorie[i].idCat %>"></span></button>
+                                                            <button class=" btn btn-success btn-xs"
+                                                                onclick="alertMod('<%= categorie[i].idCat %>')"><span
+                                                                    class=" fa fa-edit"></span></button>
+                                                            <button class=" btn btn-danger btn-xs"
+                                                                onclick="alertSupp('<%= categorie[i].idCat %>')"><span
+                                                                    class="fa fa-trash"></span></button>
+                                                        </td>
+                                                    </tr>
+                                                    <% }  }%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-<% include ../footer.ejs %>
+    </div>
+</div>
+<% include ../layouts/footer.ejs %>

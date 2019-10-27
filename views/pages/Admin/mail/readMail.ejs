@@ -1,0 +1,169 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+<link href="css/mail/mail.css" rel="stylesheet">
+<script src="js/Admin/mail/mail.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="content-wrapper" id="pages_breadcrumb">
+            <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Stock</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="table-responsive">
+                    <div class="card card-primary card-outline">
+                        <!-- /.card-header -->
+                        <div class="card-body p-0" style="margin: 100px;">
+                            <div class="mailbox-read-info">
+                                <h5><%= mail.sujet %></h5>
+                                <h6>From: <%= mail.email %> (<%= mail.nom %> <%= mail.prenom %> )
+                                    <span class="mailbox-read-time float-right"><%= mail.dateMail %></span>
+                                </h6>
+                            </div>
+                            <!-- /.mailbox-read-info -->
+
+                            <!-- /.mailbox-controls -->
+                            <div class="mailbox-read-message">
+                                <%= mail.text %>
+                            </div>
+                            <!-- /.mailbox-read-message -->
+                        </div>
+                        <!-- /.card-body -->
+
+                        <!-- /.card-footer -->
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-default" data-toggle="modal"
+                                    data-target="#exampleModal"><i class="fas fa-pencil-alt"></i>
+                                    Reply</button>
+                            </div>
+                            <button type="button" class="btn btn-default" onclick="deleteMail('<%= mail.idMail %>')"><i
+                                    class="far fa-trash-alt"></i>
+                                Delete</button>
+                            <a href="mails"> <button type="button" class="btn btn-default"><i
+                                        class="fas fa-backward"></i>
+                                    retour</button></a>
+
+                        </div>
+                        <!-- /.card-footer -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label">E-mail:</label>
+                    <input type="text" class="form-control" id="email" value="<%= mail.email %>" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Sujet:</label>
+                    <input type="text" class="form-control" id="sujet" value="reply(<%= mail.sujet %>)" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Message:</label>
+                    <textarea class="form-control" id="text" rows="10" cols="50"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="sendMail('<%= mail.email %>')">Envoyer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<% include ../layouts/footer.ejs %>
+
+
+<script>
+    /************************aler supprimer mail**********************/
+    function deleteMail(idMail) {
+        swal({
+            title: "êtes vous sure ?",
+            text: "vous voulez vraiment supprimer ce mail !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.post("deleteMail", {
+                        idMail
+                    },
+                        function (data, status) {
+                            if (data == 'done') {
+                                swal("Ce mail a été bien supprimé !", {
+                                    icon: "success",
+                                });
+                                setTimeout(function () {
+                                    window.location.href = "/mails";
+                                }, 2000)
+                            } else {
+                                swal("Ce mail n'a été supprimé !", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                } else {
+                    swal("Ce mail n'a pas été supprimé");
+                }
+            });
+    }
+    /************************fin alert supprimer mail**********************/
+
+    function sendMail(email) {
+        $.post("sendMail", {
+            email: email,
+            text: $('#text').val(),
+            sujet: $('#sujet').val(),
+        },
+            function (data, status) {
+                if (data == 'done') {
+                    swal("Ce mail a été bien envoyé !", {
+                        icon: "success",
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/mails";
+                    }, 2000)
+                } else {
+                    swal("Ce mail n'a été envoyé !", {
+                        icon: "error",
+                    });
+                }
+            });
+    }
+
+
+
+</script>

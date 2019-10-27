@@ -1,0 +1,144 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+
+<script src="js/Admin/valise/valise.js"></script>
+
+<link href="css/fSelect.css" rel="stylesheet">
+<script src="js/fSelect.js"></script>
+<link rel="stylesheet" href="css/fileSkinCSS.css">
+<script>
+    (function ($) {
+        $(function () {
+            $('.test').fSelect();
+        });
+    })(jQuery);
+</script>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4 grid-margin">
+                                                <h4 class="card-title text-center">Produits au valise </h4>
+                                                <div class="row">
+                                                    <label for="nom" class="col-sm-3 col-form-label">Produits</label>
+                                                    <div class="col-sm-7">
+                                                        <select class="test" multiple="multiple">
+                                                            <% for(let i=0; i<produit.length; i++){ %>
+                                                            <option value='<%= produit[i].nom %>' name=produit>
+                                                                <%= produit[i].nom %></option>
+                                                            <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <br /><br />
+
+                                                <div class="row">
+                                                    <div class="col-md-10 text-right">
+                                                        <button id="submit"
+                                                            class="btn btn-success mr-2">Confirmer</button>
+                                                        <button class="btn btn-light"
+                                                            onclick="resetFileds()">Annuler</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="snackbar"> <span class="fa fa-check"
+                                                    style="font-size: x-large;"></span>&nbsp;&nbsp;Succés ! la valise
+                                                est bien ajouté.</div>
+                                            <div id="snackbarError"> <span class="fa fa-times"
+                                                    style="font-size: x-large;"></span>&nbsp;&nbsp;Erreur !Aucune
+                                                sélection.</div>
+
+                                            <div class="col-sm-2 grid-margin"></div>
+
+
+                                            <div class="col-sm-5 grid-margin">
+                                                <h4 class="card-title text-center">Les valises des employes</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover" id="tableau1">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">N°</th>
+                                                                <th class="text-center">Employé</th>
+                                                                <th class="text-center">Produit</th>
+                                                                <th class="text-center">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% if(locals.valise){
+                                                                        for(let i=0; i<valise.length; i++){ %>
+                                                            <tr id="<%=valise[i].idEmp %>">
+                                                                <td class="text-center"><%= i+1 %></td>
+                                                                <td uppercase>
+                                                                    <%= valise[i].nom %>&nbsp;<%= valise[i].prenom %>
+                                                                </td>
+                                                                <td>
+                                                                    <%for(let j=0; j<valise[i].produit.length; j++){ if(valise[i].produit[j].idProd ){%>
+                                                                    <div id="prod<%=valise[i].produit[j].idProd %>">
+                                                                        <label
+                                                                            class="col-sm-7"><%= valise[i].produit[j].nomProd %></label>
+
+                                                                        <input type="number" id="quantity" min="0"
+                                                                            max="1000" style="width: 23%;"
+                                                                            value="<%= valise[i].quantite[j].quantite %>">
+
+                                                                        <button type="button" class="close" style="
+                                                                                        margin-top: 1.5%; "
+                                                                            aria-label="Close"
+                                                                            onclick="div('<%=valise[i].produit[j].idProd %>','<%=valise[i].idEmp %>')">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+
+                                                                        <button class=" btn btn-md"
+                                                                            style="color: #fff;background-color: #fafafa00;
+                                                                                        border-color: #fafafa00;     margin-left: -5%;"
+                                                                            type="button" class="btn btn-primary"
+                                                                            onclick="ajoutQte('<%=valise[i].produit[j].idProd %>','<%=valise[i].idEmp %>')"><span
+                                                                                class=" fa fa-edit "
+                                                                                style="color: darkolivegreen"></span></button>
+                                                                    </div>
+                                                                    <br />
+                                                                    <br />
+                                                                    <% }}  %>
+                                                                </td>
+                                                                <%for(let j=0; j<valise[i].produit.length; j++){ %>
+                                                                <%if(j==0) { %>
+                                                                <td class="text-center">
+                                                                    <button class="btn btn-success btn-xs"
+                                                                        id="afficher<%=valise[i].idEmp %>"
+                                                                        onclick="affiche('<%=valise[i].idEmp %>')"><span
+                                                                            class="fa fa-plus"
+                                                                            id="plus<%=valise[i].produit[j].idProd %><%=valise[i].idEmp %>"></span></button>
+                                                                    <button style="display: none"
+                                                                        class="btn btn-warning btn-xs"
+                                                                        id="cache<%=valise[i].idEmp %>"
+                                                                        onclick="cache('<%=valise[i].idEmp %>')"><span
+                                                                            class="fa fa-minus"
+                                                                            id="plus<%=valise[i].produit[j].idProd %><%=valise[i].idEmp %>"></span></button>
+                                                                </td>
+                                                                <% }}  %>
+                                                            </tr>
+                                                            <% }   }  %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <% include ../layouts/footer.ejs %>

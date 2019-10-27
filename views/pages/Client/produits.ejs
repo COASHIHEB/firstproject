@@ -1,19 +1,20 @@
 <% include header.ejs %>
 <% include sidebar.ejs %>
-<script src="js/Clients/produits/produits.js"></script>
+<script src="js/Client/produits/produits.js"></script>
 
 <div class="main">
-<!-- Product filter section -->
-   <section class="product-filter-section">
+    <!-- Product filter section -->
+    <section class="product-filter-section">
         <div class="container">
             <div class="section-title">
                 <h2>Listes du notre articles </h2>
             </div>
             <div class="text-center col-lg-12">
                 <div class="input-group col-lg-6 col-sm-8 col-xs-12">
-                    <input id="myInputt" class="form-control search" type="text" placeholder="Rechercher sur ce categorie..">
+                    <input id="myInputt" class="form-control search" type="text"
+                        placeholder="Rechercher sur ce categorie..">
                     <div class="input-group-append">
-                        <span class="input-group-text"  id="nomValide">
+                        <span class="input-group-text" id="nomValide">
                             <i class="fa fa-search"></i>
                         </span>
                     </div>
@@ -28,58 +29,64 @@
                 <a href="#" id="sousCat" onclick="categorie(0)"></a>
                 <hr class="co-lg-12">
             </div>
-            <div class="row"  id="prduitsListes" >
+            <div class="row" id="prduitsListes">
                 <% if(locals.produits){ 
-                    for(let i=0; i<produits.length; i++){ %> 
-                    <div class="col-lg-3 col-sm-6 class">
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="images/offre/<%= produits[i].image %>" alt="produitImage" style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal" data-target="#myModal<%= produits[i].idOffre %>">
-                                <div class="pi-links">
-                                    <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                    <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                                </div>
-                            </div>
-                            <div class="pi-text">
-                                <h6><%= produits[i].prix %></h6>
-                                <p><%= produits[i].nom %></p>
-                                <p><a href="produit?code=<%= produits[i].idOffre %>" target="_blank">Plus...</a></p>
+                    for(let i=0; i<produits.length; i++){ %>
+                <div class="col-lg-3 col-sm-6 class">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="images/offre/<%= produits[i].image %>" alt="produitImage"
+                                style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal"
+                                data-target="#myModal<%= produits[i].idOffre %>">
+                            <div class="pi-links">
+                                <a style="cursor: pointer"
+                                    onclick="addItem('<%= produits[i].idOffre %>','<%= produits[i].prix %>')"
+                                    class="add-card"><i class="flaticon-bag"></i><span>AJOUTER</span></a>
+                                <a class="wishlist-btn"><i class="flaticon-heart"></i></a>
                             </div>
                         </div>
+                        <div class="pi-text">
+                            <h6><%= produits[i].prix %></h6>
+                            <p><%= produits[i].nom %></p>
+                            <p><a href="produit?code=<%= produits[i].idOffre %>" target="_blank">Plus...</a></p>
+                        </div>
                     </div>
+                </div>
                 <%}} %>
             </div>
             <script>
                 $(document).ready(function () {
                     $('#prduitsListes').buzinaPagination({
-                        itemsOnPage:5
+                        itemsOnPage: 5
                     });
                 });
             </script>
             <% if(locals.produits){ 
                 for(let i=0; i<produits.length; i++){ %>
-                        <!-- Debut Modal-->
-                    <div id="myModal<%= produits[i].idOffre %>" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button><br>
-                                  <!-- Modal content-->
-                            <div class=" modal-content" id="content"  style="height: 10px">
-                               <% if(locals.images){ %>
-                                <img src='images/offre/<%= produits[i].image %>' alt='produitImage' >
-                                <div class='product-slider owl-carousel' id='imageSlide'>
-                                <% for(let j=0; j<images.length; j++){ %> 
-                                    <% if(produits[i].idOffre === images[j].Offre_idOffre){ %>
-                                        <img id="image<%= j %>" style="height: 135px" src='images/offre/<%= images[j].nom %>' style="cursor:pointer" onclick="updateImage('<%= j %>','<%= produits[i].idOffre %>')" alt='produitImage'>
-                                    <%}}%>
-                                </div>
-                                <%}%>
+            <!-- Debut Modal-->
+            <div id="myModal<%= produits[i].idOffre %>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button><br>
+                    <!-- Modal content-->
+                    <div class=" modal-content" id="content" style="height: 10px">
+                        <% if(locals.images){ %>
+                        <img src='images/offre/<%= produits[i].image %>' alt='produitImage'>
+                        <div class='product-slider owl-carousel' id='imageSlide'>
+                            <% for(let j=0; j<images.length; j++){ %>
+                            <% if(produits[i].idOffre === images[j].Offre_idOffre){ %>
+                            <img id="image<%= j %>" style="height: 135px" src='images/offre/<%= images[j].nom %>'
+                                style="cursor:pointer" onclick="updateImage('<%= j %>','<%= produits[i].idOffre %>')"
+                                alt='produitImage'>
+                            <%}}%>
+                        </div>
+                        <%}%>
                             </div>		
                         </div>
                     </div>
                     <!-- Fin Modal-->
                 <%}
             } %>
-        </div>
+                    </div>
     </section>
     <!-- Product filter section end -->
 

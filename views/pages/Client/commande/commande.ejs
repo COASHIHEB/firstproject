@@ -1,0 +1,259 @@
+<% include ../layout/header.ejs %>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0&callback=initMap"
+    type="text/javascript"></script>
+<script>
+
+    function initMap() {
+        gpsTraitement((resp) => {
+            console.log(resp);
+        })
+    }
+
+    function gpsTraitement(Callback) {
+
+
+        // testMap = new google.maps.Map(document.getElementById('map'), {
+        //     center: { lat: -34.397, lng: 150.644 },
+        //     zoom: 8
+        // });
+
+        // google.maps.event.addListener(testMap, 'click', function (event) {
+
+        //     placeMarker(event.latLng);
+        // });
+
+        // function placeMarker(location) {
+        //     var marker = new google.maps.Marker({
+        //         position: location,
+        //         map: testMap
+        //     });
+        // }
+
+
+
+        let distances = [];
+        let map;
+        let renDist;
+        let client = new google.maps.LatLng(34.8274, -1.5283);
+        let locations = [
+            { emp: 1, Long: 34.848072, Lat: -1.208673 },
+            { emp: 2, Long: 34.908683, Lat: -1.306030 },
+            { emp: 3, Long: 34.897308, Lat: -1.271583 },
+            { emp: 4, Long: 34.916172, Lat: -1.375221 },
+            { emp: 5, Long: 34.866328, Lat: -1.418460 }
+        ];
+
+
+
+        //let origin2 = 'Greenwich, England';
+        //let client = 'Stockholm, Sweden';
+        //let destinationB = new google.maps.LatLng(50.087692, 14.421150);
+
+        let service = new google.maps.DistanceMatrixService();
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((resp) => {
+                testMap = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: resp.coords.latitude, lng: resp.coords.longitude },
+                    zoom: 10
+                });
+                let markerClient = new google.maps.Marker({
+                    position: { lat: 34.8274, lng: -1.5283 },
+                    map: testMap,
+                });
+
+               
+
+                let marker, i;
+                let infowindow = new google.maps.InfoWindow();
+                locations.forEach((e) => {
+                    marker = new google.maps.Marker({
+                        position: { lat: e.Lat, lng: e.Long },
+                        map: testMap,
+                    });
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(e.emp);
+                            infowindow.open(testMap, marker);
+                        }
+                    })(marker, i));
+
+                    service.getDistanceMatrix(
+                        {
+                            origins: [client],
+                            destinations: [{ lat: e.Lat, lng: e.Long }],
+                            travelMode: 'DRIVING',
+                        }, (response, statuts) => {
+                            distances.push({
+                                client: 'client',
+                                clientAdresse: response.originAddresses[0],
+                                employeAdresse: response.destinationAddresses[0],
+                                distanceEnMetre: response.rows[0].elements[0].distance.value,
+                                distanceEnKM: response.rows[0].elements[0].distance.text,
+                                duration: response.rows[0].elements[0].duration.text,
+                                durationEnSeconde: response.rows[0].elements[0].duration.value,
+                            });
+
+                            if ((5) == distances.length) { Callback(distances); }//<---- le 5 on doit le retourner via BDD
+                        });
+                })
+            });
+
+
+
+
+        } else {
+            console.log("error geolicalisation");
+        }
+
+        /*****   debut Socket javascripte   *****/
+
+    }
+
+</script>
+
+<style>
+    #map {
+        height: 100%;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<script src="js/Client/commande/commande.js"></script>
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+                <div class="checkout-form">
+                    <div class="cf-title">Coordonnées De Facturation</div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+                                <div class="card" style="height: 30rem;">
+                                    <div class="card-body">
+                                        <div id="map"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <p>*Informations de facturation de l'adresse</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="cf-radio-btns address-rb">
+                                    <div class="cfr-item">
+                                        <input type="radio" name="adress" id="one" value="habituelle" checked>
+                                        <label for="one">Utilisez mon adresse habituelle</label>
+                                    </div>
+                                    <div class="cfr-item">
+                                        <input type="radio" name="adress" id="two" value="differente">
+                                        <label for="two">Utilisez une adresse différente</label>
+                                    </div>
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <p>*Informations de facturation du téléphone</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="cf-radio-btns address-rb">
+                                    <div class="cfr-item">
+                                        <input type="radio" name="telephone" id="onee" value="rad" value="tlf1" checked>
+                                        <label for="onee">Utilisez mon numéro habituel</label>
+                                    </div>
+                                    <div class="cfr-item">
+                                        <input type="radio" name="telephone" id="twoe" value="tlf2">
+                                        <label for="twoe">Utilisez un numéro différent</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row address-inputs">
+                        <div class="col-md-12">
+                            <input type='hidden' id='numero' pattern='[0-9]{10}' placeholder='Numéro' required>
+                            <input type='hidden' id='adress' placeholder='Address' required>
+                        </div>
+                    </div>
+                    <div class="cf-title">Informations de livraison</div>
+                    <div class="row shipping-btns">
+                        <div class="col-6">
+                            <h4>Standard</h4>
+                        </div>
+                        <div class="col-6">
+                            <div class="cf-radio-btns">
+                                <div class="cfr-item">
+                                    <input type="radio" name="shipping" id="ship-1" checked>
+                                    <label for="ship-1">Gratuit</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                            <div class="col-6">
+                                <h4>Livraison rapide ou en congé </h4>
+                            </div>
+                            <div class="col-6">
+                                <div class="cf-radio-btns">
+                                    <div class="cfr-item">
+                                        <input type="radio" name="shipping" id="ship-2">
+                                        <label for="ship-2">$3.45</label>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                    </div>
+                    <div class="cf-title">Paiement</div>
+                    <ul class="payment-list">
+                        <!-- 
+                            <li>Paypal<a href="#"><img src="divisima/img/paypal.png" alt=""></a></li>
+                            <li>Credit / Debit card<a href="#"><img src="divisima/img/mastercart.png" alt=""></a></li>
+                            -->
+                        <li>Pay when you get the package</li>
+                    </ul>
+                    <button class="site-btn submit-order-btn" id="<%if(locals.commande && commande.length >0){%><%= commande[0].idCommande %><%}%>0">Passer la commande</button>
+                    </div>
+                </div>
+                <div class="col-lg-4 order-1 order-lg-2">
+                    <div class="checkout-cart">
+                        <h3>Votre Panier</h3>
+                        <ul class="product-list" style="overflow: auto; min-height: 100; max-height: 500px;">
+                                <% if(locals.commande){ 
+                                    for(let i=0; i<commande.length; i++){ %> 
+                            <li>
+                                <div class=" pl-thumb"><img src="images/offre/<%= commande[i].image %>"
+                            alt="produitImage">
+                </div>
+                <h6><%= commande[i].nom %></h6>
+                <p><%= commande[i].prix %> <%= locals.devis %></p>
+                </li>
+                <%}} %>
+                </ul>
+                <ul class="price-list">
+                    <li>Total<span style="width: 150px;"><% if(locals.commande && commande.length >0){%>
+                            <%= commande[0].prixTotal %> <%= locals.devis %>
+                            <%}%></span></li>
+                            <li>Livraison<span  style="width: 150px;">Gratuit</span></li>
+                            <li class="total">Total<span style="width: 130px;"><% if(locals.commande && commande.length >0){%>
+                            <%= commande[0].prixTotal %>
+                            <%= locals.devis %> <%}%></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- checkout section end -->
+
+    <% include ../layout/footer.ejs %>

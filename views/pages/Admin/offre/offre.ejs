@@ -1,7 +1,7 @@
-<% include ../header.ejs %>
-<% include ../sideBar.ejs %>
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
 
-<script src="js/Administrateur/offre/offre.js"></script>
+<script src="js/Admin/offre/offre.js"></script>
 <link href="css/fSelect.css" rel="stylesheet">
 <script src="js/fSelect.js"></script>
 <link  rel = "stylesheet"  href = "css/fileSkinCSS.css" >
@@ -55,7 +55,7 @@
                                                     <div class="col-sm-3"  id="sousCat">
                                                         <select class="form-control" onchange="verifier()">
                                                             <%for(let i=0; i<sousCat.length; i++){ %>
-                                                                <option style="line-height:1" value='<%= sousCat[i].nom %>' data-id="<%= sousCat[i].id %>" name="sousCateg" > <%= sousCat[i].nom %></option>
+                                                                <option style="line-height:1" value='<%= sousCat[i].nom %>'    name="sousCateg" > <%= sousCat[i].nom %></%=>
                                                             <% } %> 
                                                         </select>
                                                     </div>
@@ -164,7 +164,7 @@
                                                             <% if(locals.offreRec){
                                                                 for(let i=0; i<offreRec.length; i++){ %>
                                                                     <tr>
-                                                                        <td class="text-center"><%= i+1 %></</td>
+                                                                        <td class="text-center"><%= i+1 %></td>
                                                                         <td class="text-center" ><%= offreRec[i].nomOffre %></td>
                                                                         <td class="text-center" style="word-wrap: break-word !important;white-space: normal"><%= offreRec[i].description %></td>
                                                                         <td class="text-center"><%= offreRec[i].nomSC %></td>
@@ -235,9 +235,14 @@
                                                                         <% }  %>
                                                                         <div class="col-sm-12">
                                                                         <select class="test" multiple="multiple"  id="produitSelect<%= offre[i].idOffre %>" >
-                                                                            <% for(let z=0; z<produit.length; z++){ %>
-                                                                                <option  value='<%= produit[z].nom %>' data-id="<%= produit[z].id %>" name="produit<%= offre[i].idOffre %>" id="produit<%=z%>"><%= produit[z].nom %></option>
-                                                                                <% } %>
+                                                                        <% if(produit.length != offre[i].produit.length){
+                                                                            for(let z=0; z<produit.length; z++){ 
+                                                                                let o=0;
+                                                                                for(let j=0; j<offre[i].produit.length; j++){
+                                                                                    if(produit[z].nom == offre[i].produit[j].nomProd){ o++; }}
+                                                                                    if(o == 0 ){%>
+                                                                                        <option  value='<%= produit[z].nom %>' data-id="<%= produit[z].id %>" name="produit<%= offre[i].idOffre %>" id="produit<%=z%>"><%= produit[z].nom %></option>
+                                                                                <% }}} %>
                                                                         </select>
                                                                     </div>
                                                                     </td>
@@ -245,20 +250,24 @@
                                                                     <td class="text-center" contenteditable="true" id="prix<%= offre[i].idOffre %>"><%= offre[i].prix %></td>
                                                                     <td class="text-center" contenteditable="true" id="dure<%= offre[i].idOffre %>"><%= offre[i].dure %></td>
                                                                     <td class="text-center">
-                                                                        <select class=" form-control" id="categorieModif" onchange="selCatModif('<%= offre[i].idOffre %>'), recupereCat('<%= offre[i].idOffre %>')" >
+                                                                        <select class=" form-control" id="categorieModif<%= offre[i].idOffre %>" onchange="selCatModif('<%= offre[i].idOffre %>'), recupereCat('<%= offre[i].idOffre %>')" >
                                                                             <option name="cate<%= offre[i].idOffre %>"  value='<%= offre[i].nomCat %>'  name="cat" selected> <%= offre[i].nomCat %></option>
-                                                                            <%for(let k=0; k<categorie.length; k++){ %>
-                                                                                <option  name="cate<%= offre[i].idOffre %>" value='<%= categorie[k].nom %>' data-id="<%= categorie[k].id %>" name="cat" > <%= categorie[k].nom %></option>
-                                                                            <% } %>
+                                                                            <%for(let k=0; k<categorie.length; k++){
+                                                                                if(categorie[k].nom !=  offre[i].nomCat) { %>
+                                                                                    <option  name="cate<%= offre[i].idOffre %>"  value='<%= categorie[k].nom %>' name="cat" > <%= categorie[k].nom %></option>
+                                                                            <% } }%>
                                                                         </select>
                                                                     </td>
                                                                     <td class="text-center" id="sousCatModif" >
                                                                         <div id="modif<%= offre[i].idOffre %>">
                                                                         <select class="form-control" id="sousCat<%= offre[i].idOffre %>" onchange="recupereSousCat('<%= offre[i].idOffre %>')">
                                                                             <option name="sousCat<%= offre[i].idOffre %>"  style="line-height:1" value='<%= offre[i].nomSC %>' name="sousCateg" selected><%= offre[i].nomSC %></option>
-                                                                            <%for(let i=0; i<sousCat.length; i++){ %>
-                                                                                <option name="sousCat<%= offre[i].idOffre %>" style="line-height:1" value='<%= sousCat[i].nom %>' data-id="<%= sousCat[i].id %>" name="sousCateg" > <%= sousCat[i].nom %></option>
-                                                                            <% } %> 
+
+                                                                                <%for(let b=0; b<sousCateg.length; b++){
+                                                                                    if((sousCateg[b].nomCat == offre[i].nomCat) && (sousCateg[b].nomSC != offre[i].nomSC)){ %>
+                                                                                        <option name="sousCat<%= offre[i].idOffre %>" style="line-height:1" value='<%= sousCateg[b].nomSC %>' name="sousCateg" > <%= sousCateg[b].nomSC %></option>
+                                                                            <% }} %> 
+
                                                                         </select>
                                                                     </div>
                                                                     </td>
@@ -332,5 +341,5 @@
                 </div>
             </div>
         </div>
-<% include ../footer.ejs %>
+<% include ../layouts/footer.ejs %>
                                                                 

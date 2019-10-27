@@ -1,5 +1,5 @@
 var connexion = require('../../config/db');
-var moment = require('../../config/moment');
+var moment = require('../../config/moment').moment;
 
 
 class Stock {
@@ -28,9 +28,9 @@ class Stock {
         });
     }
     static stockBientotExpire(CallBack) {
-        var now = moment().add(1, 'months').calendar();
-        var now = '2019-01-05';
-        connexion.query("SELECT * FROM produit where dateExp <= ? ORDER BY idProd DESC ", [now], (err, rows) => {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        connexion.query("SELECT * FROM produit where dateExp <= ? ORDER BY idProd DESC ", [date], (err, rows) => {
             if (err) throw err;
             let produits = [];
             rows.forEach(function (row) {

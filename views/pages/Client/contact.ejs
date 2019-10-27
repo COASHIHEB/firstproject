@@ -32,11 +32,12 @@
                     <a href="#"><i class="fa fa-behance"></i></a>
                 </div>
                 <form class="contact-form">
-                    <input type="text" placeholder="Your name">
-                    <input type="text" placeholder="Your e-mail">
-                    <input type="text" placeholder="Subject">
-                    <textarea placeholder="Message"></textarea>
-                    <button class="site-btn">SEND NOW</button>
+                    <input type="text" id="nom" placeholder="Votre nom" value="<%= mails.nom %> <%= mails.prenom %>"
+                        readonly>
+                    <input type="text" id="email" placeholder="Votre e-mail" value="<%= mails.email %>" readonly>
+                    <input type="text" id="sujet" placeholder="Sujet">
+                    <textarea id="text" placeholder="Message"></textarea>
+                    <button class="site-btn" id="sendMail()">ENVOYER MAINTENANT</button>
                 </form>
             </div>
         </div>
@@ -123,3 +124,25 @@
 
 
 <% include footer.ejs %>
+
+<script>
+    function sendMail() {
+        $.post("sendMailLocal", {
+            text: $('#text').val(),
+            sujet: $('#sujet').val(),
+        },
+            function (data, status) {
+                if (data == 'done') {
+                    swal("Ce mail a été bien envoyé !", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Ce mail n'a été envoyé !", {
+                        icon: "error",
+                    });
+                }
+            });
+    }
+
+
+</script>

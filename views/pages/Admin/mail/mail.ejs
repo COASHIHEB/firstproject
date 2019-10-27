@@ -1,0 +1,181 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+<link href="css/mail/mail.css" rel="stylesheet">
+<script src="js/Admin/mail/mail.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="content-wrapper" id="pages_breadcrumb">
+            <div class="card">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Mail inbox</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-footer">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-default" data-toggle="modal"
+                                data-target="#exampleModal"><i class="fas fa-pencil-alt"></i>
+                                envoyer un mail</button>
+                        </div>
+
+                    </div>
+                    <div class="">
+
+                        <table class="table table-inbox table-hover" id="mail">
+                            <thead style="display: none;">
+                                <tr>
+                                    <th class="text-center"> Nom</th>
+                                    <th class="text-center"> Nom</th>
+                                    <th class="text-center"> sujet</th>
+                                    <th class="text-center"> text</th>
+                                    <th class="text-center"> date </th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for(let i=0; i<mails.length; i++){ %>
+
+                                <tr <%if (mails[i].vu == 0) { %> class="unread" <% }  else{ %> class="" <%  } %>>
+                                    <td class="view-message  dont-show"> <img class="img-sm rounded-circle mb-4 mb-md-0"
+                                            src="images/profilePicture/<%= mails[i].image %>" alt="profile image">
+                                    </td>
+                                    <td class="view-message  dont-show"><%= mails[i].nom %>
+                                        <%= mails[i].prenom %>
+                                    </td>
+                                    <td class="view-message  dont-show"><%= mails[i].sujet %></td>
+                                    <td class="view-message ">
+                                        <script type="text/javascript">
+                                            var a = "<%- mails[i].text %>"
+                                            document.write(a.slice(0, 50) + "...");  
+                                        </script>
+
+                                    </td>
+
+                                    <td class="view-message  text-right"><%= mails[i].dateMail %></td>
+                                    <td class="view-message  text-right">
+                                        <a href="/read-mail?id=<%= mails[i].idMail %>"
+                                            class=" btn btn-success btn-xs"><span
+                                                class=" fas fa-envelope-open-text"></span></a>
+                                        <button class=" btn btn-danger btn-xs"
+                                            onclick="deleteMail('<%= mails[i].idMail %>')"><span
+                                                class="fa fa-trash"></span></button>
+                                    </td>
+                                </tr>
+                                <% } %>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">send mail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-form-label">E-mail:</label>
+                            <input type="text" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Sujet:</label>
+                            <input type="text" class="form-control" id="sujet">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="text" rows="10" cols="50"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="sendMail()">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <% include ../layouts/footer.ejs %>
+
+
+        <script>
+            /************************aler supprimer mail**********************/
+            function deleteMail(idMail) {
+                swal({
+                    title: "êtes vous sure ?",
+                    text: "vous voulez vraiment supprimer ce mail !",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.post("deleteMail", {
+                                idMail
+                            },
+                                function (data, status) {
+                                    if (data == 'done') {
+                                        swal("Ce mail a été bien supprimé !", {
+                                            icon: "success",
+                                        });
+                                        setTimeout(function () {
+                                            window.location.reload();
+                                        }, 2000)
+                                    } else {
+                                        swal("Ce mail n'a été supprimé !", {
+                                            icon: "error",
+                                        });
+                                    }
+                                });
+                        } else {
+                            swal("Ce mail n'a pas été supprimé");
+                        }
+                    });
+            }
+            /************************fin alert supprimer mail**********************/
+            function sendMail() {
+                $.post("sendMail", {
+                    email: $('#email').val(),
+                    text: $('#text').val(),
+                    sujet: $('#sujet').val(),
+                },
+                    function (data, status) {
+                        if (data == 'done') {
+                            swal("Ce mail a été bien envoyé !", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("Ce mail n'a été envoyé !", {
+                                icon: "error",
+                            });
+                        }
+                    });
+            }
+
+        </script>

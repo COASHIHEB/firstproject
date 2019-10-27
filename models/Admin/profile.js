@@ -1,5 +1,5 @@
 var connexion = require('../../config/db');
-var moment = require('../../config/moment');
+var moment = require('../../config/moment').moment;
 var sha1 = require('sha1');
 
 
@@ -10,26 +10,26 @@ class profile {
         this.row = row;
     }
 
+
     static getUtilisateur(idUtil, CallBack) {
-        connexion.query("SELECT * FROM utilisateur  where idUtil=? LIMIT 1", [idUtil], (err, rows) => {
-            if (err) throw err;
-            let utilisateurs = [];
-            rows.forEach(function (row) {
-                let util = {
-                    nom: row.nom,
-                    prenom: row.prenom,
-                    email: row.email,
-                    numTel: row.numTel,
-                    adresse: row.adresse,
-                    image: row.image,
-                    statut: row.statut,
-                    date: moment(row.date).format('YYYY-MM-DD'),
-                };
-                utilisateurs.push(util);
-            });
-            CallBack(utilisateurs[0]);
+        connexion.query("SELECT * FROM utilisateur  where idUtil=?", [idUtil], (err, user) => {
+            if (err) {
+                CallBack('error');
+            } else {
+                CallBack({
+                    nom: user[0].nom,
+                    prenom: user[0].prenom,
+                    email: user[0].email,
+                    numTel: user[0].numTel,
+                    adresse: user[0].adresse,
+                    image: user[0].image,
+                    statut: user[0].statut,
+                    date: moment(user[0].date).format('YYYY-MM-DD'),
+                });
+            }
         });
     }
+
 
 
     static updateUtilisateur(inputs, CallBack) {

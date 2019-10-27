@@ -1,0 +1,157 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+
+<script src="js/Admin/client/client.js"></script>
+
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="col-md-12 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+                <div class="col-12 stretch-card">
+                    <div class="card">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center">Liste des Client</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover" id="tableau">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">N°</th>
+                                                    <th class="text-center">Client</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Télephone</th>
+                                                    <th class="text-center">Code</th>
+                                                    <th class="text-center">Point</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(locals.client){
+                                                            for(let i=0; i<client.length; i++){ %>
+                                                <tr>
+                                                    <td class="text-center"><%= i+1 %></td>
+                                                    <td uppercase><%= client[i].nom %>&nbsp;<%= client[i].prenom %></td>
+                                                    <td><%= client[i].email %> </td>
+                                                    <td class="text-center"><%= client[i].numTel %></td>
+                                                    <td class="text-center"><%= client[i].code %></td>
+                                                    <td class="text-center"><%= client[i].point %></td>
+                                                </tr>
+                                                <% }  }%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+                <div class="col-12 stretch-card">
+                    <div class="card">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center">Client avec commandes faites</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover" id="tableau2">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">N°</th>
+                                                    <th class="text-center">Client</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Télephone</th>
+                                                    <th class="text-center">Code</th>
+                                                    <th class="text-center">Point</th>
+                                                    <th class="text-center">Commande</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(locals.clientF){
+                                                                for(let i=0; i<clientF.length; i++){ %>
+                                                <tr>
+                                                    <td class="text-center"><%= i+1 %></td>
+                                                    <td uppercase><%= clientF[i].nom %>&nbsp;<%= clientF[i].prenom %>
+                                                    </td>
+                                                    <td><%= clientF[i].email %> </td>
+                                                    <td class="text-center"><%= clientF[i].numTel %></td>
+                                                    <td class="text-center"><%= clientF[i].code %></td>
+                                                    <td class="text-center"><%= clientF[i].point %></td>
+                                                    <td class="text-center"><%= clientF[i].nbrCommande %></td>
+                                                </tr>
+                                                <% }  }%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+                <div class="col-12 stretch-card">
+                    <div class="card">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center">Client avec commandes non faites</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover" id="tableau1">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">N°</th>
+                                                    <th class="text-center">Client</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Télephone</th>
+                                                    <th class="text-center">Code</th>
+                                                    <th class="text-center">Point</th>
+                                                    <th class="text-center">Commande</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(locals.clientNF){
+                                                                        for(let i=0; i<clientNF.length; i++){ %>
+                                                <tr>
+                                                    <td class="text-center"><%= i+1 %></td>
+                                                    <td uppercase><%= clientNF[i].nom %>&nbsp;<%= clientNF[i].prenom %>
+                                                    </td>
+                                                    <td><%= clientNF[i].email %> </td>
+                                                    <td class="text-center"><%= clientNF[i].numTel %></td>
+                                                    <td class="text-center"><%= clientNF[i].code %></td>
+                                                    <td class="text-center"><%= clientF[i].point %></td>
+                                                    <td class="text-center"><%= clientF[i].nbrCommande %></td>
+                                                </tr>
+                                                <% }  }%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <% include ../layouts/footer.ejs %>

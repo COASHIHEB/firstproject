@@ -1,17 +1,17 @@
-<% include ../header.ejs %>
-<% include ../sideBar.ejs %>
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
 
-<script src="js/Administrateur/adherent/adherent.js"></script>
+<script src="js/Admin/adherent/adherent.js"></script>
 
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-12 grid-margin ">
-                <div class="card" >
-                    <div class="card-body"  >
-                        <h4 class="card-title text-center">Liste des clients</h4>
-                        <div class="table-responsive"  style="height: 400px">
-                            <table class="table table-bordered table-hover" id="tableau" >
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Liste des Client</h4>
+                        <div class="table-responsive" style="height: 400px">
+                            <table class="table table-bordered table-hover" id="tableau">
                                 <thead>
                                     <tr>
                                         <th class="text-center"> N°</th>
@@ -25,21 +25,28 @@
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody >
-                                        <% if(locals.respo){
+                                <tbody>
+                                    <% if(locals.respo){
                                             for(let i=0; i<respo.length; i++){ %>
                                     <tr>
                                         <td class="text-center"><%= i+1 %></td>
-                                        <td class="text-center" class="nav-item dropdown" onclick="nbrComd('<%= i+1 %>')" id="code<%= respo[i].id %>">
-                                            <a class="nav-link count-indicator dropdown-toggle" id="commandes" href="#" data-toggle="dropdown">
+                                        <td class="text-center" class="nav-item dropdown"
+                                            onclick="nbrComd('<%= i+1 %>')" id="code<%= respo[i].id %>">
+                                            <a class="nav-link count-indicator dropdown-toggle" id="commandes" href="#"
+                                                data-toggle="dropdown">
                                                 <%= respo[i].code %>
                                             </a>
-                                            <div style="background-color:rgb(249, 249, 249); box-shadow: 0px 0px 6px -4px;" class="dropdown-menu dropdown-menu-center navbar-dropdown preview-list" aria-labelledby="commandes">
+                                            <div style="background-color:rgb(249, 249, 249); box-shadow: 0px 0px 6px -4px;"
+                                                class="dropdown-menu dropdown-menu-center navbar-dropdown preview-list"
+                                                aria-labelledby="commandes">
                                                 <div style="width: 600px">
                                                     <div class="preview-item-content">
-                                                        <h6 class="preview-subject text-center font-weight-medium text-dark">La liste des commandes</h6>
+                                                        <h6
+                                                            class="preview-subject text-center font-weight-medium text-dark">
+                                                            La liste des commandes</h6>
                                                         <p class=" small-text">
-                                                            <table class="table table-bordered table-hover" id="tableau<%= i+1 %>" >
+                                                            <table class="table table-bordered table-hover"
+                                                                id="tableau<%= i+1 %>">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="text-center"> N°</th>
@@ -49,43 +56,53 @@
                                                                         <th class="text-center"> Date</th>
                                                                     </tr>
                                                                 </thead>
+
                                                                 <body>
                                                                     <% for(let j=0; j<respo[i].nbrComd; j++){ %>
-                                                                        <tr>
-                                                                           <td class="text-center"><%= i+1 %></td>
-                                                                           <td class="text-center"><%= respo[i].commandes[j].idCommande %></td>
-                                                                           <td class="text-center"><%= respo[i].commandes[j].prixTotal %></td>
-                                                                           <td class="text-center"><%= respo[i].commandes[j].statut %></td>
-                                                                           <td class="text-center"><%= respo[i].commandes[j].dateCommande %></td>
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"><%= i+1 %></td>
+                                                                        <td class="text-center">
+                                                                            <%= respo[i].commandes[j].idCommande %></td>
+                                                                        <td class="text-center">
+                                                                            <%= respo[i].commandes[j].prixTotal %></td>
+                                                                        <td class="text-center">
+                                                                            <%= respo[i].commandes[j].statut %></td>
+                                                                        <td class="text-center">
+                                                                            <%= respo[i].commandes[j].dateCommande %>
+                                                                        </td>
+                                                                    </tr>
                                                                     <% } %>
                                                                 </body>
                                                             </table>
                                                         </p>
                                                     </div>
                                                     <div class="dropdown-divider"></div>
-                                                    <p class="mb-0 font-weight-normal text-center float-center"> 
-                                                            <%= respo[i].nom %> <%= respo[i].prenom %> a <b><%= respo[i].nbrComd %></b> commande(s).
+                                                    <p class="mb-0 font-weight-normal text-center float-center">
+                                                        <%= respo[i].nom %> <%= respo[i].prenom %> a
+                                                        <b><%= respo[i].nbrComd %></b> commande(s).
                                                     </p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center" uppercase><%= respo[i].nom %> <%= respo[i].prenom %></td>
-                                        <td class="text-center" id="points<%= respo[i].idUtil %>"><%= respo[i].point %></td>
+                                        <td class="text-center" uppercase><%= respo[i].nom %> <%= respo[i].prenom %>
+                                        </td>
+                                        <td class="text-center" id="points<%= respo[i].idUtil %>"><%= respo[i].point %>
+                                        </td>
                                         <td class="text-center"><%= respo[i].email %></td>
                                         <td class="text-center"><%= respo[i].numTel %></td>
                                         <td class="text-center"><%= respo[i].date %></td>
                                         <% if(respo[i].valide == "oui"){%>
-                                          <td class="text-center" style="color:green"><%= respo[i].valide %></td>
+                                        <td class="text-center" style="color:green"><%= respo[i].valide %></td>
                                         <%}%>
                                         <% if(respo[i].valide == "non"){%>
-                                          <td class="text-center" style="color: red"><%= respo[i].valide %></td>
+                                        <td class="text-center" style="color: red"><%= respo[i].valide %></td>
                                         <%}%>
                                         <td class="text-center"> 
-                                            <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].idUtil %>','<%= respo[i].idadh %>')"><span class="fa fa-trash"></span></button>
+                                            <button class=" btn btn-danger btn-xs" onclick="alertSupp('<%= respo[i].idUtil %>','<%= respo[i].idadh %>')"><span
+                                            class="fa fa-trash"></span></button>
                                         </td>
                                     </tr>
-                                            <% }  }%>
+                                    <% }  }%>
                                 </tbody>
                             </table>
                         </div>
@@ -98,4 +115,4 @@
         </div>
     </div>
 </div>
-<% include ../footer.ejs %>
+<% include ../layouts/footer.ejs %>

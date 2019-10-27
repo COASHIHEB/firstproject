@@ -3,42 +3,49 @@ var app = express();
 var router = express.Router();
 
 
-/**** Redirect l'admin no connecter  vert la page login ****/
-const redirectLogin = (request, response) => {
-    if (!request.session.userType) {
-        response.redirect('/login');
-    } else {
-        if (request.session.userType === "Administrateur") {
-            return response.render('pages/Admin/index', {});
-        } else if (request.session.userType === "Employe") {
-            return response.render('pages/Employee/index', {});
-        } else {
-            return response.render('pages/Client/index', {});
-        }
-    }
-}
+// const redirectLogin = (request, response) => {
+//     if (!request.session.userType) {
+//         response.redirect('/login');
+//     } else {
+//         if (request.session.userType === "Administrateur") {
+//             return response.redirect('/dashboard-admin');
+//         } else if (request.session.userType === "Employe") {
+//             return response.redirect('/dashboard-employe');
+//         } else {
+//             return response.render('pages/Client/index', {});
+//         }
+//     }
+// }
 
 
-/* lien vert la pages idex d'admenistrateur */
-router.get('/dashbordAdmin', redirectLogin, (request, responsess) => {
-    responsess.render('pages/Admin/index', {});
-});
+
+
+// /* lien vert la pages index générale du site */
+// router.get('/', (request, response) => {
+//     require("../models/Client/produit").selectProduits((resp) => {
+//         require("../models/Client/image").selectAllImages((res) => {
+//             response.render('pages/Client/index', { produits: resp, images: res });
+//         });
+//     });
+// });
+
 
 
 /* lien vert la pages index générale du site */
 router.get('/', (request, response) => {
-    require("../models/clients/produit").selectProduits((resp) => {
-        require("../models/clients/image").selectAllImages((res) => {
-           response.render('pages/Client/index', {produits : resp, images: res});
+    require("../models/Client/produit").selectProduits((resp) => {
+        require("../models/Client/image").selectAllImages((res) => {
+            response.render('pages/Client/index', { produits: resp, images: res });
         });
     });
 });
 
+
 /* lien pour la page des produits*/
 router.get('/articles', (request, response) => {
-    require("../models/clients/produit").selectAllProduit((resp) => {
-        require("../models/clients/image").selectAllImages((res) => {
-            response.render('pages/Client/produits', {produits : resp, images: res});
+    require("../models/Client/produit").selectAllProduit((resp) => {
+        require("../models/Client/image").selectAllImages((res) => {
+            response.render('pages/Client/produits', { produits: resp, images: res });
         });
     });
 });
@@ -46,13 +53,13 @@ router.get('/articles', (request, response) => {
 
 /* lien pour afficher le détaille d'un produit*/
 router.get('/produit', (request, response) => {
-    if(typeof request.query.code === 'undefined'){
+    if (typeof request.query.code === 'undefined') {
         response.render('pages/Error/error404', {});
-    }else{
-        require("../models/clients/produit").selectProduit(request.query.code,(resp) => {
-            require("../models/clients/image").selectImages(request.query.code,(res) => {
-                require("../models/clients/produit").selectProduitsParCategorie({code : resp.idCat, id : request.query.code},(rsp) => {
-                   response.render('pages/Client/product', {produit : resp, images: res, produits:rsp});
+    } else {
+        require("../models/Client/produit").selectProduit(request.query.code, (resp) => {
+            require("../models/Client/image").selectImages(request.query.code, (res) => {
+                require("../models/Client/produit").selectProduitsParCategorie({ code: resp.idCat, id: request.query.code }, (rsp) => {
+                    response.render('pages/Client/product', { produit: resp, images: res, produits: rsp });
                 });
             });
         });
@@ -61,9 +68,9 @@ router.get('/produit', (request, response) => {
 
 /* lien pour recuperie les categories et les sous categories*/
 router.post('/selecteCategories', (request, response) => {
-    require("../models/clients/categorie").selectCategories((resp) => {
-        require("../models/clients/produit").selectAllProduit((res) => {
-            response.json({categories : resp , produits : res});
+    require("../../models/Client/categorie").selectCategories((resp) => {
+        require("../../models/Client/produit").selectAllProduit((res) => {
+            response.json({ categories: resp, produits: res });
         });
     });
 });

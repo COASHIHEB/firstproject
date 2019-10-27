@@ -1,48 +1,31 @@
-<% include header.ejs %>
-<script src="js/Clients/produits/produits.js"></script>
+<% include layout/header.ejs %>
+<script src="js/Client/produits/produits.js"></script>
+
 <!-- Hero section -->
 <section class="hero-section">
 	<div class="hero-slider owl-carousel">
-		<div class="hs-item set-bg" data-setbg="divisima/img/bg.jpg">
+		<% if(locals.slides){ 
+			for(let i=0; i<slides.length; i++){ %>
+		<div class="hs-item set-bg" data-setbg="images/slides/<%= slides[i].namePicture %>">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-6 col-lg-7 text-white">
-						<span>New Arrivals</span>
-						<h2>denim jackets</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-							ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus
-							commodo viverra maecenas accumsan lacus vel facilisis. </p>
-						<a href="#" class="site-btn sb-line">DISCOVER</a>
-						<a href="#" class="site-btn sb-white">ADD TO CART</a>
+						<span><%= slides[i].title %></span>
+						<h2><%= slides[i].nomOffre %></h2>
+						<p><%= slides[i].description %> </p>
+						<a href="/produit?code=<%= slides[i].idOffre %>" class="site-btn sb-line">DISCOVER</a>
+						<a href="#" onclick="addItem()" class="site-btn sb-white">ADD TO CART</a>
 					</div>
 				</div>
 				<div class="offer-card text-white">
 					<span>from</span>
-					<h2>$29</h2>
-					<p>SHOP NOW</p>
+					<h2><%= slides[i].prix %> </h2>
+					<p>DH</p>
 				</div>
 			</div>
 		</div>
-		<div class="hs-item set-bg" data-setbg="divisima/img/bg-2.jpg">
-			<div class="container">
-				<div class="row">
-					<div class="col-xl-6 col-lg-7 text-white">
-						<span>New Arrivals</span>
-						<h2>denim jackets</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-							ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus
-							commodo viverra maecenas accumsan lacus vel facilisis. </p>
-						<a href="#" class="site-btn sb-line">DISCOVER</a>
-						<a href="#" class="site-btn sb-white">ADD TO CART</a>
-					</div>
-				</div>
-				<div class="offer-card text-white">
-					<span>from</span>
-					<h2>$29</h2>
-					<p>SHOP NOW</p>
-				</div>
-			</div>
-		</div>
+		<%}
+		} %>
 	</div>
 	<div class="container">
 		<div class="slide-num-holder" id="snh-1"></div>
@@ -174,52 +157,57 @@
 		</div>
 		<div class="row">
 			<% if(locals.produits){ 
-				for(let i=0; i<produits.length; i++){ %> 
-				<div class="col-lg-3 col-sm-6">
-					<div class="product-item">
-						<div class="pi-pic">
-							<img src="images/offre/<%= produits[i].image %>" alt="produitImage" style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal" data-target="#myModal<%= produits[i].idOffre %>">
-							<div class="pi-links">
-								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-								<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-							</div>
-						</div>
-						<div class="pi-text">
-							<h6><%= produits[i].prix %></h6>
-							<p><%= produits[i].nom %></p>
-							<p><%= produits[i].description %></p>
+				for(let i=0; i<produits.length; i++){ %>
+			<div class="col-lg-3 col-sm-6">
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="images/offre/<%= produits[i].image %>" alt="produitImage"
+							style="cursor:pointer; width: 100%; height: 300px;" data-toggle="modal"
+							data-target="#myModal<%= produits[i].idOffre %>">
+						<div class="pi-links">
+							<a style="cursor: pointer"
+								onclick="addItem('<%= produits[i].idOffre %>','<%= produits[i].prix %>')"
+								class="add-card"><i class="flaticon-bag"></i><span>AJOUTER</span></a>
 						</div>
 					</div>
+					<div class="pi-text">
+						<h6><%= produits[i].prix %> <%= locals.devis %></h6>
+						<p><%= produits[i].nom %></p>
+						<p><a href="produit?code=<%= produits[i].idOffre %>" target="_blank">Plus...</a></p>
+					</div>
 				</div>
+			</div>
 			<%}} %>
 		</div>
 		<% if(locals.produits){ 
 			for(let i=0; i<produits.length; i++){ %>
-					<!-- Debut Modal-->
-				<div id="myModal<%= produits[i].idOffre %>" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<button type="button" class="close" data-dismiss="modal">&times;</button><br>
-							  <!-- Modal content-->
-						<div class=" modal-content" id="content"  style="height: 10px">
-				           <% if(locals.images){ %>
-							<img src='images/offre/<%= produits[i].image %>' alt='produitImage' >
-							<div class='product-slider owl-carousel' id='imageSlide'>
-							<% for(let j=0; j<images.length; j++){ %> 
-								<% if(produits[i].idOffre === images[j].Offre_idOffre){ %>
-									<img id="image<%= j %>" style="height: 135px" src='images/offre/<%= images[j].nom %>' style="cursor:pointer" onclick="updateImage('<%= j %>','<%= produits[i].idOffre %>')" alt='produitImage'>
-					            <%}}%>
-							</div>
-							<%}%>
+		<!-- Debut Modal-->
+		<div id="myModal<%= produits[i].idOffre %>" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<button type="button" class="close" data-dismiss="modal">&times;</button><br>
+				<!-- Modal content-->
+				<div class=" modal-content" id="content" style="height: 10px">
+					<% if(locals.images){ %>
+					<img src='images/offre/<%= produits[i].image %>' alt='produitImage'>
+					<div class='product-slider owl-carousel' id='imageSlide'>
+						<% for(let j=0; j<images.length; j++){ %>
+						<% if(produits[i].idOffre === images[j].Offre_idOffre){ %>
+						<img id="image<%= j %>" style="height: 135px" src='images/offre/<%= images[j].nom %>'
+							style="cursor:pointer" onclick="updateImage('<%= j %>','<%= produits[i].idOffre %>')"
+							alt='produitImage'>
+						<%}}%>
+					</div>
+					<%}%>
 			            </div>		
 					</div>
 				</div>
 				<!-- Fin Modal-->
 			<%}
 		} %>
-		<div class="text-center pt-5">
-			<a href="articles" class="site-btn sb-line sb-dark">LOAD MORE</a>
-		</div>
-	</div>
+					<div class="text-center pt-5">
+						<a href="articles" class="site-btn sb-line sb-dark">Lire Plus</a>
+					</div>
+				</div>
 </section>
 <!-- Product filter section end -->
 
@@ -237,4 +225,4 @@
 </section>
 <!-- Banner section end  -->
 
-<% include footer.ejs %>
+<% include layout/footer.ejs %>

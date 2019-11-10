@@ -69,7 +69,6 @@ moment.locale('fr');
 var time = moment().tz("Africa/Casablanca").format("HH:mm:ss");
 var dateTime = moment().tz("Africa/Casablanca").format("YYYY-MM-DD HH:mm:ss");
 
-var dateTime2 = moment(dateTime).add(2, 'seconds').format("YYYY-MM-DD HH:mm:ss");
 var date = moment().tz("Africa/Casablanca").format("YYYY-MM-DD");
 
 

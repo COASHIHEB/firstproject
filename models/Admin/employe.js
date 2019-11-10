@@ -1,5 +1,6 @@
 var connexion = require('../../config/db');
 var moment = require('../../config/moment').moment;
+var date = require('../../config/moment').date;
 var sha1 = require('sha1');
 class employe {
 
@@ -22,7 +23,7 @@ class employe {
 
         let code = generateRandomCode(6);
         if ((inputs.password != '') && (inputs.nomUser != '') && (inputs.prenomUser != '') && (inputs.email != '') && (inputs.tel != '') && (inputs.adresse != '')) {
-            connexion.query("INSERT INTO utilisateur (nom, prenom, email, mdp, numTel, adresse, date, statut, valide,image) VALUES (?,?,?,?,?,?,?,?,?,?)", [inputs.nomUser, inputs.prenomUser, inputs.email, password, inputs.tel, inputs.adresse, new Date(), inputs.type, "oui", "profil.png"], (err, result) => {
+            connexion.query("INSERT INTO utilisateur (nom, prenom, email, mdp, numTel, adresse, date, statut, valide,image) VALUES (?,?,?,?,?,?,?,?,?,?)", [inputs.nomUser, inputs.prenomUser, inputs.email, password, inputs.tel, inputs.adresse, date, inputs.type, "oui", "profil.png"], (err, result) => {
                 if (err) {
                     CallBack('error');
                 } else {

@@ -105,6 +105,7 @@ app.use(require('./routes/Admin/configuration.js'))
 app.use(require("./routes/Employe/dashboardEmploye.js"));
 app.use(require("./routes/Employe/commandeFaite.js"));
 app.use(require("./routes/Employe/commandeAttente.js"));
+app.use(require("./routes/Employe/commandeHier.js"));
 app.use(require("./routes/Employe/valise.js"));
 app.use(require("./routes/Employe/maps.js"));
 

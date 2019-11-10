@@ -1,6 +1,9 @@
 var connexion = require('../../config/db');
 let devis = require('../../config/devis');
 
+var moment = require('../../config/moment').moment;
+var dateTime = require('../../config/moment').dateTime;
+
 class panier {
 
     //la methode pour afficher les commandes non validé
@@ -53,7 +56,7 @@ class panier {
                             //});
                         });
                     } else {
-                        connexion.query("INSERT INTO commande (dateCommande , prixTotal , statut , adherent_idadh) VALUES (?,?,?,?)", [new Date(), parseFloat(inputs.prix), 'non valide', client[0].idadh], (err, commande) => {
+                        connexion.query("INSERT INTO commande (dateCommande , prixTotal , statut , adherent_idadh) VALUES (?,?,?,?)", [dateTime, parseFloat(inputs.prix), 'non valide', client[0].idadh], (err, commande) => {
                             if (err) {
                                 CallBack('error');
                             } else {

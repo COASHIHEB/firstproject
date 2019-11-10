@@ -72,6 +72,8 @@ server1.on("connect", function () {
     server1.on('getEmployeConnected', function (from) {
         console.log("5# getEmploye connected socket server 2")
         require("../models/Employe/maps").getEmployeConnected((resp) => {
+            console.log("From")
+            console.log(from)
             // resp contient idUser , long , latitu
             console.log("6# server 2 : sendLocation to client ")
             io.emit("sendLocation", resp, from);

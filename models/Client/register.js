@@ -1,5 +1,6 @@
 var connexion = require('../../config/db');
 var moment = require('../../config/moment').moment;
+var date = require('../../config/moment').date;
 var sha1 = require('sha1');
 class register {
     //la methode pour creer un client
@@ -12,7 +13,7 @@ class register {
                 if (reslt[0].email === inputs.email) { CallBack("exist"); }
             } else {
                 let password = sha1(inputs.password);
-                connexion.query("INSERT INTO utilisateur (nom, prenom, email, mdp, numTel, adresse, date) VALUES (?,?,?,?,?,?,?)", [inputs.nom, inputs.prenom, inputs.email, password, inputs.tel, inputs.adresse, new Date()], (err, result) => {
+                connexion.query("INSERT INTO utilisateur (nom, prenom, email, mdp, numTel, adresse, date) VALUES (?,?,?,?,?,?,?)", [inputs.nom, inputs.prenom, inputs.email, password, inputs.tel, inputs.adresse, date], (err, result) => {
                     if (err) {
                         CallBack('notInsert');
                     } else {

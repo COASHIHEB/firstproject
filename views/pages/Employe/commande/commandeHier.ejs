@@ -1,0 +1,89 @@
+<% include ../layouts/header.ejs %>
+<% include ../layouts/sideBar.ejs %>
+
+<script src="js/Admin/commande/commande.js"></script>
+<style>
+    .fa-star {
+        color: gray;
+    }
+
+    .fa-star.gold {
+        color: #ffdc0f;
+    }
+</style>
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+                <div class="row flex-grow">
+                    <div class="col-12 stretch-card">
+                        <div class="card">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-center">Historique des commandes faites</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="tableau2">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">N°</th>
+                                                        <th class="text-center">Client</th>
+                                                        <th class="text-center">Date</th>
+                                                        <th class="text-center">Offre</th>
+                                                        <th class="text-center"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(locals.commandeHier){
+                                                                for(let i=0; i<commandeHier.length; i++){ %>
+                                                    <tr>
+                                                        <td class="text-center"><%= i+1 %></td>
+                                                        <td uppercase>
+                                                            <%= commandeHier[i].nomAdherent %>&nbsp;<%= commandeHier[i].prenomAdherent %>
+                                                        </td>
+                                                        <td class="text-center"><%= commandeHier[i].dateCommande %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%for(let j=0; j<commandeHier[i].nomOffre.length; j++){ %>
+                                                            <%= commandeHier[i].nomOffre[j].nomOffre %>
+                                                            <br /><br />
+                                                            <% } %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <% if(i==0) {%>
+                                                            <button class="btn btn-success"
+                                                                onclick="accepterUneNouvelleCommande('<%= commandeHier[i].idCommande%>')">prendre</button>
+                                                            /
+                                                            <% }%>
+                                                            <button class="btn btn-danger"
+                                                                onclick="commandeAnnule('<%= commandeHier[i].idCommande%>')">annulé</button>
+                                                        </td>
+                                                    </tr>
+                                                    <% }  }%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <% include ../layouts/footer.ejs %>

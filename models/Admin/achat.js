@@ -1,5 +1,6 @@
 var connexion = require('../../config/db');
-var moment = require('../../config/moment').date;
+var moment = require('../../config/moment').moment;
+var date = require('../../config/moment').date;
 
 class achat {
 
@@ -22,7 +23,7 @@ class achat {
                         if (err) throw err;
                         var idProd = rows[0].idProd
                         var queryInsertAchat = "INSERT INTO achat (quantiteAchat, dateAchat, Produit_idProd) VALUES (?,?,?)";
-                        connexion.query(queryInsertAchat, [inputs.quantiteAchat, moment, idProd], function (err, rows, fields) {
+                        connexion.query(queryInsertAchat, [inputs.quantiteAchat, date, idProd], function (err, rows, fields) {
                             if (err) CallBack('error');
                             else {
                                 var insertedID = rows.insertId
@@ -41,7 +42,7 @@ class achat {
                     if (err) throw err;
                     var insertedID = rows.insertId
                     var queryInsertAchat = "INSERT INTO achat (quantiteAchat, dateAchat, Produit_idProd) VALUES (?,?,?)";
-                    connexion.query(queryInsertAchat, [inputs.quantiteAchat, new Date(), insertedID], function (err, rows, fields) {
+                    connexion.query(queryInsertAchat, [inputs.quantiteAchat, date, insertedID], function (err, rows, fields) {
                         if (err) CallBack('error');
                         else {
                             var insertedID = rows.insertId

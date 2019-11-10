@@ -50,6 +50,7 @@ class commande {
 
     //la methode pour supprimer une commande
     static deleteCommande(input, CallBack) {
+
         connexion.query("DELETE FROM commandeoffre WHERE Commande_idCommande= ?", [input], (err, deleted) => {
             if (err) {
                 CallBack('error');
@@ -65,6 +66,17 @@ class commande {
         });
     }
 
+
+    static clientAccepteSaCommande(input, CallBack) {
+
+        connexion.query("update commande set statut = 'accepte' where idCommande = ?", [input.idCommande], (err, deleted) => {
+            if (err) {
+                CallBack('error');
+            } else {
+                CallBack('done');
+            }
+        });
+    }
 
 }
 

@@ -65,6 +65,8 @@ socket.on('sendLocation', function (data, from) {
         console.log("get location socket client side from server 2 ");
         gpsTraitement({ employe: data, idCommande: idCommande, adress: adress }, (resp) => {
             resp.sort(compare);
+
+            console.log("###########################")
             console.log("reponses : ")
             console.log(resp)
             socket.emit('envoyerLesEmployeProche', resp);
@@ -96,29 +98,34 @@ socket.on('sendLocation', function (data, from) {
                 else {
                     employeAdresse = { lat: e.latitude, lng: e.longitude };
                 }
+
+
+                console.log("employeAdresse")
+                console.log(employeAdresse)
                 service.getDistanceMatrix(
                     {
                         origins: [client],
                         destinations: [employeAdresse],
                         travelMode: 'DRIVING',
                     }, (response, statuts) => {
-                        if (moment().tz("Africa/Casablanca").format("YYYY-MM-DD HH:mm:ss") < moment(e.dateFinRealisation).format("YYYY-MM-DD HH:mm:ss")) {
-                            e.dateFinRealisation = moment(e.dateFinRealisation).add(response.rows[0].elements[0].duration.value, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+                        if (response.rows[0].elements[0].status == "OK") {
+                            if (moment().tz("Africa/Casablanca").format("YYYY-MM-DD HH:mm:ss") < moment(e.dateFinRealisation).format("YYYY-MM-DD HH:mm:ss")) {
+                                e.dateFinRealisation = moment(e.dateFinRealisation).add(response.rows[0].elements[0].duration.value, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+                                e.dateFinRealisation = moment().tz("Africa/Casablanca").format("YYYY-MM-DD HH:mm:ss");
+                            }
+                            else {
+                                e.dateFinRealisation = moment(e.dateFinRealisation).add(response.rows[0].elements[0].duration.value, 'seconds').format("YYYY-MM-DD HH:mm:ss");
+                            }
+                            distances.push({
+                                idCommande: idCommande,
+                                idEmp: e.idEmp,
+                                dateArrive: e.dateFinRealisation,
+                                clientAdresse: response.originAddresses[0],
+                                employeAdresse: response.destinationAddresses[0],
+                                distanceEnKM: response.rows[0].elements[0].distance.text,
+                                duration: response.rows[0].elements[0].duration.text,
+                            });
                         }
-                        else {
-                            e.dateFinRealisation = moment().tz("Africa/Casablanca").format("YYYY-MM-DD HH:mm:ss");
-                            e.dateFinRealisation = moment(e.dateFinRealisation).add(response.rows[0].elements[0].duration.value, 'seconds').format("YYYY-MM-DD HH:mm:ss");
-                        }
-                        distances.push({
-                            idCommande: idCommande,
-                            idEmp: e.idEmp,
-                            dateArrive: e.dateFinRealisation,
-                            clientAdresse: response.originAddresses[0],
-                            employeAdresse: response.destinationAddresses[0],
-                            distanceEnKM: response.rows[0].elements[0].distance.text,
-                            duration: response.rows[0].elements[0].duration.text,
-                        });
-
                         if ((locations.length) == distances.length) { Callback(distances); }
                     });
             })
@@ -131,3 +138,15 @@ socket.on('sendLocation', function (data, from) {
 });
 
 
+
+/*
+
+Pour ajouter une commande :
+1- post lancerCommande ajouter une nouvelle commande avec l'idClient + adress + numeroTelephone
+2- emit socket : getLocation : pour demander aux employés leurs emplacements -> emit socket : post changeLocation
+3- post changeLocation : pour changer l'emplacement des employés -> emit socket : getEmployeConnected
+4- emit socket : getEmployeConnected to server 1 pour recuperer les employé connectés -> emit socket :sendLocation
+5- emit socket : sendLocation pour envoyer au client les locations des employées pour trouver le plus proche Employé
+6- emit socket : envoyerLesEmployeProche pour ajouter le plus proche employé a la table commandeEnAttente
+
+*/

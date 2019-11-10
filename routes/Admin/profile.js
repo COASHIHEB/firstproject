@@ -17,8 +17,6 @@ const redirectLogin = (request, response, next) => {
   }
 };
 
-
-
 /* lien vers page profil */
 app.get("/profile", redirectLogin, (request, response) => {
   if (request.session.userType === "Administrateur") {

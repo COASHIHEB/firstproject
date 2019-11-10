@@ -1,10 +1,9 @@
 <% include layouts/header.ejs %>
 <% include layouts/sideBar.ejs %>
 
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChnAfNPjSPo76qR3c9yR5IOWkA9BRlpf0&callback=initMap"
-  type="text/javascript"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/Employe/dashboardEmploye.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" type="text/javascript"></script>
 <style>
   /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -24,8 +23,49 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
-      
+      <% if(locals.commande){
+          for(let i=0; i<commande.length; i++){ %>
+      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+        <div class="card card-statistics">
+          <div class="card-body">
+            <div class="clearfix">
+              <div class="text-center">
+                <h4 class="mb-0 text-center"><%= commande[i].nom%> <%= commande[i].nom%></h4>
+                <div class="fluid-container">
+                  <h6 class="mb-0 text-center"><%= commande[i].numTel%></h6>
+                </div>
+                <div class="fluid-container">
+                  <p class="mb-0 text-center"><%= commande[i].adresse%></p>
+                </div>
+                <br />
+                <div id="details<%= commande[i].idCommande%>" style="display: none;">
+                  <h4 class="mb-0 text-center">Offres</h4>
+                  <% for(let j=0; j<commande[i].nomOffre.length; j++){ %>
+                  <div class="row">
+                    <p class="col-md-6 mb-0"><%= commande[i].nomOffre[j].nomOffre %></p>
+                    <p class="col-md-6 mb-0"><%= commande[i].nomOffre[j].duree %></p>
+                  </div>
+                  <% }  %>
+                </div>
+                <div>
+                  <button id="plus<%= commande[i].idCommande%>" onclick="plus('<%= commande[i].idCommande%>')"
+                    style=" background: bottom; border: aliceblue;color: blue;">Détails</button>
+                </div>
+                <br />
+                <div class="col-md-12 text-right">
+                  <button onclick="accepterUneNouvelleCommande('<%= commande[i].idCommande%>')"
+                    class="btn btn-success"><i class=" fa fa-check  icon-lg"></i></button>
+                  <button class="btn btn-danger" onclick="refuserUneCommande('<%= commande[i].idCommande%>')"><i
+                      class=" fa fa-times  icon-lg"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } } %>
     </div>
+
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <!--weather card-->

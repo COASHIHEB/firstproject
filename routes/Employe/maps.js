@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 var server2 = require('./../socket.js').server2;
+var io = require('./../socket.js').io;
 
 router.post("/changeLocation", (request, response) => {
 
@@ -21,6 +22,20 @@ router.post("/changeLocation", (request, response) => {
 
 });
 
+
+
+
+
+router.get("/getLastCommandeEmploye", (request, response) => {
+    require("../../models/Employe/maps.js").getLastCommandeEmploye({
+        id: request.session.userId
+    }, (resp) => {
+        console.log(resp)
+        response.json(resp);
+    });
+
+});
+
 router.post("/verifyIdEmploye", (request, response) => {
     require("../../models/Employe/maps.js").verifyIdEmploye({
         idCommande: request.body.idCommande,
@@ -32,8 +47,20 @@ router.post("/verifyIdEmploye", (request, response) => {
 });
 
 
-router.post("/verifyIdClient", (request, response) => {
-    require("../../models/Employe/maps.js").verifyIdClient({
+router.post("/recupererLesEmployesQuiOntRefuseCetteCommande", (request, response) => {
+    require("../../models/Employe/maps.js").recupererLesEmployesQuiOntRefuseCetteCommande({
+        idCommande: request.body.idCommande,
+    }, (resp) => {
+        console.log("recupererLesEmployesQuiOntRefuseCetteCommande")
+        console.log(resp)
+        response.json(resp);
+    });
+
+});
+
+
+router.post("/verifyIdCommande", (request, response) => {
+    require("../../models/Employe/maps.js").verifyIdCommande({
         idCommande: request.body.idCommande,
         id: request.session.userId,
     }, (resp) => {
@@ -58,32 +85,73 @@ router.post("/accepterUneNouvelleCommande", (request, response) => {
     require("../../models/Employe/maps.js").accepterUneNouvelleCommande({
         idCommande: request.body.idCommande,
         idUtil: request.session.userId,
+        dateArrive: request.body.dateArrive
     }, (resp) => {
-        if (resp = "done") {
-            //envoyé la confirmation au client 
-            io.emit("sendConfiramtionToClient", request.body.idCommande);
-            io.emit("getLocation", "employe");
-            response.json({ statut: resp, idUtil: request.session.userId });
+        console.log(resp)
+        if (resp.statut = "done") {
+            // envoyé la confirmation au client
+
+            io.emit("sendConfiramtionToClient" + resp.idClient, request.body.idCommande);
+            console.log("sendConfiramtionToClient" + resp.idClient)
+            // io.emit("getLocation", "employe");
+            response.json({ statut: resp.statut, idUtil: request.session.userId });
         }
     });
-
 });
 
 
 router.post("/refuserUneCommande", (request, response) => {
-    // quand il click sur accepter une nouvelle commande on met l'update sur la table commande
-    // on doit envoyer idCommande , idEmp , 
     require("../../models/Employe/maps.js").refuserUneCommande({
         idCommande: request.body.idCommande,
+        idUtil: request.session.userId,
     }, (resp) => {
         if (resp = "done") {
-            io.emit("getLocation", "employe");
+            // on doit retransmettre la commande à un autre client
+            io.emit("getLocation", "employeRefuseUneCommande" + request.session.userId);
             response.json(resp);
         }
     });
 
 });
 
+router.post("/recupererToutesLesCommandesEnAttentesDeCetEmploye", (request, response) => {
+    require("../../models/Employe/maps.js").recupererToutesLesCommandesEnAttentesDeCetEmploye(request.session.userId, (resp) => {
+        if (resp.statut = "done") {
+            io.emit("getLocation", "employeRefuseUneCommande" + request.session.userId);
+        }
+        response.json(resp);
+    });
+});
+
+
+router.get("/getIdUtil", (request, response) => {
+    console.log(request.session.userId)
+    response.json(request.session.userId);
+});
+
+
+router.post("/commandeAnnule", (request, response) => {
+    let commande = require("../../models/Employe/commandeHier");
+    commande.commandeAnnule({
+        idUser: request.session.userId,
+        idCommande: request.body.idCommande,
+        description: request.body.description,
+        par: request.session.userType
+    }, (resp) => {
+        response.json(resp);
+    })
+});
+
+
+
+router.post("/clientAccepteSaCommande", (request, response) => {
+    let commande = require("../../models/client/commande");
+    commande.clientAccepteSaCommande({
+        idCommande: request.body.idCommande,
+    }, (resp) => {
+        response.json(resp);
+    })
+});
 
 
 

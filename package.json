@@ -20,7 +20,7 @@
     "ejs": "^2.5.7",
     "events": "^3.0.0",
     "express": "^4.16.2",
-    "express-fileupload": "^1.1.6-alpha.5",
+    "express-fileupload": "^1.1.9",
     "express-session": "^1.16.2",
     "google-libphonenumber": "^3.2.4",
     "libphonenumber": "0.0.10",
